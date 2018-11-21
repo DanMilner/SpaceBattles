@@ -22,9 +22,12 @@ public class UIHandler : MonoBehaviour {
         HorizontalText.text = "Horizontal: " + playerShip.velocity.x.ToString("F3");
         VerticalText.text = "Vertical: " + playerShip.velocity.y.ToString("F3");
 
-        PitchText.text = "Pitch: " + playerShip.angularVelocity.x.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).x.ToString("F3");
-        RollText.text = "Roll: " + playerShip.angularVelocity.z.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).z.ToString("F3");
-        YawText.text = "Yaw: " + playerShip.angularVelocity.y.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).y.ToString("F3");
+        //PitchText.text = "Pitch: " + playerShip.angularVelocity.x.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).x.ToString("F3");
+        //RollText.text = "Roll: " + playerShip.angularVelocity.z.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).z.ToString("F3");
+        //YawText.text = "Yaw: " + playerShip.angularVelocity.y.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).y.ToString("F3");
+        PitchText.text = "Pitch: " + playerShip.angularVelocity.x.ToString("F3");
+        RollText.text = "Roll: " + playerShip.angularVelocity.z.ToString("F3");
+        YawText.text = "Yaw: " + playerShip.angularVelocity.y.ToString("F3");
     }
 
     public void ToggleRotationalStabiliers(bool active)

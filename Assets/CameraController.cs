@@ -7,7 +7,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform CameraTarget;
+    private Transform CameraTarget;
     private float x = 0.0f;
     private float y = 0.0f;
 
@@ -24,11 +24,6 @@ public class CameraController : MonoBehaviour
     private float currentDistance;
 
     public float cameraTargetHeight = 1.0f;
-
-    //checks if first person mode is on
-    private bool click = false;
-    //stores cameras distance from player
-    private float curDist = 0;
 
     // Use this for initialization
     void Start()
@@ -81,5 +76,14 @@ public class CameraController : MonoBehaviour
 
         transform.rotation = rotation;
         transform.position = position;
+    }
+
+    public void SetCameraTarget(Transform newCameraTarget, CameraZoomSettings cameraZoomSettings)
+    {
+        CameraTarget = newCameraTarget;
+        MinViewDistance = cameraZoomSettings.MinZoom;
+        MaxViewDistance = cameraZoomSettings.MaxZoom;
+        ZoomRate = cameraZoomSettings.ZoomRate;
+        cameraTargetHeight = cameraZoomSettings.CameraHeight;
     }
 }

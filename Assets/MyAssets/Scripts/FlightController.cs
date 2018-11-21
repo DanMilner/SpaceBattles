@@ -101,7 +101,7 @@ public class FlightController : MonoBehaviour
         if (moveHorizontal == 0)
         {         
             //if ship velocity is low, reduce velocity by 10%. Allows the ship to stop smoothly.
-            if (ShipRigidbody.velocity.x < 0.05 && ShipRigidbody.velocity.x > -0.05)
+            if (ShipRigidbody.velocity.x < 0.1 && ShipRigidbody.velocity.x > -0.1)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x *0.90f, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z);
             }
@@ -112,7 +112,7 @@ public class FlightController : MonoBehaviour
         }
         if (moveVertical == 0)
         {
-            if (ShipRigidbody.velocity.x < 0.05 && ShipRigidbody.velocity.x > -0.05)
+            if (ShipRigidbody.velocity.y < 0.1 && ShipRigidbody.velocity.y > -0.1)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y * 0.90f, ShipRigidbody.velocity.z);
             }
@@ -123,7 +123,7 @@ public class FlightController : MonoBehaviour
         }
         if (moveForward == 0)
         {
-            if (ShipRigidbody.velocity.x < 0.05 && ShipRigidbody.velocity.x > -0.05)
+            if (ShipRigidbody.velocity.z < 0.1 && ShipRigidbody.velocity.z > -0.1)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z * 0.90f);
             }
