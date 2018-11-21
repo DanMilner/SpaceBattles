@@ -110,56 +110,60 @@ public class FlightController : MonoBehaviour
 
     private void StabiliseMovement()
     {
+
         if (moveHorizontal == 0)
-        {
-            if (ShipRigidbody.velocity.x < 0.02 && ShipRigidbody.velocity.x > -0.02)
+        {            
+            if (ShipRigidbody.velocity.x < 0.05 && ShipRigidbody.velocity.x > -0.05)
             {
                 ShipRigidbody.velocity = new Vector3(0, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z);
-            }
+            }            
 
-            if (ShipRigidbody.velocity.x > 0)
+            float xVel = transform.InverseTransformDirection(ShipRigidbody.velocity).x;
+
+            if (xVel > 0.01)
             {
-                ShipRigidbody.AddForce(-Vector3.right * horizontalThrust);                
+                ShipRigidbody.AddForce(-ShipTransform.right * horizontalThrust);                
             }
-            else if(ShipRigidbody.velocity.x < 0)
+            else if(xVel < -0.01)
             {
-                ShipRigidbody.AddForce(Vector3.right * horizontalThrust);
+                ShipRigidbody.AddForce(ShipTransform.right * horizontalThrust);
             }
-            //ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x * 0.99f, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z);
         }
         if (moveVertical == 0)
-        {
-            if (ShipRigidbody.velocity.y < 0.02 && ShipRigidbody.velocity.y > -0.02)
+        {            
+            if (ShipRigidbody.velocity.y < 0.05 && ShipRigidbody.velocity.y > -0.05)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, 0, ShipRigidbody.velocity.z);
             }
+            
+            float yVel = transform.InverseTransformDirection(ShipRigidbody.velocity).y;
 
-            if (ShipRigidbody.velocity.y > 0)
+            if (yVel > 0.01)
             {
-                ShipRigidbody.AddForce(-Vector3.up * forwardThrust);
+                ShipRigidbody.AddForce(-ShipTransform.up * forwardThrust);
             }
-            else if (ShipRigidbody.velocity.y < 0)
+            else if (yVel < -0.01)
             {
-                ShipRigidbody.AddForce(Vector3.up * forwardThrust);
+                ShipRigidbody.AddForce(ShipTransform.up * forwardThrust);
             }
-            //ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y * 0.99f, ShipRigidbody.velocity.z);
         }
         if (moveForward == 0)
-        {
-            if (ShipRigidbody.velocity.z < 0.02 && ShipRigidbody.velocity.z > -0.02)
+        {            
+            if (ShipRigidbody.velocity.z < 0.05 && ShipRigidbody.velocity.z > -0.05)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y, 0);
-            }
+            }            
 
-            if (ShipRigidbody.velocity.z > 0)
+            float zVel = transform.InverseTransformDirection(ShipRigidbody.velocity).z;
+
+            if (zVel > 0.01)
             {
-                ShipRigidbody.AddForce(-Vector3.forward * verticalThrust);
+                ShipRigidbody.AddForce(-ShipTransform.forward * verticalThrust);
             }
-            else if (ShipRigidbody.velocity.z < 0)
+            else if (zVel < -0.01)
             {
-                ShipRigidbody.AddForce(Vector3.forward * verticalThrust);
+                ShipRigidbody.AddForce(ShipTransform.forward * verticalThrust);
             }
-            //ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z * 0.99f);
         }
     }
 
@@ -174,9 +178,9 @@ public class FlightController : MonoBehaviour
 
     private void ThrusterMovement()
     {
-        ShipRigidbody.AddRelativeForce(Vector3.forward * forwardThrust * moveForward);
-        ShipRigidbody.AddRelativeForce(Vector3.right * horizontalThrust * moveHorizontal);
-        ShipRigidbody.AddRelativeForce(Vector3.up * verticalThrust * moveVertical);
+        ShipRigidbody.AddForce(ShipTransform.forward * forwardThrust * moveForward);
+        ShipRigidbody.AddForce(ShipTransform.right * horizontalThrust * moveHorizontal);
+        ShipRigidbody.AddForce(ShipTransform.up * verticalThrust * moveVertical);
     }
 
     private void ThrusterRotation()
