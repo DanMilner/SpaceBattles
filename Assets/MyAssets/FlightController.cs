@@ -14,11 +14,6 @@ public class FlightController : MonoBehaviour
     public float rollSpeed = 0.03f;
     public float pitchSpeed = 0.03f;
 
-    public float missileSpeed = 50.0f;
-
-    public GameObject[] Missiles;
-    private int missilesLeft;
-
     private Rigidbody ShipRigidbody;
     private Transform ShipTransform;
 
@@ -39,8 +34,6 @@ public class FlightController : MonoBehaviour
     {
         ShipRigidbody = gameObject.GetComponent<Rigidbody>();
         ShipTransform = gameObject.GetComponent<Transform>();
-
-        missilesLeft = Missiles.Length - 1;
 
         thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
     }
@@ -71,11 +64,6 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (missilesLeft >= 0) { ShootMissile(); }
-        }
-
         if (Input.GetButtonDown("RotationalStabilisers"))
         {
             rotationalStabiliersActive = !rotationalStabiliersActive;
@@ -113,7 +101,7 @@ public class FlightController : MonoBehaviour
 
         if (moveHorizontal == 0)
         {            
-            if (ShipRigidbody.velocity.x < 0.05 && ShipRigidbody.velocity.x > -0.05)
+            if (ShipRigidbody.velocity.x < 0.02 && ShipRigidbody.velocity.x > -0.02)
             {
                 ShipRigidbody.velocity = new Vector3(0, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z);
             }            
@@ -131,7 +119,7 @@ public class FlightController : MonoBehaviour
         }
         if (moveVertical == 0)
         {            
-            if (ShipRigidbody.velocity.y < 0.05 && ShipRigidbody.velocity.y > -0.05)
+            if (ShipRigidbody.velocity.y < 0.02 && ShipRigidbody.velocity.y > -0.02)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, 0, ShipRigidbody.velocity.z);
             }
@@ -149,7 +137,7 @@ public class FlightController : MonoBehaviour
         }
         if (moveForward == 0)
         {            
-            if (ShipRigidbody.velocity.z < 0.05 && ShipRigidbody.velocity.z > -0.05)
+            if (ShipRigidbody.velocity.z < 0.02 && ShipRigidbody.velocity.z > -0.02)
             {
                 ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y, 0);
             }            
@@ -165,15 +153,6 @@ public class FlightController : MonoBehaviour
                 ShipRigidbody.AddForce(ShipTransform.forward * verticalThrust);
             }
         }
-    }
-
-    private void ShootMissile()
-    {
-        GameObject missile = Missiles[missilesLeft--];
-        missile.transform.parent = null;
-        missile.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
-        missile.GetComponent<Rigidbody>().AddForce(missile.transform.forward * missileSpeed);
-        missile.GetComponentInChildren<MissileController>().enabled = true;
     }
 
     private void ThrusterMovement()
