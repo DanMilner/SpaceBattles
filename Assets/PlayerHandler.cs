@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour {
+    public GameObject[] PlayerShips;
+    public UIHandler uIHandler;
+
     private KeyCode[] keyCodes = {
          KeyCode.Alpha1,
          KeyCode.Alpha2,
@@ -15,16 +18,19 @@ public class PlayerHandler : MonoBehaviour {
          KeyCode.Alpha9,
      };
 
-    public GameObject[] PlayerShips;
-
-    public GameObject CurrentPlayerShip;
+    private GameObject CurrentPlayerShip;
     private CameraController cameraController;
+    private FlightController CurrentFlightController;
+    private Rigidbody CurrentShipRigidbody;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         cameraController = gameObject.GetComponent<CameraController>();
-        cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
-        CurrentPlayerShip.GetComponent<FlightController>().enabled = true;
+
+        SetPlayerShip(0);
+
+        uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
+        uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
     }
 
     void Update()
@@ -39,16 +45,40 @@ public class PlayerHandler : MonoBehaviour {
                 }
             }
         }
+
+        if (Input.GetButtonDown("RotationalStabilisers"))
+        {
+            CurrentFlightController.ToggleRotationalStabilisers();
+            uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
+        }
+
+        if (Input.GetButtonDown("MovementStabilisers"))
+        {
+            CurrentFlightController.ToggleMovementStabilisers();
+            uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
+        }
+
+        uIHandler.UpdateUI(CurrentShipRigidbody);
     }
 
     private void ChangePlayerShip(int shipNumber)
     {
         if (shipNumber > PlayerShips.Length) { return; }
 
-        CurrentPlayerShip.GetComponent<FlightController>().enabled = false;
+        CurrentFlightController.enabled = false;
 
+        SetPlayerShip(shipNumber);
+
+        uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
+        uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
+    }
+
+    private void SetPlayerShip(int shipNumber)
+    {
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
-        CurrentPlayerShip.GetComponent<FlightController>().enabled = true;
+        CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
+        CurrentFlightController.enabled = true;
+        CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
     }
 }

@@ -30,7 +30,7 @@ public class UIHandler : MonoBehaviour {
         YawText.text = "Yaw: " + playerShip.angularVelocity.y.ToString("F3");
     }
 
-    public void ToggleRotationalStabiliers(bool active)
+    public void SetRotationalStabiliers(bool active)
     {
         if (active)
         {
@@ -42,7 +42,7 @@ public class UIHandler : MonoBehaviour {
         }
     }
 
-    public void ToggleMovementStabiliers(bool active)
+    public void SetMovementStabiliers(bool active)
     {
         if (active)
         {
@@ -52,5 +52,5 @@ public class UIHandler : MonoBehaviour {
         {
             MovementStabilisers.text = "Movement Stabilisers: Inactive";
         }
-    }
+    }    
 }

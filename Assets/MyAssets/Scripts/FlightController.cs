@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FlightController : MonoBehaviour
 {
-    public UIHandler uIHandler;
-
     public float forwardThrust = 10.0f;
     public float horizontalThrust = 10.0f;
     public float verticalThrust = 10.0f;
@@ -62,22 +60,24 @@ public class FlightController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ToggleRotationalStabilisers()
     {
-        if (Input.GetButtonDown("RotationalStabilisers"))
-        {
-            rotationalStabiliersActive = !rotationalStabiliersActive;
-            uIHandler.ToggleRotationalStabiliers(rotationalStabiliersActive);
-        }
+        rotationalStabiliersActive = !rotationalStabiliersActive;
+    }
 
+    public void ToggleMovementStabilisers()
+    {
+        movementStabiliersActive = !movementStabiliersActive;
+    }
 
-        if (Input.GetButtonDown("MovementStabilisers"))
-        {
-            movementStabiliersActive = !movementStabiliersActive;
-            uIHandler.ToggleMovementStabiliers(movementStabiliersActive);
-        }
+    public bool AreMovementStabilisersActive()
+    {
+        return movementStabiliersActive;
+    }
 
-        uIHandler.UpdateUI(ShipRigidbody);
+    public bool AreRotationalStabilisersActive()
+    {
+        return rotationalStabiliersActive;
     }
 
     private void StabiliseRotation()
