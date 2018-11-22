@@ -59,16 +59,19 @@ public class CameraController : MonoBehaviour
 
         Vector3 position = CameraTarget.position - (rotation * Vector3.forward * desireDistance);
 
+        
         RaycastHit collisionHit;
         Vector3 cameraTargetPosition = new Vector3(CameraTarget.position.x, CameraTarget.position.y + cameraTargetHeight, CameraTarget.position.z);
 
         bool isCorrected = false;
         if (Physics.Linecast(cameraTargetPosition, position, out collisionHit))
         {
-            position = collisionHit.point;
-            correctedDistance = Vector3.Distance(cameraTargetPosition, position);
-            isCorrected = true;
-        }
+            if (!collisionHit.transform.CompareTag("Player")) {
+                position = collisionHit.point;
+                correctedDistance = Vector3.Distance(cameraTargetPosition, position);
+                isCorrected = true;
+            }
+        }        
 
         currentDistance = !isCorrected || correctedDistance > currentDistance ? Mathf.Lerp(currentDistance, correctedDistance, Time.deltaTime * ZoomRate) : correctedDistance;
 

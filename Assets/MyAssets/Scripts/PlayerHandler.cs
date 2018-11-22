@@ -75,10 +75,15 @@ public class PlayerHandler : MonoBehaviour {
 
     private void SetPlayerShip(int shipNumber)
     {
+        if(CurrentPlayerShip != null)
+        {
+            CurrentPlayerShip.tag = "Untagged";
+        }
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
         CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
         CurrentFlightController.enabled = true;
         CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
+        CurrentPlayerShip.tag = "Player";
     }
 }
