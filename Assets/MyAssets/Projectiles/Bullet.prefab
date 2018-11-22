@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114393568107962556}
   - component: {fileID: 54454165397314700}
   - component: {fileID: 65940618936302492}
-  - component: {fileID: 114185321218128794}
+  - component: {fileID: 114599542371005870}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -114,18 +114,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 22.9, y: 24.2, z: 135.1}
   m_Center: {x: 0, y: 0, z: 50}
---- !u!114 &114185321218128794
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1047206646823354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c401499c1720d449cb28b85a591410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 10
 --- !u!114 &114393568107962556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,3 +132,15 @@ MonoBehaviour:
   m_lineColor: {r: 1, g: 0.9632827, b: 0, a: 1}
   m_lineWidth: 100
   m_lightSaberFactor: 0.8
+--- !u!114 &114599542371005870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1047206646823354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cee275f2ef47040bf2ef7bb2fac8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 10

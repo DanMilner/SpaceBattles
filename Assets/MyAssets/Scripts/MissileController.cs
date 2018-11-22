@@ -2,46 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileController : MonoBehaviour {
-    public float accelerationSpeed = 1.0f;
-    public float lifeTime = 10.0f;
+public class MissileController : MonoBehaviour, IWeapon
+{
+    public GameObject[] Missiles;
 
-    public ParticleSystem explosion;
-    public ParticleSystem thruster;
+    private int missilesLeft;
+    private Rigidbody ShipRigidbody;
 
-    private float armingTimer = 0.50f;
+    private float MissileCooldown = 0.6f;
+    private float MissileCooldownTimer;
 
-    private Rigidbody rb;
 
     void Start () {
-        rb = gameObject.GetComponent<Rigidbody>();
-        thruster.Play();
-    }
-	
-	void FixedUpdate () {
-        rb.AddForce(gameObject.transform.forward * accelerationSpeed);
+        missilesLeft = Missiles.Length - 1;
+        ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
     }
 
     void Update()
     {
-        lifeTime -= Time.deltaTime;
-        armingTimer -= Time.deltaTime;
+        MissileCooldownTimer -= Time.deltaTime;
+    }
 
-        if(armingTimer < 0)
-        {
-            gameObject.GetComponentInChildren<Collider>().enabled = true;
-        }
-
-        if (lifeTime < 0)
-        {
-            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-            GameObject.Destroy(gameObject);
+    public void Fire()
+    {
+        if (MissileCooldownTimer < 0 && missilesLeft >= 0) {
+            ShootMissile();
+            MissileCooldownTimer = MissileCooldown;
         }
     }
 
-    void OnTriggerEnter()
+    private void ShootMissile()
     {
-        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-        GameObject.Destroy(gameObject);
+        GameObject missile = Missiles[missilesLeft--];
+        missile.transform.parent = null;
+        missile.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
+        missile.GetComponentInChildren<IndividualMissileController>().enabled = true;
+    }
+    public string GetName()
+    {
+        return "Missiles";
     }
 }

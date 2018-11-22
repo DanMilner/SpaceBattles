@@ -2,61 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponController : MonoBehaviour {
-    public float missileSpeed = 50.0f;
-    public GameObject[] Missiles;
+interface IWeapon
+{
+    void Fire();
+    string GetName();
+}
 
-    public GameObject bulletPrefab;
-    public GameObject bulletSpawn;
-    public float bulletSpeed = 100.0f;
-    public float fireRate = 2.0f;
-    public float bulletLifeSpan = 10.0f;
-    private float bulletCooldown;
+public class WeaponController : MonoBehaviour
+{
+    public GameObject[] Weapons;
+    public UIHandler uIHandler;
 
-    private int missilesLeft;
-    private Rigidbody ShipRigidbody;
+    private int CurrentWeaponNum = 0;
+    private IWeapon CurrentWeapon;
+    private int NumberOfWeapons = 0;
 
-    // Use this for initialization
-    void Start () {
-        missilesLeft = Missiles.Length - 1;
-        ShipRigidbody = gameObject.GetComponent<Rigidbody>();
-        bulletCooldown = fireRate;
+    void Start()
+    {
+        CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+        NumberOfWeapons = Weapons.Length-1;
+        uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (missilesLeft >= 0) { ShootMissile(); }
+            CurrentWeaponNum++;
+            if(CurrentWeaponNum > NumberOfWeapons)
+            {
+                CurrentWeaponNum = 0;
+            }
+            CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
         }
-
-        bulletCooldown -= Time.deltaTime;
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            CurrentWeaponNum--;
+            if (CurrentWeaponNum < 0)
+            {
+                CurrentWeaponNum = NumberOfWeapons;
+            }
+            CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+        }
 
         if (Input.GetMouseButton(0))
         {
-            if (bulletCooldown < 0) {
-                ShootBullet();
-                bulletCooldown = fireRate;
-            }
+            CurrentWeapon.Fire();
         }
-    }
-
-    private void ShootMissile()
-    {
-        GameObject missile = Missiles[missilesLeft--];
-        missile.transform.parent = null;
-        missile.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
-        missile.GetComponent<Rigidbody>().AddForce(missile.transform.forward * missileSpeed);
-        missile.GetComponentInChildren<MissileController>().enabled = true;
-    }
-
-    private void ShootBullet()
-    {
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
-        bullet.transform.parent = null;
-        bullet.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
-        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed);
-
-        Destroy(bullet, bulletLifeSpan);
     }
 }

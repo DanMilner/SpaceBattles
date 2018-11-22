@@ -15,6 +15,8 @@ public class UIHandler : MonoBehaviour {
     public Text RotationalStabilisers;
     public Text MovementStabilisers;
 
+    public Text CurrentWeapon;
+
 
     public void UpdateUI(Rigidbody playerShip)
     {
@@ -53,4 +55,9 @@ public class UIHandler : MonoBehaviour {
             MovementStabilisers.text = "Movement Stabilisers: Inactive";
         }
     }    
+
+    public void SetCurrentWeapon(string CurrentWeaponName)
+    {
+        CurrentWeapon.text = "Current Weapon: " + CurrentWeaponName;
+    }
 }
