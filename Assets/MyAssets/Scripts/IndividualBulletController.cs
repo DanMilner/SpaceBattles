@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IndividualBulletController : MonoBehaviour {
     public float lifeTime = 10.0f;
+    public ParticleSystem explosion;
 
     // Update is called once per frame
     void Update()
@@ -18,6 +19,7 @@ public class IndividualBulletController : MonoBehaviour {
 
     void OnTriggerEnter()
     {
+        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
         GameObject.Destroy(gameObject);
     }
 }
