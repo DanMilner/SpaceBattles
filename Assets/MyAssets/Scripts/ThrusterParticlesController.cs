@@ -58,7 +58,7 @@ public class ThrusterParticlesController : MonoBehaviour {
 	
 	public void ActivateThrusters (Rigidbody ShipRigidbody, bool movementStabiliersActive, bool rotationalStabiliersActive) {
         DetermineThrusterActivation(Input.GetButton("Move Forward"), Input.GetButton("Move Backward"), MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).z, movementStabiliersActive);
-        DetermineThrusterActivation(Input.GetButton("Move Right"), Input.GetButton("Move Left"), MoveLeftThrustersParticles, MoveRightThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).x, movementStabiliersActive);
+        DetermineThrusterActivation(Input.GetButton("Move Right"), Input.GetButton("Move Left"), MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).x, movementStabiliersActive);
         DetermineThrusterActivation(Input.GetButton("Move Up"), Input.GetButton("Move Down"), MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).y, movementStabiliersActive);
 
         DetermineThrusterActivation(Input.GetButton("Pitch Up"), Input.GetButton("Pitch Down"), PitchUpThrustersParticles, PitchDownThrustersParticles, ShipRigidbody.angularVelocity.x, rotationalStabiliersActive);
