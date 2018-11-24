@@ -53,7 +53,10 @@ public class CameraController : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-        desireDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * ZoomRate * Mathf.Abs(desireDistance);
+        if(Input.GetKey("left ctrl"))
+        {
+            desireDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * ZoomRate * Mathf.Abs(desireDistance);
+        }
         desireDistance = Mathf.Clamp(desireDistance, MinViewDistance, MaxViewDistance);
         correctedDistance = desireDistance;
 

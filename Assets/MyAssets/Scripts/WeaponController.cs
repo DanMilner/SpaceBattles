@@ -26,25 +26,28 @@ public class WeaponController : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (!Input.GetKey("left ctrl"))
         {
-            CurrentWeaponNum++;
-            if(CurrentWeaponNum > NumberOfWeapons)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                CurrentWeaponNum = 0;
+                CurrentWeaponNum++;
+                if (CurrentWeaponNum > NumberOfWeapons)
+                {
+                    CurrentWeaponNum = 0;
+                }
+                CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+                uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
             }
-            CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
-            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
-        }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            CurrentWeaponNum--;
-            if (CurrentWeaponNum < 0)
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                CurrentWeaponNum = NumberOfWeapons;
+                CurrentWeaponNum--;
+                if (CurrentWeaponNum < 0)
+                {
+                    CurrentWeaponNum = NumberOfWeapons;
+                }
+                CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+                uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
             }
-            CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
-            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
         }
 
         if (Input.GetMouseButton(0))
