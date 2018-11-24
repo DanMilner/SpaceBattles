@@ -12,6 +12,8 @@ public class FlightController : MonoBehaviour
     public float rollSpeed = 0.03f;
     public float pitchSpeed = 0.03f;
 
+    private bool PlayerControlled = false;
+
     private Rigidbody ShipRigidbody;
     private Transform ShipTransform;
 
@@ -38,15 +40,19 @@ public class FlightController : MonoBehaviour
 
     void FixedUpdate()
     {
-        moveForward = Input.GetAxis("Move Forward") - Input.GetAxis("Move Backward");
-        moveHorizontal = Input.GetAxis("Move Right") - Input.GetAxis("Move Left");
-        moveVertical = Input.GetAxis("Move Up") - Input.GetAxis("Move Down");
-        pitch = Input.GetAxis("Pitch Down") - Input.GetAxis("Pitch Up");
-        yaw = Input.GetAxis("Yaw Right") - Input.GetAxis("Yaw Left");
-        roll = Input.GetAxis("Roll Left") - Input.GetAxis("Roll Right");
+        if (PlayerControlled)
+        {
+            moveForward = Input.GetAxis("Move Forward") - Input.GetAxis("Move Backward");
+            moveHorizontal = Input.GetAxis("Move Right") - Input.GetAxis("Move Left");
+            moveVertical = Input.GetAxis("Move Up") - Input.GetAxis("Move Down");
+            pitch = Input.GetAxis("Pitch Down") - Input.GetAxis("Pitch Up");
+            yaw = Input.GetAxis("Yaw Right") - Input.GetAxis("Yaw Left");
+            roll = Input.GetAxis("Roll Left") - Input.GetAxis("Roll Right");
 
-        ThrusterMovement();
-        ThrusterRotation();
+            ThrusterMovement();
+            ThrusterRotation();
+        }
+
         thrusterParticlesController.ActivateThrusters(ShipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
 
         if (rotationalStabiliersActive)
@@ -78,6 +84,12 @@ public class FlightController : MonoBehaviour
     public bool AreRotationalStabilisersActive()
     {
         return rotationalStabiliersActive;
+    }
+
+    public void SetPlayerControlled(bool IsPlayerControlled)
+    {
+        PlayerControlled = IsPlayerControlled;
+        thrusterParticlesController.SetPlayerControlled(IsPlayerControlled);
     }
 
     private void StabiliseRotation()

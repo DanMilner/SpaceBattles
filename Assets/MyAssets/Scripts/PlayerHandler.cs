@@ -65,7 +65,7 @@ public class PlayerHandler : MonoBehaviour {
     {
         if (shipNumber > PlayerShips.Length) { return; }
 
-        CurrentFlightController.enabled = false;
+        CurrentFlightController.SetPlayerControlled(false);
 
         SetPlayerShip(shipNumber);
 
@@ -82,7 +82,7 @@ public class PlayerHandler : MonoBehaviour {
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
         CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
-        CurrentFlightController.enabled = true;
+        CurrentFlightController.SetPlayerControlled(true);
         CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
         CurrentPlayerShip.tag = "Player";
     }
