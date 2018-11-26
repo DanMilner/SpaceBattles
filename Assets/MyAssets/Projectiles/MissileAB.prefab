@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4325654017679526}
   - component: {fileID: 198882613193485640}
   - component: {fileID: 199077341140698672}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Thruster_Very_Tiny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 54152456958492538}
   - component: {fileID: 65523375819683108}
   - component: {fileID: 114667762379952570}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MissileAB
   m_TagString: Untagged
   m_Icon: {fileID: 0}

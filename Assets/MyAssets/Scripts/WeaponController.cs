@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IWeapon
+public interface IWeapon
 {
     void Fire();
     string GetName();

@@ -41,9 +41,12 @@ public class IndividualMissileController : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-        GameObject.Destroy(gameObject);
+        if (!other.CompareTag("AutoTurret"))
+        {
+            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
+            GameObject.Destroy(gameObject);
+        }
     }
 }

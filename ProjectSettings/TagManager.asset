@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shootable
+  - AutoTurret
+  - Bullet
+  - ShipCollider
   layers:
   - Default
   - TransparentFX

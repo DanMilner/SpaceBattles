@@ -29,7 +29,6 @@ public class BulletController : MonoBehaviour, IWeapon
             ShootBullet();
             bulletCooldown = fireRate;
         }
-
     }
 
     private void ShootBullet()
