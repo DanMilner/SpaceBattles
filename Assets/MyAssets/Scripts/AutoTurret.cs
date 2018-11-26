@@ -9,8 +9,6 @@ public interface IAutoTurretWeapon
 
 public class AutoTurret : MonoBehaviour
 {
-    public float range = 500f;
-    public SphereCollider rangeCollider;
     public float fireRate = 2.0f;
     public GameObject weapon;
 
@@ -21,12 +19,9 @@ public class AutoTurret : MonoBehaviour
     private GameObject currentTarget;
     private int factionId;
 
-    private int count = 0;
-
     // Use this for initialization
     void Start()
     {
-        rangeCollider.radius = range;
         EnemyShips = new HashSet<GameObject>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
@@ -103,20 +98,14 @@ public class AutoTurret : MonoBehaviour
         return false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void AddShip(GameObject enemyShip)
     {
-        if (other.CompareTag("ShipCollider"))
-        {
-            if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
-            {
-                EnemyShips.Add(other.gameObject);
-            }
-        }
+        EnemyShips.Add(enemyShip);
     }
 
-    private void OnTriggerExit(Collider other)
+    public void RemoveShip(GameObject enemyShip)
     {
-        EnemyShips.Remove(other.gameObject);
+        EnemyShips.Remove(enemyShip);
     }
 
     private void Fire()
