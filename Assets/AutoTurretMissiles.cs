@@ -5,8 +5,12 @@ using UnityEngine;
 public class AutoTurretMissiles : MonoBehaviour {
     public float range = 500f;
     public SphereCollider rangeCollider;
-    private IWeapon gun;
-    public GameObject Weapons;
+
+    public GameObject missilePrefab;
+    public GameObject spawnPoint;
+    public float fireRate = 2.0f;
+    private float cooldown;
+    private Rigidbody ShipRigidbody;
 
     private HashSet<GameObject> EnemyShips;
     private GameObject currentTarget;
@@ -16,12 +20,15 @@ public class AutoTurretMissiles : MonoBehaviour {
 	void Start () {
         rangeCollider.radius = range;
         EnemyShips = new HashSet<GameObject>();
-        gun = Weapons.GetComponent<IWeapon>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
+        ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
+        cooldown = fireRate;
     }
 
     // Update is called once per frame
     void Update () {
+        cooldown -= Time.deltaTime;
+
         if (currentTarget == null)
         {
             FindNewTarget();
@@ -31,7 +38,7 @@ public class AutoTurretMissiles : MonoBehaviour {
             if (CheckLineOfShight(currentTarget.transform))
             {
                 gameObject.transform.LookAt(currentTarget.transform);
-                gun.Fire();
+                Fire();
             }
             else
             {
@@ -51,16 +58,12 @@ public class AutoTurretMissiles : MonoBehaviour {
                     EnemyShips.Remove(ship);
                 }
 
-                //Debug.Log(ship.tag);
-
                 if (CheckLineOfShight(ship.transform))
                 {
                     currentTarget = ship;
                     return;
                 }
             }
-            //Debug.Log("-----------------------");
-
         }
     }
 
@@ -76,7 +79,6 @@ public class AutoTurretMissiles : MonoBehaviour {
         if (Physics.Raycast(transform.position, heading, out hit, 15, layerMask))
         {
             return factionId != hit.transform.gameObject.GetComponentInParent<FactionID>().Faction;
-            //return hit.transform.CompareTag("Player");
         }
         return false;
     }
@@ -95,5 +97,22 @@ public class AutoTurretMissiles : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         EnemyShips.Remove(other.gameObject);
+    }
+
+    private void Fire()
+    {
+        if (cooldown < 0)
+        {
+            ShootMissile();
+            cooldown = fireRate;
+        }
+    }
+
+    private void ShootMissile()
+    {
+        GameObject missile = Instantiate(missilePrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        missile.GetComponent<HomingMissile>().SetTarget(currentTarget);
+        missile.transform.parent = null;
+        missile.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
     }
 }
