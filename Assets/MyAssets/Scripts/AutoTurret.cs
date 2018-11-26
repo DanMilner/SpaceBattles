@@ -21,6 +21,8 @@ public class AutoTurret : MonoBehaviour
     private GameObject currentTarget;
     private int factionId;
 
+    private int count = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -37,6 +39,15 @@ public class AutoTurret : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
+
+        if(cooldown > 0)
+        {
+            if(currentTarget != null)
+            {
+                gameObject.transform.LookAt(currentTarget.transform);
+            }
+            return;
+        }
 
         if (currentTarget == null)
         {
