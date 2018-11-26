@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4383340128093016}
   - component: {fileID: 135968046710368024}
   - component: {fileID: 114306928739572436}
+  - component: {fileID: 114838314712475330}
   m_Layer: 0
   m_Name: Parent
   m_TagString: AutoTurret
@@ -54,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4991795173517184}
   m_Layer: 0
-  m_Name: BulletSpawn
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +103,7 @@ GameObject:
   - component: {fileID: 4803990962137684}
   - component: {fileID: 33845485874661346}
   - component: {fileID: 23425603178626570}
-  - component: {fileID: 114286738929463470}
+  - component: {fileID: 114837746653373686}
   m_Layer: 0
   m_Name: launcher
   m_TagString: AutoTurret
@@ -218,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1499123113632896}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: -0.62, z: 0.82}
+  m_LocalPosition: {x: -0, y: -0.723, z: 1.892}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4937281042573706}
@@ -392,23 +393,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1665661820384536}
   m_Mesh: {fileID: 4300002, guid: a0a649bdc1054084ba48a8553534f309, type: 3}
---- !u!114 &114286738929463470
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1665661820384536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c401499c1720d449cb28b85a591410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1047206646823354, guid: 33cb97b3b5374c945b541fba1280198d,
-    type: 2}
-  bulletSpawn: {fileID: 1499123113632896}
-  bulletSpeed: 110
-  fireRate: 0.15
-  bulletLifeSpan: 10
 --- !u!114 &114306928739572436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,9 +404,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984095d034339724c98546f07bf43f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 1311479516285964, guid: c18a915da124f054388cf0452db68969,
+    type: 2}
+  spawnPoint: {fileID: 1499123113632896}
+--- !u!114 &114837746653373686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665661820384536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984095d034339724c98546f07bf43f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 1311479516285964, guid: c18a915da124f054388cf0452db68969,
+    type: 2}
+  spawnPoint: {fileID: 1499123113632896}
+--- !u!114 &114838314712475330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1266072581402732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c733bc40157264eae5062174d2c51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   range: 500
   rangeCollider: {fileID: 135968046710368024}
-  Weapons: {fileID: 1665661820384536}
+  fireRate: 4
+  weapon: {fileID: 1665661820384536}
 --- !u!135 &135968046710368024
 SphereCollider:
   m_ObjectHideFlags: 1
