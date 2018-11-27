@@ -6,23 +6,45 @@ public class IndividualBulletController : MonoBehaviour {
     public float lifeTime = 10.0f;
     public ParticleSystem explosion;
 
+    private float counter = 0.0f;
+    private Transform parent;
     // Update is called once per frame
     void Update()
     {
-        lifeTime -= Time.deltaTime;
+        counter -= Time.deltaTime;
 
-        if (lifeTime < 0)
+        if (counter < 0)
         {
-            GameObject.Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+
+    public void SetParent(Transform p)
+    {
+        parent = p;
+        transform.parent = p;
+    }
+
+    public void ResetBullet()
+    {
+        counter = lifeTime;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("AutoTurret") && !other.CompareTag("Bullet"))
         {
-            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-            GameObject.Destroy(gameObject);
+            explosion.transform.parent = null;
+            explosion.Play();
+            DisableBullet();
         }
+    }
+
+    private void DisableBullet()
+    {
+        transform.parent = parent;
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 }

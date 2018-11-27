@@ -37,6 +37,7 @@ public class BulletController : MonoBehaviour, IWeapon
         bullet.transform.parent = null;
         bullet.GetComponent<Rigidbody>().velocity = ShipRigidbody.velocity;
         bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed);
+        bullet.GetComponent<IndividualBulletController>().ResetBullet();
 
         Destroy(bullet, bulletLifeSpan);
     }

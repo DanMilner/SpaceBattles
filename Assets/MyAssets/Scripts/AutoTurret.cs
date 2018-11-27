@@ -14,7 +14,6 @@ public class AutoTurret : MonoBehaviour
 
     private IAutoTurretWeapon mainWeapon;
     private float cooldown;
-    private Rigidbody ShipRigidbody;
     private HashSet<GameObject> EnemyShips;
     private GameObject currentTarget;
     private int factionId;
@@ -24,7 +23,6 @@ public class AutoTurret : MonoBehaviour
     {
         EnemyShips = new HashSet<GameObject>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
-        ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         cooldown = fireRate;
 
         mainWeapon = weapon.GetComponent<IAutoTurretWeapon>();

@@ -14,11 +14,6 @@ public class AutoTurretManager : MonoBehaviour {
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnTriggerEnter(Collider other)
     {
