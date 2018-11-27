@@ -27,7 +27,6 @@ public class CannonController : MonoBehaviour {
     {
         if(coolDown <= 0)
         {
-            Debug.Log("bang");
             coolDown = coolDownTime;
 
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);

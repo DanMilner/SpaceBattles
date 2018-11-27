@@ -160,10 +160,10 @@ MonoBehaviour:
   m_templateMaterial: {fileID: 2100000, guid: 974b33ccbd786464a825203eb88b8dab, type: 2}
   m_doNotOverwriteTemplateMaterialProperties: 0
   m_startPos: {x: 0, y: 0, z: 0}
-  m_endPos: {x: 0, y: 0, z: 100}
+  m_endPos: {x: 0, y: 0, z: 150}
   m_lineColor: {r: 1, g: 0.9632827, b: 0, a: 1}
-  m_lineWidth: 100
-  m_lightSaberFactor: 0.2
+  m_lineWidth: 200
+  m_lightSaberFactor: 0.572
 --- !u!114 &114556242056971714
 MonoBehaviour:
   m_ObjectHideFlags: 1

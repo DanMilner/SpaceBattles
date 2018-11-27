@@ -26,7 +26,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1092013658012910
 GameObject:
@@ -43,7 +43,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1304193930103616
 GameObject:
@@ -75,7 +75,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1818762227333402
 GameObject:
@@ -92,7 +92,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4059841984367318
 Transform:
@@ -296,7 +296,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1818762227333402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: fb9d5a87f4e06a2449e0939a784a004e, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownTime: 1
   bulletSpawn: {fileID: 4758442940176680}
-  bulletPrefab: {fileID: 1047206646823354, guid: 33cb97b3b5374c945b541fba1280198d,
+  bulletPrefab: {fileID: 1528197487637058, guid: 57af176c8d8deb04492b2cb84fb15211,
     type: 2}
-  bulletSpeed: 10
+  bulletSpeed: 200
   bulletLifeSpan: 10
