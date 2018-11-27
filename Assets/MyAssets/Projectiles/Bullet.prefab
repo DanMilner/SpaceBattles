@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047206646823354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.736706, y: 19.973188, z: 559.81604}
+  m_LocalPosition: {x: 22.816448, y: -1.3176084, z: 565.3998}
   m_LocalScale: {x: 0.0001, y: 0.0001, z: 0.0001}
   m_Children:
   - {fileID: 4384448785090172}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_endPos: {x: 0, y: 0, z: 100}
   m_lineColor: {r: 1, g: 0.9632827, b: 0, a: 1}
   m_lineWidth: 100
-  m_lightSaberFactor: 0.8
+  m_lightSaberFactor: 0.2
 --- !u!114 &114556242056971714
 MonoBehaviour:
   m_ObjectHideFlags: 1
