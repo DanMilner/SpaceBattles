@@ -17,6 +17,8 @@ public class WeaponController : MonoBehaviour
     private IWeapon CurrentWeapon;
     private int NumberOfWeapons = 0;
 
+    private bool playerControlled = false;
+
     void Start()
     {
         CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
@@ -26,6 +28,11 @@ public class WeaponController : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
+        if (!playerControlled)
+        {
+            return;
+        }
+
         if (!Input.GetKey("left ctrl"))
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -53,6 +60,15 @@ public class WeaponController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             CurrentWeapon.Fire();
+        }
+    }
+
+    public void SetPlayerControlled(bool pControlled)
+    {
+        playerControlled = pControlled;
+        if (playerControlled)
+        {
+            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
         }
     }
 }

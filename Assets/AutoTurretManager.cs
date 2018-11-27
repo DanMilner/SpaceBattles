@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoTurretManager : MonoBehaviour {
-    private HashSet<GameObject> EnemyShips;
     private int factionId;
 
     private AutoTurret[] autoTurrets;
 
     // Use this for initialization
     void Start () {
-        EnemyShips = new HashSet<GameObject>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
     }

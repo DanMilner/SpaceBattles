@@ -21,6 +21,7 @@ public class PlayerHandler : MonoBehaviour {
     private GameObject CurrentPlayerShip;
     private CameraController cameraController;
     private FlightController CurrentFlightController;
+    private WeaponController currentWeaponController;
     private Rigidbody CurrentShipRigidbody;
 
     // Use this for initialization
@@ -66,6 +67,7 @@ public class PlayerHandler : MonoBehaviour {
         if (shipNumber > PlayerShips.Length) { return; }
 
         CurrentFlightController.SetPlayerControlled(false);
+        currentWeaponController.SetPlayerControlled(false);
 
         SetPlayerShip(shipNumber);
 
@@ -82,7 +84,9 @@ public class PlayerHandler : MonoBehaviour {
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
         CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
+        currentWeaponController = CurrentPlayerShip.GetComponent<WeaponController>();
         CurrentFlightController.SetPlayerControlled(true);
+        currentWeaponController.SetPlayerControlled(true);
         CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
         CurrentPlayerShip.tag = "Player";
     }
