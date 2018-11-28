@@ -21,9 +21,9 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
-        CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+        CurrentWeapon = GetWeapon(CurrentWeaponNum);
         NumberOfWeapons = Weapons.Length-1;
-        uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+        UpdateUIWithWeaponName();
     }
 
     // Update is called once per frame
@@ -42,8 +42,8 @@ public class WeaponController : MonoBehaviour
                 {
                     CurrentWeaponNum = 0;
                 }
-                CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
-                uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+                CurrentWeapon = GetWeapon(CurrentWeaponNum);
+                UpdateUIWithWeaponName();
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
@@ -52,8 +52,8 @@ public class WeaponController : MonoBehaviour
                 {
                     CurrentWeaponNum = NumberOfWeapons;
                 }
-                CurrentWeapon = Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
-                uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+                CurrentWeapon = GetWeapon(CurrentWeaponNum);
+                UpdateUIWithWeaponName();
             }
         }
 
@@ -68,7 +68,31 @@ public class WeaponController : MonoBehaviour
         playerControlled = pControlled;
         if (playerControlled)
         {
+            UpdateUIWithWeaponName();
+        }
+    }
+
+    private IWeapon GetWeapon(int weaponNum)
+    {
+        if (Weapons.Length > 0 && weaponNum <= NumberOfWeapons)
+        {
+            return Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private void UpdateUIWithWeaponName()
+    {
+        if(CurrentWeapon != null)
+        {
             uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+        }
+        else
+        {
+            uIHandler.SetCurrentWeapon("No Weapons");
         }
     }
 }
