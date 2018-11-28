@@ -89,6 +89,11 @@ public class FlightController : MonoBehaviour
     public void SetPlayerControlled(bool IsPlayerControlled)
     {
         PlayerControlled = IsPlayerControlled;
+
+        if (thrusterParticlesController == null)
+        {
+            thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
+        }
         thrusterParticlesController.SetPlayerControlled(IsPlayerControlled);
     }
 
