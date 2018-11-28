@@ -23,6 +23,7 @@ public class PlayerHandler : MonoBehaviour {
     private FlightController CurrentFlightController;
     private WeaponController currentWeaponController;
     private Rigidbody CurrentShipRigidbody;
+    private ShipHealth currentShipHealth;
 
     // Use this for initialization
     void Start () {
@@ -68,6 +69,7 @@ public class PlayerHandler : MonoBehaviour {
 
         CurrentFlightController.SetPlayerControlled(false);
         currentWeaponController.SetPlayerControlled(false);
+        currentShipHealth.SetPlayerControlled(false);
 
         SetPlayerShip(shipNumber);
 
@@ -86,10 +88,13 @@ public class PlayerHandler : MonoBehaviour {
 
         CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
         currentWeaponController = CurrentPlayerShip.GetComponent<WeaponController>();
+        currentShipHealth = CurrentPlayerShip.GetComponent<ShipHealth>();
         CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
 
         CurrentFlightController.SetPlayerControlled(true);
         currentWeaponController.SetPlayerControlled(true);
+        currentShipHealth.SetPlayerControlled(true);
+
         CurrentPlayerShip.tag = "Player";
     }
 }

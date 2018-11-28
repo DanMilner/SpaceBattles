@@ -8,6 +8,9 @@ TagManager:
   - AutoTurret
   - Bullet
   - ShipCollider
+  - FxTemporaire
+  - Fire
+  - UI
   layers:
   - Default
   - TransparentFX

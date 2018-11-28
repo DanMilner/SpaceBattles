@@ -11,8 +11,8 @@ public interface IWeapon
 public class WeaponController : MonoBehaviour
 {
     public GameObject[] Weapons;
-    public UIHandler uIHandler;
 
+    private UIHandler uIHandler;
     private int CurrentWeaponNum = 0;
     private IWeapon CurrentWeapon;
     private int NumberOfWeapons = 0;
@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
+        uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         CurrentWeapon = GetWeapon(CurrentWeaponNum);
         NumberOfWeapons = Weapons.Length-1;
         UpdateUIWithWeaponName();
@@ -86,7 +87,11 @@ public class WeaponController : MonoBehaviour
 
     private void UpdateUIWithWeaponName()
     {
-        if(CurrentWeapon != null)
+        if(uIHandler == null)
+        {
+            uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
+        }
+        if (CurrentWeapon != null)
         {
             uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
         }

@@ -11,12 +11,15 @@ public class ShipHealth : MonoBehaviour {
 
     private bool alive = true;
     private ParticleSystem[] damage;
+    private UIHandler uIHandler;
     int damageActive = 0;
     float damageThreshold;
     float currentThreshold;
+    private bool isPlayerShip;
 
     void Start()
     {
+        uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         damage = damagePoints.GetComponentsInChildren<ParticleSystem>();
 
         damageThreshold = health / damage.Length;
@@ -46,11 +49,26 @@ public class ShipHealth : MonoBehaviour {
             alive = false;
             DestroyShip();
         }
+
+        UpdateUi();
+    }
+
+    public void SetPlayerControlled(bool pControlled)
+    {
+        isPlayerShip = pControlled;
+        UpdateUi();
+    }
+
+    private void UpdateUi()
+    {
+        if (isPlayerShip)
+        {
+            uIHandler.SetCurrentHealth(health);
+        }
     }
 
     private void StartFire()
     {
-        Debug.Log("Fire started");
         if(damageActive < damage.Length)
         {
             damage[damageActive++].Play();
