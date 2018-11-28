@@ -14,14 +14,17 @@ public class AutoTurret : MonoBehaviour
 
     private IAutoTurretWeapon mainWeapon;
     private float cooldown;
-    private HashSet<GameObject> EnemyShips;
+    private HashSet<GameObject> enemyShips;
     private GameObject currentTarget;
     private int factionId;
+    private RaycastHit hit;
+    int layerMask;
 
     // Use this for initialization
     void Start()
     {
-        EnemyShips = new HashSet<GameObject>();
+        layerMask = ~(1 << 2);
+        enemyShips = new HashSet<GameObject>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         cooldown = fireRate;
 
@@ -62,13 +65,13 @@ public class AutoTurret : MonoBehaviour
 
     private void FindNewTarget()
     {
-        if (EnemyShips.Count > 0)
+        if (enemyShips.Count > 0)
         {
-            foreach (GameObject ship in EnemyShips)
+            foreach (GameObject ship in enemyShips)
             {
                 if (ship == null)
                 {
-                    EnemyShips.Remove(ship);
+                    enemyShips.Remove(ship);
                 }
 
                 if (CheckLineOfShight(ship.transform))
@@ -82,28 +85,11 @@ public class AutoTurret : MonoBehaviour
 
     private bool CheckLineOfShight(Transform shipTransform)
     {
-        // ignore layer 2
-        int layerMask = 1 << 2;
-        layerMask = ~layerMask;
-
-        var heading = shipTransform.position - transform.position;
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, heading, out hit, 15, layerMask))
+        if (Physics.Raycast(transform.position, shipTransform.position - transform.position, out hit, 15, layerMask))
         {
             return factionId != hit.transform.gameObject.GetComponentInParent<FactionID>().Faction;
         }
         return false;
-    }
-
-    public void AddShip(GameObject enemyShip)
-    {
-        EnemyShips.Add(enemyShip);
-    }
-
-    public void RemoveShip(GameObject enemyShip)
-    {
-        EnemyShips.Remove(enemyShip);
     }
 
     private void Fire()
@@ -113,5 +99,10 @@ public class AutoTurret : MonoBehaviour
             mainWeapon.Fire(currentTarget);
             cooldown = fireRate;
         }
+    }
+
+    public void SetEnenmyShipCollection(HashSet<GameObject> enemyShipsCoolection)
+    {
+        enemyShips = enemyShipsCoolection;
     }
 }

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AutoTurretManager : MonoBehaviour {
     private int factionId;
-
     private AutoTurret[] autoTurrets;
+    private HashSet<GameObject> enemyShips;
 
-    // Use this for initialization
     void Start () {
+        enemyShips = new HashSet<GameObject>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
+
+        for (int i = 0; i < autoTurrets.Length; i++)
+        {
+            autoTurrets[i].SetEnenmyShipCollection(enemyShips);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,10 +24,7 @@ public class AutoTurretManager : MonoBehaviour {
         {
             if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
             {
-                for(int i = 0; i < autoTurrets.Length; i++)
-                {
-                    autoTurrets[i].AddShip(other.gameObject);
-                }
+                enemyShips.Add(other.gameObject);
             }
         }
     }
@@ -33,10 +35,7 @@ public class AutoTurretManager : MonoBehaviour {
         {
             if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
             {
-                for (int i = 0; i < autoTurrets.Length; i++)
-                {
-                    autoTurrets[i].RemoveShip(other.gameObject);
-                }
+                enemyShips.Remove(other.gameObject);
             }
         }
     }
