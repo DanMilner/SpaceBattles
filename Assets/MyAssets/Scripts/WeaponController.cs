@@ -60,7 +60,10 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            CurrentWeapon.Fire();
+            if(CurrentWeapon != null)
+            {
+                CurrentWeapon.Fire();
+            }
         }
     }
 
