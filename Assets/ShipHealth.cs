@@ -5,10 +5,10 @@ using UnityEngine;
 public class ShipHealth : MonoBehaviour {
     public float health = 100.0f;
     public GameObject deathExplostion;
-    public GameObject fire;
     public GameObject AutoTurrets;
     public GameObject damagePoints;
     public bool alive = true;
+    public Material deadMaterial;
 
     private ParticleSystem[] damage;
     private UIHandler uIHandler;
@@ -80,6 +80,11 @@ public class ShipHealth : MonoBehaviour {
         gameObject.GetComponent<FlightController>().enabled = false;
         gameObject.GetComponent<ThrusterParticlesController>().enabled = false;
         gameObject.GetComponent<WeaponController>().enabled = false;
+
+        foreach(MeshRenderer renderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+        {
+            renderer.material = deadMaterial;
+        }
 
         DisableAutoTurrets();
 
