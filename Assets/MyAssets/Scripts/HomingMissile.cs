@@ -23,6 +23,11 @@ public class HomingMissile : MonoBehaviour {
     void Update()
     {
         lifeTime -= Time.deltaTime;
+
+        if(lifeTime < 0)
+        {
+            Detonate();
+        }
     }
 
     void FixedUpdate()
@@ -48,8 +53,13 @@ public class HomingMissile : MonoBehaviour {
             {
                 shipHealth.TakeDamage(damage);
             }
-            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-            GameObject.Destroy(gameObject);
+            Detonate();
         }
+    }
+
+    private void Detonate()
+    {
+        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
+        GameObject.Destroy(gameObject);
     }
 }
