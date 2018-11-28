@@ -8,6 +8,7 @@ public class HomingMissile : MonoBehaviour {
     public ParticleSystem explosion;
     public ParticleSystem thruster;
     public GameObject target;
+    public float damage = 1.0f;
 
     public float lifeTime = 10.0f;
 
@@ -42,6 +43,11 @@ public class HomingMissile : MonoBehaviour {
     {
         if (!other.CompareTag("AutoTurret"))
         {
+            ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
+            if(shipHealth != null)
+            {
+                shipHealth.TakeDamage(damage);
+            }
             Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
             GameObject.Destroy(gameObject);
         }

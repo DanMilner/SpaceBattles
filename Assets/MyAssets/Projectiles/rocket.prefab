@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 65673244908000744}
   m_Layer: 2
   m_Name: rocket
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
     type: 2}
   thruster: {fileID: 198996436220494068}
   target: {fileID: 0}
+  damage: 1
   lifeTime: 10
 --- !u!198 &198996436220494068
 ParticleSystem:

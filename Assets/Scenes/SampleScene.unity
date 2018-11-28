@@ -288,6 +288,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Faction: 1
+--- !u!114 &392690840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 392690832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbc2ff3270adf943bc2eb7c5b454a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  deathExplostion: {fileID: 1722173367756480, guid: 46951b07c9483254b9609b13fd1e1b43,
+    type: 2}
+  fire: {fileID: 1846115748584558, guid: f5f4e8e21b7dda2459bdc1b3eb7c92cb, type: 2}
+  AutoTurrets: {fileID: 0}
+  damagePoints: {fileID: 0}
 --- !u!1001 &541349092
 Prefab:
   m_ObjectHideFlags: 0
@@ -297,7 +314,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 14.91
+      value: 13.97
       objectReference: {fileID: 0}
     - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
       propertyPath: m_LocalPosition.y
@@ -560,66 +577,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 885088613}
   m_CullTransparentMesh: 0
---- !u!1001 &915598688
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 16.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 5.080798
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 570.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114095808473545242, guid: e477b4072732fec429ee3354f23e4957,
-        type: 2}
-      propertyPath: uIHandler
-      value: 
-      objectReference: {fileID: 1424216869}
-    - target: {fileID: 1041771994463176, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_Name
-      value: ErisClassCruiser (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114293606996733170, guid: e477b4072732fec429ee3354f23e4957,
-        type: 2}
-      propertyPath: Faction
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &924843613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,8 +1034,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerShips:
-  - {fileID: 392690832}
   - {fileID: 1920920683}
+  - {fileID: 392690832}
   - {fileID: 301320700}
   - {fileID: 1653536637}
   uIHandler: {fileID: 1424216869}
@@ -1490,6 +1447,14 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1645113060107984, guid: 5519f7fc0f4feb6459708852caf66851, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645113060107984, guid: 5519f7fc0f4feb6459708852caf66851, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5519f7fc0f4feb6459708852caf66851, type: 2}
   m_IsPrefabAsset: 0
@@ -1584,6 +1549,62 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36691ff414d330146b14a862c51fad1a, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!1001 &1912077519
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 17.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5.080798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 568.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114095808473545242, guid: e477b4072732fec429ee3354f23e4957,
+        type: 2}
+      propertyPath: uIHandler
+      value: 
+      objectReference: {fileID: 1424216869}
+    - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 2}
+      propertyPath: m_Name
+      value: ErisClassCruiser (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114293606996733170, guid: e477b4072732fec429ee3354f23e4957,
+        type: 2}
+      propertyPath: Faction
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1914372339 stripped
 GameObject:

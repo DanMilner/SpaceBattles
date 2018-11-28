@@ -83,11 +83,13 @@ public class PlayerHandler : MonoBehaviour {
         }
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
+
         CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
         currentWeaponController = CurrentPlayerShip.GetComponent<WeaponController>();
+        CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
+
         CurrentFlightController.SetPlayerControlled(true);
         currentWeaponController.SetPlayerControlled(true);
-        CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
         CurrentPlayerShip.tag = "Player";
     }
 }

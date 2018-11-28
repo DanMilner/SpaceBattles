@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 10
   explosion: {fileID: 198646977569279792}
+  damage: 1
 --- !u!198 &198646977569279792
 ParticleSystem:
   m_ObjectHideFlags: 1

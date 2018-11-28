@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 10
   explosion: {fileID: 198478636279423108}
+  damage: 50
 --- !u!114 &114424973841118534
 MonoBehaviour:
   m_ObjectHideFlags: 1

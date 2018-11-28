@@ -5,6 +5,7 @@ using UnityEngine;
 public class IndividualBulletController : MonoBehaviour {
     public float lifeTime = 10.0f;
     public ParticleSystem explosion;
+    public float damage = 1.0f;
 
     private float counter = 0.0f;
     private Transform parent;
@@ -34,6 +35,11 @@ public class IndividualBulletController : MonoBehaviour {
     {
         if (!other.CompareTag("AutoTurret") && !other.CompareTag("Bullet"))
         {
+            ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
+            if (shipHealth != null)
+            {
+                shipHealth.TakeDamage(damage);
+            }
             explosion.transform.parent = null;
             explosion.Play();
             DisableBullet();

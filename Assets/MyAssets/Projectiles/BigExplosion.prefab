@@ -217,7 +217,7 @@ Transform:
   m_GameObject: {fileID: 1722173367756480}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 6.15, y: 1.88, z: -32.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4262250333575534}
   - {fileID: 4793070344192800}
@@ -237,7 +237,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4746,7 +4746,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9255,7 +9255,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -13845,7 +13845,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -18453,8 +18453,8 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -23079,7 +23079,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -27669,7 +27669,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
