@@ -208,6 +208,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapons: []
+--- !u!114 &301320708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 301320700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbc2ff3270adf943bc2eb7c5b454a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  deathExplostion: {fileID: 0}
+  fire: {fileID: 0}
+  AutoTurrets: {fileID: 0}
+  damagePoints: {fileID: 0}
+  alive: 1
 --- !u!1 &344369587
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +321,7 @@ MonoBehaviour:
   fire: {fileID: 1846115748584558, guid: f5f4e8e21b7dda2459bdc1b3eb7c92cb, type: 2}
   AutoTurrets: {fileID: 0}
   damagePoints: {fileID: 0}
+  alive: 1
 --- !u!1001 &541349092
 Prefab:
   m_ObjectHideFlags: 0
@@ -773,6 +791,10 @@ Prefab:
     - target: {fileID: 1285029698782406, guid: 03f03597ef08317438f4e55c8ccbcf7a, type: 2}
       propertyPath: m_TagString
       value: ShipCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860389513736694, guid: 03f03597ef08317438f4e55c8ccbcf7a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03f03597ef08317438f4e55c8ccbcf7a, type: 2}

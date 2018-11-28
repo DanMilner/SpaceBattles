@@ -18,6 +18,7 @@ public class AutoTurret : MonoBehaviour
     private GameObject currentTarget;
     private int factionId;
     private RaycastHit hit;
+    private int count = 0;
     int layerMask;
 
     // Use this for initialization
@@ -35,8 +36,20 @@ public class AutoTurret : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
+        count++;
 
-        if(cooldown > 0)
+        //every 100 frames check that the current target is still a valid target
+        if (count > 100) 
+        {
+            if (!enemyShips.Contains(currentTarget))
+            {
+                currentTarget = null;
+            }
+            count = 0;
+        }
+
+        //if gun cant shoot dont bother continuing.
+        if (cooldown > 0)
         {
             if(currentTarget != null)
             {

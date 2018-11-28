@@ -8,8 +8,8 @@ public class ShipHealth : MonoBehaviour {
     public GameObject fire;
     public GameObject AutoTurrets;
     public GameObject damagePoints;
+    public bool alive = true;
 
-    private bool alive = true;
     private ParticleSystem[] damage;
     private UIHandler uIHandler;
     int damageActive = 0;
