@@ -8,18 +8,21 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
     public float bulletLifeSpan;
     public float bulletSpeed;
     private int numBullets = 100;
-
+    
     private Rigidbody ShipRigidbody;
     private Queue<GameObject> bullets;
 
     void Start () {
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();        
         bullets = new Queue<GameObject>();
-        for(int i = 0; i < numBullets; i++)
+        Transform bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
+        Vector3 spawnPosition = spawnPoint.transform.position;
+        Quaternion spawnRotation = spawnPoint.transform.rotation;
+
+        for (int i = 0; i < numBullets; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);            
+            GameObject bullet = Instantiate(bulletPrefab, spawnPosition, spawnRotation, bulletHolder);            
             bullet.SetActive(false);
-            bullet.GetComponent<IndividualBulletController>().SetParent(transform);
             bullets.Enqueue(bullet);
         }        
     }
@@ -40,8 +43,6 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
 
             bulletRigidBody.velocity = ShipRigidbody.velocity;
             bulletRigidBody.AddForce(bullet.transform.forward * bulletSpeed);
-
-            bullet.transform.parent = null;
         }
         bullets.Enqueue(bullet);
         

@@ -8,7 +8,6 @@ public class IndividualBulletController : MonoBehaviour {
     public float damage = 1.0f;
 
     private float counter = 0.0f;
-    private Transform parent;
     // Update is called once per frame
     void Update()
     {
@@ -18,12 +17,6 @@ public class IndividualBulletController : MonoBehaviour {
         {
             gameObject.SetActive(false);
         }
-    }
-
-    public void SetParent(Transform p)
-    {
-        parent = p;
-        transform.parent = p;
     }
 
     public void ResetBullet()
@@ -48,7 +41,6 @@ public class IndividualBulletController : MonoBehaviour {
 
     private void DisableBullet()
     {
-        transform.parent = parent;
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         gameObject.SetActive(false);

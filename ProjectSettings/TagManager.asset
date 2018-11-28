@@ -11,6 +11,7 @@ TagManager:
   - FxTemporaire
   - Fire
   - UI
+  - BulletHolder
   layers:
   - Default
   - TransparentFX
