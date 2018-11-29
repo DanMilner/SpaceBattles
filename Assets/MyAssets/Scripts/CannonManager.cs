@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CannonManager : MonoBehaviour, IWeapon {
     public CannonController[] Cannons;
-    
+
     public void Fire()
     {
-        for(int i =0; i < Cannons.Length; i++)
+        for(int i = 0; i < Cannons.Length; i++)
         {
             Cannons[i].FireCannon();
         }

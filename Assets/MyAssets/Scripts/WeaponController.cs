@@ -11,16 +11,18 @@ public interface IWeapon
 public class WeaponController : MonoBehaviour
 {
     public GameObject[] Weapons;
+    public GameObject weaponTarget;
 
+    private GameObject mainCamera;
     private UIHandler uIHandler;
     private int CurrentWeaponNum = 0;
     private IWeapon CurrentWeapon;
     private int NumberOfWeapons = 0;
-
     private bool playerControlled = false;
 
     void Start()
     {
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         CurrentWeapon = GetWeapon(CurrentWeaponNum);
         NumberOfWeapons = Weapons.Length-1;
@@ -33,6 +35,10 @@ public class WeaponController : MonoBehaviour
         {
             return;
         }
+
+        weaponTarget.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 50;
+        //TODO. shoot raycast and put target at whatever it hits or put it at the max distance.
+        //An AI could just place the target at its enemytargets position.
 
         if (!Input.GetKey("left ctrl"))
         {

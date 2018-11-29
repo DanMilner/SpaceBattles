@@ -8,9 +8,14 @@ public class CannonController : MonoBehaviour {
     public GameObject bulletPrefab;
     public float bulletSpeed = 10.0f;
     public float bulletLifeSpan = 10.0f;
+    public Transform cannonTower;
+    public Transform cannonGun;
+    public Transform cannonTarget;
 
     private float coolDown;
     private Rigidbody shipRigidbody;
+    private Vector3 lookDirection;
+    private Quaternion rotation;
 
     void Start()
     {
@@ -21,10 +26,18 @@ public class CannonController : MonoBehaviour {
     void Update()
     {
         coolDown -= Time.deltaTime;
+
+        cannonTower.LookAt(cannonTarget);
+        rotation = new Quaternion(0, cannonTower.localRotation.y, 0, cannonTower.localRotation.w);
+        cannonTower.localRotation = rotation;
+       
+        rotation = Quaternion.LookRotation(cannonTarget.position - cannonGun.position, transform.up);
+        cannonGun.rotation = rotation;
     }
 
     public void FireCannon()
     {
+         
         if(coolDown <= 0)
         {
             coolDown = coolDownTime;
