@@ -6,5 +6,5 @@ public class CameraZoomSettings : MonoBehaviour {
     public float MinZoom = 1.0f;
     public float MaxZoom = 10.0f;
     public int ZoomRate = 10;
-    public int CameraHeight = 0;
+    public float CameraHeight = 0;
 }
