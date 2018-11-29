@@ -63,6 +63,10 @@ public class ShipHealth : MonoBehaviour {
     {
         if (isPlayerShip)
         {
+            if(uIHandler == null)
+            {
+                uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
+            }
             uIHandler.SetCurrentHealth(health);
         }
     }
