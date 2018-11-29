@@ -78,6 +78,7 @@ public class ShipHealth : MonoBehaviour {
     private void DestroyShip()
     {
         gameObject.GetComponent<FlightController>().enabled = false;
+        gameObject.GetComponent<ThrusterParticlesController>().ShipDestroyed();
         gameObject.GetComponent<ThrusterParticlesController>().enabled = false;
         gameObject.GetComponent<WeaponController>().enabled = false;
 

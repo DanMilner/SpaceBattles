@@ -155,4 +155,20 @@ public class ThrusterParticlesController : MonoBehaviour {
             }
         }
     }
+
+    public void ShipDestroyed()
+    {
+        ToggleThrusterParticleSystems(MoveForwardThrustersParticles, false);
+        ToggleThrusterParticleSystems(MoveBackwardThrustersParticles, false);
+        ToggleThrusterParticleSystems(MoveUpThrustersParticles, false);
+        ToggleThrusterParticleSystems(MoveDownThrustersParticles, false);
+        ToggleThrusterParticleSystems(MoveLeftThrustersParticles, false);
+        ToggleThrusterParticleSystems(MoveRightThrustersParticles, false);
+        ToggleThrusterParticleSystems(PitchUpThrustersParticles, false);
+        ToggleThrusterParticleSystems(PitchDownThrustersParticles, false);
+        ToggleThrusterParticleSystems(YawLeftThrustersParticles, false);
+        ToggleThrusterParticleSystems(YawRightThrustersParticles, false);
+        ToggleThrusterParticleSystems(RollLeftThrustersParticles, false);
+        ToggleThrusterParticleSystems(RollRightThrustersParticles, false);
+    }
 }
