@@ -21,9 +21,9 @@ public class UIHandler : MonoBehaviour {
     
     public void UpdateUI(Rigidbody playerShip)
     {
-        ForwardText.text = "Forward: " + playerShip.velocity.z.ToString("F3");
-        HorizontalText.text = "Horizontal: " + playerShip.velocity.x.ToString("F3");
-        VerticalText.text = "Vertical: " + playerShip.velocity.y.ToString("F3");
+        ForwardText.text = "Forward: " + playerShip.velocity.z.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.velocity).z.ToString("F3");
+        HorizontalText.text = "Horizontal: " + playerShip.velocity.x.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.velocity).x.ToString("F3");
+        VerticalText.text = "Vertical: " + playerShip.velocity.y.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.velocity).y.ToString("F3");
 
         //PitchText.text = "Pitch: " + playerShip.angularVelocity.x.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).x.ToString("F3");
         //RollText.text = "Roll: " + playerShip.angularVelocity.z.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.angularVelocity).z.ToString("F3");

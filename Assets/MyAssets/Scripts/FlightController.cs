@@ -116,48 +116,54 @@ public class FlightController : MonoBehaviour
     private void StabiliseMovement()
     {
         if (moveHorizontal == 0)
-        {         
-            //if ship velocity is low, reduce velocity by 10%. Allows the ship to stop smoothly.
-            if (ShipRigidbody.velocity.x < 0.1 && ShipRigidbody.velocity.x > -0.1)
+        {
+            float x = transform.InverseTransformDirection(ShipRigidbody.velocity).x;
+
+            //if ship velocity is low, reduce velocity by 90%. This allows the ship to come to a complete stop smoothly.
+            if (x < 0.1f && x > -0.1f)
             {
-                ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x *0.90f, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z);
+                SlowShipUsingStabilisers(x, ShipTransform.right, horizontalThrust*0.1f);
             }
             else
             {
-                SlowShipUsingStabilisers(transform.InverseTransformDirection(ShipRigidbody.velocity).x, ShipTransform.right, horizontalThrust);
+                SlowShipUsingStabilisers(x, ShipTransform.right, horizontalThrust);
             }
         }
         if (moveVertical == 0)
         {
-            if (ShipRigidbody.velocity.y < 0.1 && ShipRigidbody.velocity.y > -0.1)
+            float y = transform.InverseTransformDirection(ShipRigidbody.velocity).y;
+
+            if (y < 0.1f && y > -0.1f)
             {
-                ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y * 0.90f, ShipRigidbody.velocity.z);
+                SlowShipUsingStabilisers(y, ShipTransform.up, verticalThrust * 0.1f);
             }
             else
             {
-                SlowShipUsingStabilisers(transform.InverseTransformDirection(ShipRigidbody.velocity).y, ShipTransform.up, verticalThrust);
+                SlowShipUsingStabilisers(y, ShipTransform.up, verticalThrust);
             }
         }
         if (moveForward == 0)
         {
-            if (ShipRigidbody.velocity.z < 0.1 && ShipRigidbody.velocity.z > -0.1)
+            float z = transform.InverseTransformDirection(ShipRigidbody.velocity).z;
+
+            if (z < 0.1f && z > -0.1f)
             {
-                ShipRigidbody.velocity = new Vector3(ShipRigidbody.velocity.x, ShipRigidbody.velocity.y, ShipRigidbody.velocity.z * 0.90f);
+                SlowShipUsingStabilisers(z, ShipTransform.forward, forwardThrust * 0.1f);
             }
             else
             {
-                SlowShipUsingStabilisers(transform.InverseTransformDirection(ShipRigidbody.velocity).z, ShipTransform.forward, forwardThrust);
+                SlowShipUsingStabilisers(z, ShipTransform.forward, forwardThrust);
             }
         }
     }
 
     private void SlowShipUsingStabilisers(float localVelocity, Vector3 direction, float thrustSpeed)
     {
-        if (localVelocity > 0.01)
+        if (localVelocity > 0.005)
         {
             ShipRigidbody.AddForce(-direction * thrustSpeed);
         }
-        else if (localVelocity < -0.01)
+        else if (localVelocity < -0.005)
         {
             ShipRigidbody.AddForce(direction * thrustSpeed);
         }
