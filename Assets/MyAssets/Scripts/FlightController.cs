@@ -117,43 +117,33 @@ public class FlightController : MonoBehaviour
     {
         if (moveHorizontal == 0)
         {
-            float x = transform.InverseTransformDirection(ShipRigidbody.velocity).x;
-
-            //if ship velocity is low, reduce velocity by 90%. This allows the ship to come to a complete stop smoothly.
-            if (x < 0.1f && x > -0.1f)
-            {
-                SlowShipUsingStabilisers(x, ShipTransform.right, horizontalThrust*0.1f);
-            }
-            else
-            {
-                SlowShipUsingStabilisers(x, ShipTransform.right, horizontalThrust);
-            }
+            float localXVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).x;
+            DetermineStabilisingSpeed(localXVelocity, ShipTransform.right, horizontalThrust);
         }
+
         if (moveVertical == 0)
         {
-            float y = transform.InverseTransformDirection(ShipRigidbody.velocity).y;
-
-            if (y < 0.1f && y > -0.1f)
-            {
-                SlowShipUsingStabilisers(y, ShipTransform.up, verticalThrust * 0.1f);
-            }
-            else
-            {
-                SlowShipUsingStabilisers(y, ShipTransform.up, verticalThrust);
-            }
+            float localYVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).y;
+            DetermineStabilisingSpeed(localYVelocity, ShipTransform.up, verticalThrust);
         }
+
         if (moveForward == 0)
         {
-            float z = transform.InverseTransformDirection(ShipRigidbody.velocity).z;
+            float localZVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).z;
+            DetermineStabilisingSpeed(localZVelocity, ShipTransform.forward, forwardThrust);
+        }
+    }
 
-            if (z < 0.1f && z > -0.1f)
-            {
-                SlowShipUsingStabilisers(z, ShipTransform.forward, forwardThrust * 0.1f);
-            }
-            else
-            {
-                SlowShipUsingStabilisers(z, ShipTransform.forward, forwardThrust);
-            }
+    private void DetermineStabilisingSpeed(float currentVelocity, Vector3 direction, float thrust)
+    {
+        if (currentVelocity < 0.1f && currentVelocity > -0.1f)
+        {
+            //if ship velocity is low, reduce velocity by 90%. This allows the ship to come to a complete stop smoothly.
+            SlowShipUsingStabilisers(currentVelocity, direction, thrust * 0.1f);
+        }
+        else
+        {
+            SlowShipUsingStabilisers(currentVelocity, direction, thrust);
         }
     }
 
