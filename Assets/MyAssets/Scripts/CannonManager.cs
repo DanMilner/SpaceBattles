@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonManager : MonoBehaviour, IWeapon {
-    public CannonController[] Cannons;
+    private CannonController[] Cannons;
+
+    void Start()
+    {
+        Cannons = gameObject.GetComponentsInChildren<CannonController>();
+    }
 
     public void Fire()
     {

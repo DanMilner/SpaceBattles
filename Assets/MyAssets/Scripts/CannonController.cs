@@ -14,7 +14,6 @@ public class CannonController : MonoBehaviour {
 
     private float coolDown;
     private Rigidbody shipRigidbody;
-    private Vector3 lookDirection;
     private Quaternion rotation;
     public LineOfSight lineOfSight;
 

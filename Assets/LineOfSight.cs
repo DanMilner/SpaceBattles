@@ -13,7 +13,7 @@ public class LineOfSight : MonoBehaviour {
     public bool SafeToFire()
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 20, layerMask))
-        {           
+        {
             return !hit.transform.gameObject.CompareTag("Player");
         }
         return true;
