@@ -16,6 +16,7 @@ public class CannonController : MonoBehaviour {
     private Rigidbody shipRigidbody;
     private Vector3 lookDirection;
     private Quaternion rotation;
+    public LineOfSight lineOfSight;
 
     void Start()
     {
@@ -37,18 +38,20 @@ public class CannonController : MonoBehaviour {
 
     public void FireCannon()
     {
-         
-        if(coolDown <= 0)
+        if (lineOfSight.SafeToFire())
         {
-            coolDown = coolDownTime;
+            if (coolDown <= 0)
+            {
+                coolDown = coolDownTime;
 
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
-            bullet.transform.parent = null;
-            bullet.GetComponent<Rigidbody>().velocity = shipRigidbody.velocity;
-            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed);
-            bullet.GetComponent<IndividualBulletController>().ResetBullet();
+                GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
+                bullet.transform.parent = null;
+                bullet.GetComponent<Rigidbody>().velocity = shipRigidbody.velocity;
+                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed);
+                bullet.GetComponent<IndividualBulletController>().ResetBullet();
 
-            Destroy(bullet, bulletLifeSpan);
+                Destroy(bullet, bulletLifeSpan);
+            }
         }
     }
 }
