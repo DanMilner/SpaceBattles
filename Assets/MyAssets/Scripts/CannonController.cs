@@ -10,17 +10,18 @@ public class CannonController : MonoBehaviour {
     public float bulletLifeSpan = 10.0f;
     public Transform cannonTower;
     public Transform cannonGun;
-    public Transform cannonTarget;
+    private Transform cannonTarget;
 
     private float coolDown;
     private Rigidbody shipRigidbody;
     private Quaternion rotation;
-    public LineOfSight lineOfSight;
+    private LineOfSight lineOfSight;
 
     void Start()
     {
         shipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         coolDown = coolDownTime;
+        lineOfSight = cannonGun.GetComponent<LineOfSight>();
     }
 
     void Update()
@@ -52,5 +53,10 @@ public class CannonController : MonoBehaviour {
                 Destroy(bullet, bulletLifeSpan);
             }
         }
+    }
+
+    public void SetCannonTarget(GameObject target)
+    {
+        cannonTarget = target.transform;
     }
 }
