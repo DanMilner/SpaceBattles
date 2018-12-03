@@ -18,8 +18,11 @@ public class AutoTurret : MonoBehaviour
     private GameObject currentTarget;
     private int factionId;
     private RaycastHit hit;
-    private int count = 0;
-    int layerMask;
+    private int validTargetCounter = 0;
+    private int lineOfSightCounter = 0;
+    private int targetSearchCounter = 0;
+
+    private int layerMask;
 
     // Use this for initialization
     void Start()
@@ -36,57 +39,70 @@ public class AutoTurret : MonoBehaviour
     void Update()
     {
         cooldown -= Time.deltaTime;
-        count++;
 
-        //every 100 frames check that the current target is still a valid target
-        if (count > 100) 
-        {
-            if (!enemyShips.Contains(currentTarget))
-            {
-                currentTarget = null;
-            }
-            count = 0;
-        }
+        LookAtTarget();
 
         //if gun cant shoot dont bother continuing.
-        if (cooldown > 0)
-        {
-            if(currentTarget != null)
-            {
-                gameObject.transform.LookAt(currentTarget.transform);
-            }
-            return;
-        }
+        if (cooldown > 0) { return; }
 
-        if (currentTarget == null)
+        if (CheckTargetIsValid())
         {
-            FindNewTarget();
+            Fire();
+            CheckTargetLineOfSight();
         }
         else
         {
-            if (CheckLineOfShight(currentTarget.transform))
+            FindNewTarget();
+        }
+    }
+
+    private void CheckTargetLineOfSight()
+    {
+        //every 20 frames check that the current target is still line of sight
+        lineOfSightCounter++;
+        if (lineOfSightCounter > 20)
+        {
+            if (!CheckLineOfShight(currentTarget.transform))
             {
-                gameObject.transform.LookAt(currentTarget.transform);
-                Fire();
-            }
-            else
-            {
+                Debug.Log("Lost line of sight");
                 currentTarget = null;
             }
+            lineOfSightCounter = 0;
+        }
+    }
+
+    private bool CheckTargetIsValid()
+    {
+        //every 100 frames check that the current target is still a valid target
+        validTargetCounter++;
+        if (validTargetCounter > 100)
+        {
+            validTargetCounter = 0;
+            return enemyShips.Contains(currentTarget);
+        }
+        return currentTarget != null;
+    }
+
+    private void LookAtTarget()
+    {
+        if (currentTarget != null)
+        {
+            gameObject.transform.LookAt(currentTarget.transform);
         }
     }
 
     private void FindNewTarget()
     {
+        //every 200 frames check for a new target
+        //This function is expensive!
+        targetSearchCounter++;
+        if(targetSearchCounter < 200) { return; }
+        targetSearchCounter = 0;
+
         if (enemyShips.Count > 0)
         {
             foreach (GameObject ship in enemyShips)
             {
-                if (ship == null)
-                {
-                    enemyShips.Remove(ship);
-                }
-
                 if (CheckLineOfShight(ship.transform))
                 {
                     currentTarget = ship;
