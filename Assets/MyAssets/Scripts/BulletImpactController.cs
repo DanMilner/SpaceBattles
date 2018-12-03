@@ -5,6 +5,11 @@ using UnityEngine;
 public class BulletImpactController : MonoBehaviour {
     public ParticleSystem ps;
     public Transform parent;
+    private float delay;
+    void Start()
+    {
+        delay = ps.main.duration;
+    }
 
     public void Play()
     {
@@ -15,7 +20,7 @@ public class BulletImpactController : MonoBehaviour {
     {
         transform.parent = null;
         ps.Play();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(delay);
         transform.parent = parent;
     }
 }
