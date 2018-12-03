@@ -16,7 +16,7 @@ public class BulletImpactController : MonoBehaviour {
         StartCoroutine(Coroutine());
     }
 
-    public IEnumerator Coroutine()
+    private IEnumerator Coroutine()
     {
         transform.parent = null;
         ps.Play();

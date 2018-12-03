@@ -10,6 +10,7 @@ public class IndividualBulletController : MonoBehaviour {
     private float counter = 0.0f;
 
     // Update is called once per frame
+    
     void Update()
     {
         counter -= Time.deltaTime;
@@ -19,6 +20,7 @@ public class IndividualBulletController : MonoBehaviour {
             gameObject.SetActive(false);
         }
     }
+    
 
     public void ResetBullet()
     {

@@ -18,7 +18,9 @@ public class UIHandler : MonoBehaviour {
     public Text CurrentWeapon;
 
     public Text CurrentHealth;
-    
+
+    public Text FPS;
+
     public void UpdateUI(Rigidbody playerShip)
     {
         ForwardText.text = "Forward: " + playerShip.velocity.z.ToString("F3") + " " + playerShip.transform.InverseTransformDirection(playerShip.velocity).z.ToString("F3");
@@ -65,5 +67,10 @@ public class UIHandler : MonoBehaviour {
     public void SetCurrentHealth(float health)
     {
         CurrentHealth.text = "Current Health: " + health;
+    }
+
+    public void SetFPS(float val)
+    {
+        FPS.text = "FPS: " + val;
     }
 }
