@@ -10,6 +10,7 @@ public class HomingMissile : MonoBehaviour {
     public GameObject target;
     public float damage = 1.0f;
     public float lifeTime = 10.0f;
+    private float timer;
 
     private Rigidbody missileRigidBody;
 
@@ -17,13 +18,14 @@ public class HomingMissile : MonoBehaviour {
     void Start () {
         missileRigidBody = gameObject.GetComponent<Rigidbody>();
         thruster.Play();
+        Reset();
     }
 
     void Update()
     {
-        lifeTime -= Time.deltaTime;
+        timer -= Time.deltaTime;
 
-        if(lifeTime < 0)
+        if(timer < 0)
         {
             Detonate();
         }
@@ -32,15 +34,20 @@ public class HomingMissile : MonoBehaviour {
     void FixedUpdate()
     {
         missileRigidBody.velocity = transform.forward * speed;
-
-        var targetRotation = Quaternion.LookRotation(target.transform.position - transform.position);
-
-        missileRigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, turningRate));
+        missileRigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation,
+                                    Quaternion.LookRotation(target.transform.position - transform.position),
+                                    turningRate));
     }
 
     public void SetTarget(GameObject target)
     {
         this.target = target;
+        Reset();
+    }
+
+    public void Reset()
+    {
+        timer = lifeTime;
     }
 
     void OnTriggerEnter(Collider other)
