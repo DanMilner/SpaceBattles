@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class IndividualBulletController : MonoBehaviour {
     public float lifeTime = 10.0f;
-    public ParticleSystem explosion;
+    public BulletImpactController explosion;
     public float damage = 1.0f;
 
     private float counter = 0.0f;
+
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +34,6 @@ public class IndividualBulletController : MonoBehaviour {
             {
                 shipHealth.TakeDamage(damage);
             }
-            explosion.transform.parent = null;
             explosion.Play();
             DisableBullet();
         }

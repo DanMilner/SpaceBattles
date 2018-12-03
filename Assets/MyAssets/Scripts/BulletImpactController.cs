@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletImpactController : MonoBehaviour {
-    private ParticleSystem ps;
+    public ParticleSystem ps;
     public Transform parent;
 
-    // Use this for initialization
-    void Start()
+    public void Play()
     {
-        ps = gameObject.GetComponent<ParticleSystem>();
+        StartCoroutine(Coroutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Coroutine()
     {
-        if (!ps.IsAlive())
-        {
-            transform.parent = parent;
-        }
+        transform.parent = null;
+        ps.Play();
+        yield return new WaitForSeconds(0.2f);
+        transform.parent = parent;
     }
 }
