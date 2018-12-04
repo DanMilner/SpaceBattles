@@ -28,7 +28,7 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
         }
     }
 
-    public void Fire(GameObject target)
+    public void Fire(Collider target)
     {
         GameObject missile = missiles.Dequeue();
 

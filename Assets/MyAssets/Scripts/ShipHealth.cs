@@ -16,9 +16,14 @@ public class ShipHealth : MonoBehaviour {
     float damageThreshold;
     float currentThreshold;
     private bool isPlayerShip;
+    private HashSet<AutoTurretManager> shipsTargetedBy;
 
     void Start()
     {
+        //each ship stores a set enemy ships that has auto guns and are aware of this ship
+        //This script will inform those enemy ships when it is destoryed so they will no 
+        //longer target this ship.
+        shipsTargetedBy = new HashSet<AutoTurretManager>();
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         damage = damagePoints.GetComponentsInChildren<ParticleSystem>();
 
@@ -94,6 +99,8 @@ public class ShipHealth : MonoBehaviour {
         DisableAutoTurrets();
 
         Instantiate(deathExplostion, transform.position, transform.rotation);
+
+        RemoveSelfFromTargetedShips();
     }
 
     private void DisableAutoTurrets()
@@ -105,5 +112,25 @@ public class ShipHealth : MonoBehaviour {
                 autoTurret.enabled = false;
             }
         }
+    }
+
+    private void RemoveSelfFromTargetedShips()
+    {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+
+        foreach (AutoTurretManager a in shipsTargetedBy)
+        {
+            a.RemoveShips(colliders);
+        }
+    }
+
+    public void SetTargeted(AutoTurretManager autoTurretManager)
+    {
+        shipsTargetedBy.Add(autoTurretManager);
+    }
+
+    public void SetNotTargeted(AutoTurretManager autoTurretManager)
+    {
+        shipsTargetedBy.Remove(autoTurretManager);
     }
 }

@@ -7,7 +7,7 @@ public class HomingMissile : MonoBehaviour {
     public float turningRate;
     public BulletImpactController explosion;
     public ParticleSystem thruster;
-    public GameObject target;
+    public Collider target;
     public float damage = 1.0f;
     public float lifeTime = 10.0f;
     private float timer;
@@ -39,7 +39,7 @@ public class HomingMissile : MonoBehaviour {
                                     turningRate));
     }
 
-    public void SetTarget(GameObject target)
+    public void SetTarget(Collider target)
     {
         this.target = target;
         Reset();

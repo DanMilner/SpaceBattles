@@ -5,43 +5,16 @@ using UnityEngine;
 public class AutoTurretManager : MonoBehaviour {
     private int factionId;
     private AutoTurret[] autoTurrets;
-    private HashSet<GameObject> enemyShips;
-    private int count = 0;
+    private HashSet<Collider> enemyShips;
+
     void Start () {
-        enemyShips = new HashSet<GameObject>();
+        enemyShips = new HashSet<Collider>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
 
         for (int i = 0; i < autoTurrets.Length; i++)
         {
-            autoTurrets[i].SetEnenmyShipCollection(enemyShips);
-        }
-    }
-
-    void Update()
-    {
-        count++;
-        //every  60 frames check that the list of targets are still alive
-        if(count > 60)
-        {
-            count = 0;
-
-            List<GameObject> shipsToRemove = new List<GameObject>();
-            foreach (GameObject ship in enemyShips)
-            {
-                if (!ship.GetComponentInParent<ShipHealth>().alive)
-                {
-                    shipsToRemove.Add(ship);
-                }
-            }
-
-            if(shipsToRemove.Count > 0)
-            {
-                for(int i = 0; i < shipsToRemove.Count; i++)
-                {
-                    enemyShips.Remove(shipsToRemove[i]);
-                }
-            }
+            autoTurrets[i].SetEnemyShipCollection(enemyShips);
         }
     }
 
@@ -51,7 +24,12 @@ public class AutoTurretManager : MonoBehaviour {
         {
             if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
             {
-                enemyShips.Add(other.gameObject);
+                ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
+                if (shipHealth.alive)
+                {
+                    shipHealth.SetTargeted(this);
+                    enemyShips.Add(other);
+                }
             }
         }
     }
@@ -62,9 +40,22 @@ public class AutoTurretManager : MonoBehaviour {
         {
             if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
             {
-                Debug.Log("Removing ship ");
-                enemyShips.Remove(other.gameObject);
+                enemyShips.Remove(other);
+                other.gameObject.GetComponentInParent<ShipHealth>().SetNotTargeted(this);
             }
+        }
+    }
+
+    public void RemoveShip(Collider collider)
+    {
+        enemyShips.Remove(collider);
+    }
+
+    public void RemoveShips(Collider[] collider)
+    {
+        for(int i = 0; i < collider.Length; i++)
+        {
+            enemyShips.Remove(collider[i]);
         }
     }
 }

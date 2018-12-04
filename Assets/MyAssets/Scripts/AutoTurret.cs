@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAutoTurretWeapon
 {
-    void Fire(GameObject target);
+    void Fire(Collider target);
 }
 
 public class AutoTurret : MonoBehaviour
@@ -14,8 +14,8 @@ public class AutoTurret : MonoBehaviour
 
     private IAutoTurretWeapon mainWeapon;
     private float cooldown;
-    private HashSet<GameObject> enemyShips;
-    private GameObject currentTarget;
+    private HashSet<Collider> enemyShips;
+    private Collider currentTarget;
     private int factionId;
     private RaycastHit hit;
     private int validTargetCounter = 0;
@@ -28,7 +28,7 @@ public class AutoTurret : MonoBehaviour
     void Start()
     {
         layerMask = ~(1 << 2);
-        enemyShips = new HashSet<GameObject>();
+        enemyShips = new HashSet<Collider>();
         factionId = gameObject.GetComponentInParent<FactionID>().Faction;
         cooldown = fireRate;
 
@@ -104,7 +104,7 @@ public class AutoTurret : MonoBehaviour
 
         if (enemyShips.Count > 0)
         {
-            foreach (GameObject ship in enemyShips)
+            foreach (Collider ship in enemyShips)
             {
                 if (CheckLineOfShight(ship.transform))
                 {
@@ -133,7 +133,7 @@ public class AutoTurret : MonoBehaviour
         }
     }
 
-    public void SetEnenmyShipCollection(HashSet<GameObject> enemyShipsCoolection)
+    public void SetEnemyShipCollection(HashSet<Collider> enemyShipsCoolection)
     {
         enemyShips = enemyShipsCoolection;
     }

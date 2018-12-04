@@ -9,7 +9,7 @@ public class HomingMissileController : MonoBehaviour, IWeapon
     public float fireRate = 2.0f;
     private float cooldown;
     private Rigidbody ShipRigidbody;
-    private GameObject target;
+    private Collider target;
 
     public void Start()
     {
@@ -30,7 +30,7 @@ public class HomingMissileController : MonoBehaviour, IWeapon
         }
     }
 
-    public void SetTarget(GameObject target)
+    public void SetTarget(Collider target)
     {
         this.target = target;
     }
