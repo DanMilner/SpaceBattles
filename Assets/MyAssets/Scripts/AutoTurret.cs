@@ -41,6 +41,9 @@ public class AutoTurret : MonoBehaviour
         cooldown -= Time.deltaTime;
 
         LookAtTarget();
+        validTargetCounter++;
+        lineOfSightCounter++;
+        targetSearchCounter++;
 
         //if gun cant shoot dont bother continuing.
         if (cooldown > 0) { return; }
@@ -64,7 +67,6 @@ public class AutoTurret : MonoBehaviour
         {
             if (!CheckLineOfShight(currentTarget.transform))
             {
-                Debug.Log("Lost line of sight");
                 currentTarget = null;
             }
             lineOfSightCounter = 0;
@@ -74,11 +76,13 @@ public class AutoTurret : MonoBehaviour
     private bool CheckTargetIsValid()
     {
         //every 100 frames check that the current target is still a valid target
-        validTargetCounter++;
         if (validTargetCounter > 100)
         {
             validTargetCounter = 0;
-            return enemyShips.Contains(currentTarget);
+            if (!enemyShips.Contains(currentTarget))
+            {
+                currentTarget = null;
+            }
         }
         return currentTarget != null;
     }
@@ -95,7 +99,6 @@ public class AutoTurret : MonoBehaviour
     {
         //every 200 frames check for a new target
         //This function is expensive!
-        targetSearchCounter++;
         if(targetSearchCounter < 200) { return; }
         targetSearchCounter = 0;
 

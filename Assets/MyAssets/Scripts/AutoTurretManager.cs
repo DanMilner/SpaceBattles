@@ -24,6 +24,8 @@ public class AutoTurretManager : MonoBehaviour {
         //every  60 frames check that the list of targets are still alive
         if(count > 60)
         {
+            count = 0;
+
             List<GameObject> shipsToRemove = new List<GameObject>();
             foreach (GameObject ship in enemyShips)
             {
@@ -40,7 +42,6 @@ public class AutoTurretManager : MonoBehaviour {
                     enemyShips.Remove(shipsToRemove[i]);
                 }
             }
-            count = 0;
         }
     }
 
