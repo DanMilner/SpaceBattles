@@ -29,7 +29,7 @@ public class AutoTurret : MonoBehaviour
     {
         layerMask = ~(1 << 2);
         enemyShips = new HashSet<Collider>();
-        factionId = gameObject.GetComponentInParent<FactionID>().Faction;
+        factionId = gameObject.GetComponentInParent<FactionID>().factionID;
         cooldown = fireRate;
 
         mainWeapon = weapon.GetComponent<IAutoTurretWeapon>();
@@ -119,7 +119,7 @@ public class AutoTurret : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, shipTransform.position - transform.position, out hit, 15, layerMask))
         {
-            return factionId != hit.transform.gameObject.GetComponentInParent<FactionID>().Faction;
+            return factionId != hit.transform.gameObject.GetComponentInParent<FactionID>().factionID;
         }
         return false;
     }

@@ -9,7 +9,7 @@ public class AutoTurretManager : MonoBehaviour {
 
     void Start () {
         enemyShips = new HashSet<Collider>();
-        factionId = gameObject.GetComponentInParent<FactionID>().Faction;
+        factionId = gameObject.GetComponentInParent<FactionID>().factionID;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
 
         for (int i = 0; i < autoTurrets.Length; i++)
@@ -22,7 +22,7 @@ public class AutoTurretManager : MonoBehaviour {
     {
         if (other.CompareTag("ShipCollider"))
         {
-            if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
+            if (factionId != other.gameObject.GetComponentInParent<FactionID>().factionID)
             {
                 ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
                 if (shipHealth.alive)
@@ -38,7 +38,7 @@ public class AutoTurretManager : MonoBehaviour {
     {
         if (other.CompareTag("ShipCollider"))
         {
-            if (factionId != other.gameObject.GetComponentInParent<FactionID>().Faction)
+            if (factionId != other.gameObject.GetComponentInParent<FactionID>().factionID)
             {
                 enemyShips.Remove(other);
                 other.gameObject.GetComponentInParent<ShipHealth>().SetNotTargeted(this);
