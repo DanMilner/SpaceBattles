@@ -27,7 +27,7 @@ public class PlayerHandler : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        cameraController = gameObject.GetComponent<CameraController>();
+        cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
 
         SetPlayerShip(0);
 
