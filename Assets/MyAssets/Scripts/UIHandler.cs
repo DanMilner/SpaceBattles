@@ -20,6 +20,7 @@ public class UIHandler : MonoBehaviour {
     public Text CurrentHealth;
 
     public Text FPS;
+    public Text AverageFPS;
 
     public void UpdateUI(Rigidbody playerShip)
     {
@@ -67,6 +68,11 @@ public class UIHandler : MonoBehaviour {
     public void SetCurrentHealth(float health)
     {
         CurrentHealth.text = "Current Health: " + health;
+    }
+
+    public void SetAverageFPS(float val)
+    {
+        AverageFPS.text = "Average FPS: " + val;
     }
 
     public void SetFPS(float val)

@@ -10,6 +10,6 @@ public class AverageFPS : MonoBehaviour {
 	void Update () {
         avg += ((Time.deltaTime / Time.timeScale) - avg) * 0.03f; //run this every frame
         float displayValue = (1F / avg); //display this value
-        uIHandler.SetFPS(displayValue);
+        uIHandler.SetAverageFPS(displayValue);
     }
 }
