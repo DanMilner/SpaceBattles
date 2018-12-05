@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipAI : MonoBehaviour {
-    public GameObject target { get; set; }
+    public GameObject target;
     private Rigidbody shipRigidbody;
     public float moveStrength = 200.0f;
     public float rotationStrength = 0.1f;
@@ -33,13 +33,13 @@ public class ShipAI : MonoBehaviour {
 
         distance = Vector3.Distance(target.transform.position, transform.position);
         direction = (target.transform.position - transform.position).normalized;
-        Debug.Log(angle);
+
         if (distance > stoppingDistance)
         {
             if(angle < 20)
             {
                 //we are too far away
-                float targetVelocity = (distance - stoppingDistance) / 10;
+                float targetVelocity = (distance - stoppingDistance) / 60;
                 if (transform.InverseTransformDirection(shipRigidbody.velocity).z < targetVelocity)
                 {
                     shipRigidbody.AddForce(direction * (moveStrength - angle));
@@ -62,13 +62,13 @@ public class ShipAI : MonoBehaviour {
     private void RotateTowardsTarget()
     {
         lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationStrength);
+        shipRigidbody.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationStrength);
     }
 
     private void RotateSidewaysFromTarget()
     {
         lookRotation = Quaternion.LookRotation(direction, transform.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationStrength);
+        shipRigidbody.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationStrength);
     }
 
     private void StabiliseMovement()
