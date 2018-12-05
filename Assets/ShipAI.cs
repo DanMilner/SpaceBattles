@@ -51,6 +51,8 @@ public class ShipAI : MonoBehaviour {
             }
 
             RotateTowardsTarget();
+            StabiliseMovement();
+            StabiliseRotation();
         }
         else
         {
@@ -103,5 +105,11 @@ public class ShipAI : MonoBehaviour {
         {
             shipRigidbody.AddForce(direction * thrustSpeed);
         }
+    }
+
+
+    private void StabiliseRotation()
+    {
+        shipRigidbody.angularVelocity *= 0.99f;
     }
 }
