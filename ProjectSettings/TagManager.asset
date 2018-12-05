@@ -12,6 +12,7 @@ TagManager:
   - Fire
   - UI
   - BulletHolder
+  - Ship
   layers:
   - Default
   - TransparentFX

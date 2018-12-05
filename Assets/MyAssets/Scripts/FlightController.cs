@@ -15,7 +15,6 @@ public class FlightController : MonoBehaviour
     private bool PlayerControlled = false;
 
     private Rigidbody ShipRigidbody;
-    private Transform ShipTransform;
 
     private float moveForward;
     private float moveHorizontal;
@@ -30,12 +29,14 @@ public class FlightController : MonoBehaviour
 
     private ThrusterParticlesController thrusterParticlesController;
 
+    private ShipAI shipAI;
+
     void Start()
     {
         ShipRigidbody = gameObject.GetComponent<Rigidbody>();
-        ShipTransform = gameObject.GetComponent<Transform>();
 
         thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
+        shipAI = gameObject.GetComponent<ShipAI>();
     }
 
     void FixedUpdate()
@@ -51,18 +52,23 @@ public class FlightController : MonoBehaviour
 
             ThrusterMovement();
             ThrusterRotation();
+
+            if (rotationalStabiliersActive)
+            {
+                StabiliseRotation();
+            }
+
+            if (movementStabiliersActive)
+            {
+                StabiliseMovement();
+            }
+
+            thrusterParticlesController.ActivateThrusters(ShipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
         }
-
-        thrusterParticlesController.ActivateThrusters(ShipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
-
-        if (rotationalStabiliersActive)
+        else
         {
-            StabiliseRotation();
-        }
-
-        if (movementStabiliersActive)
-        {
-            StabiliseMovement();
+            shipAI.Fly();
+            thrusterParticlesController.ActivateThrusters(ShipRigidbody, true, true);
         }
     }
 
@@ -117,20 +123,20 @@ public class FlightController : MonoBehaviour
     {
         if (moveHorizontal == 0)
         {
-            float localXVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).x;
-            DetermineStabilisingSpeed(localXVelocity, ShipTransform.right, horizontalThrust);
+            float localXVelocity = base.transform.InverseTransformDirection(ShipRigidbody.velocity).x;
+            DetermineStabilisingSpeed(localXVelocity, transform.right, horizontalThrust);
         }
 
         if (moveVertical == 0)
         {
-            float localYVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).y;
-            DetermineStabilisingSpeed(localYVelocity, ShipTransform.up, verticalThrust);
+            float localYVelocity = base.transform.InverseTransformDirection(ShipRigidbody.velocity).y;
+            DetermineStabilisingSpeed(localYVelocity, transform.up, verticalThrust);
         }
 
         if (moveForward == 0)
         {
-            float localZVelocity = transform.InverseTransformDirection(ShipRigidbody.velocity).z;
-            DetermineStabilisingSpeed(localZVelocity, ShipTransform.forward, forwardThrust);
+            float localZVelocity = base.transform.InverseTransformDirection(ShipRigidbody.velocity).z;
+            DetermineStabilisingSpeed(localZVelocity, transform.forward, forwardThrust);
         }
     }
 
@@ -161,9 +167,9 @@ public class FlightController : MonoBehaviour
 
     private void ThrusterMovement()
     {
-        ShipRigidbody.AddForce(ShipTransform.forward * forwardThrust * moveForward);
-        ShipRigidbody.AddForce(ShipTransform.right * horizontalThrust * moveHorizontal);
-        ShipRigidbody.AddForce(ShipTransform.up * verticalThrust * moveVertical);
+        ShipRigidbody.AddForce(transform.forward * forwardThrust * moveForward);
+        ShipRigidbody.AddForce(transform.right * horizontalThrust * moveHorizontal);
+        ShipRigidbody.AddForce(transform.up * verticalThrust * moveVertical);
     }
 
     private void ThrusterRotation()
@@ -173,8 +179,8 @@ public class FlightController : MonoBehaviour
         //Vector3 torque = ShipRigidbody.inertiaTensorRotation * Vector3.Scale(ShipRigidbody.inertiaTensor, desiredAngularVelInY);
         //ShipRigidbody.AddRelativeTorque(torque, ForceMode.Impulse);
 
-        ShipRigidbody.AddTorque(ShipTransform.right * pitchSpeed * pitch);
-        ShipRigidbody.AddTorque(ShipTransform.up * yawSpeed * yaw);
-        ShipRigidbody.AddTorque(ShipTransform.forward * rollSpeed * roll);
+        ShipRigidbody.AddTorque(transform.right * pitchSpeed * pitch);
+        ShipRigidbody.AddTorque(transform.up * yawSpeed * yaw);
+        ShipRigidbody.AddTorque(transform.forward * rollSpeed * roll);
     }    
 }
