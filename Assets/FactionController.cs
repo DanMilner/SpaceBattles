@@ -8,7 +8,7 @@ public class FactionController : MonoBehaviour {
     private List<ShipAI> friendlyShips = new List<ShipAI>();
 
     // Use this for initialization
-    void Start () {
+    void OnEnable () {
         SetShipFactionIds();
 
         GetShips();
