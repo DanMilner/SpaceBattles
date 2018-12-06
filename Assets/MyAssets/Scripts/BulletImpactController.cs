@@ -6,6 +6,8 @@ public class BulletImpactController : MonoBehaviour {
     public ParticleSystem ps;
     public Transform parent;
     private float delay;
+    private float time = 0.0f;
+
     void Start()
     {
         delay = ps.main.duration;
@@ -13,14 +15,18 @@ public class BulletImpactController : MonoBehaviour {
 
     public void Play()
     {
-        StartCoroutine(Coroutine());
-    }
-
-    private IEnumerator Coroutine()
-    {
+        time = delay;
         transform.parent = null;
         ps.Play();
-        yield return new WaitForSeconds(delay);
-        transform.parent = parent;
+    }
+
+    void Update()
+    {
+        time -= Time.deltaTime;
+
+        if(time < 0)
+        {
+            transform.parent = parent;
+        }
     }
 }
