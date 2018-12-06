@@ -10,9 +10,11 @@ public class ShipAI : MonoBehaviour {
     public float stoppingDistance = 40.0f;
 
     private Quaternion lookRotation;
-    private Vector3 direction;
-    private float distance;
+    private Vector3 targetDirection;
+    private float distanceToTarget;
     private Transform shipTransform;
+    private float angleToTarget;
+    private float targetVelocity;
 
     void Start()
     {
@@ -29,48 +31,78 @@ public class ShipAI : MonoBehaviour {
 
     private void MoveTowardsTarget()
     {
-        float angle = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
+        angleToTarget = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
+        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
 
-        distance = Vector3.Distance(target.transform.position, transform.position);
-        direction = (target.transform.position - transform.position).normalized;
-
-        if (distance > stoppingDistance)
+        if (distanceToTarget > stoppingDistance)
         {
-            if(angle < 20)
-            {
-                //we are too far away
-                float targetVelocity = (distance - stoppingDistance) / 60;
-                if (transform.InverseTransformDirection(shipRigidbody.velocity).z < targetVelocity)
-                {
-                    shipRigidbody.AddForce(direction * (moveStrength - angle));
-                }
-                else
-                {
-                    shipRigidbody.AddForce(-direction * (moveStrength - angle));
-                }
-            }
-
-            RotateTowardsTarget();
-            StabiliseMovement();
-            StabiliseRotation();
+            MoveToTarget();
         }
         else
         {
-            //we are withing firing distance. Rotate ship sideways.
-            //RotateSidewaysFromTarget();
+            AttackTarget();
         }
+
+        StabiliseMovement();
+        StabiliseRotation();
+    }
+
+    private void MoveToTarget()
+    {
+        targetDirection = (target.transform.position - transform.position).normalized;
+
+        if (angleToTarget < 20)
+        {
+            targetVelocity = (distanceToTarget - stoppingDistance+10) / 40;
+            if (transform.InverseTransformDirection(shipRigidbody.velocity).z < targetVelocity)
+            {
+                //accelerate
+                shipRigidbody.AddForce(targetDirection * (moveStrength - angleToTarget));
+            }
+            else
+            {
+                //decelerate
+                shipRigidbody.AddForce(-targetDirection * (moveStrength - angleToTarget));
+            }
+        }
+
+        RotateTowardsTarget();
+    }
+
+    private void AttackTarget()
+    {
+        //we are withing firing distance. Rotate ship sideways.
+        RotateSidewaysFromTarget();
     }
 
     private void RotateTowardsTarget()
     {
-        lookRotation = Quaternion.LookRotation(direction);
-        shipRigidbody.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationStrength);
+        lookRotation = Quaternion.LookRotation(targetDirection);
+        shipRigidbody.rotation = Quaternion.RotateTowards(shipRigidbody.rotation, lookRotation, rotationStrength);
     }
 
     private void RotateSidewaysFromTarget()
     {
-        lookRotation = Quaternion.LookRotation(direction, transform.forward);
-        shipRigidbody.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationStrength);
+        
+        float angle = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
+        float angle2 = Vector3.Angle(transform.forward, transform.position - target.transform.position);
+        
+        if (angle < 90.5 && angle > 89.5)
+        {
+            return;
+        }
+
+        if (angle < angle2)
+        {
+            targetDirection = (target.transform.position - transform.InverseTransformDirection(transform.right)).normalized;
+        }
+        else
+        {
+            targetDirection = (target.transform.position - transform.InverseTransformDirection(-transform.right)).normalized;
+        }        
+
+        lookRotation = Quaternion.LookRotation(targetDirection);
+        shipRigidbody.rotation = Quaternion.RotateTowards(shipRigidbody.rotation, lookRotation, rotationStrength);
     }
 
     private void StabiliseMovement()
@@ -106,7 +138,6 @@ public class ShipAI : MonoBehaviour {
             shipRigidbody.AddForce(direction * thrustSpeed);
         }
     }
-
 
     private void StabiliseRotation()
     {
