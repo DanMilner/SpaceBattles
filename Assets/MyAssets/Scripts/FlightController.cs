@@ -31,6 +31,8 @@ public class FlightController : MonoBehaviour
 
     private ShipAI shipAI;
 
+    private int count = 0;
+
     void Start()
     {
         shipRigidbody = gameObject.GetComponent<Rigidbody>();
@@ -68,7 +70,12 @@ public class FlightController : MonoBehaviour
         else
         {
             shipAI.Fly();
-            thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
+            count++;
+            if (count > 50)
+            {
+                count = 0;
+                thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
+            }
         }
     }
 
