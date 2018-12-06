@@ -12,6 +12,9 @@ public class AutoTurret : MonoBehaviour
     public float fireRate = 2.0f;
     public GameObject weapon;
 
+    public Transform turretTower;
+    public Transform turretGun;
+
     private IAutoTurretWeapon mainWeapon;
     private float cooldown;
     private HashSet<Collider> enemyShips;
@@ -21,6 +24,7 @@ public class AutoTurret : MonoBehaviour
     private int validTargetCounter = 0;
     private int lineOfSightCounter = 0;
     private int targetSearchCounter = 0;
+    private Quaternion rotation;
 
     private int layerMask;
 
@@ -91,7 +95,12 @@ public class AutoTurret : MonoBehaviour
     {
         if (currentTarget != null)
         {
-            gameObject.transform.LookAt(currentTarget.transform);
+            turretTower.LookAt(currentTarget.transform);
+            rotation = new Quaternion(0, turretTower.localRotation.y, 0, turretTower.localRotation.w);
+            turretTower.localRotation = rotation;
+
+            rotation = Quaternion.LookRotation(currentTarget.transform.position - turretGun.position, transform.up);
+            turretGun.rotation = rotation;
         }
     }
 

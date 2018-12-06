@@ -14,7 +14,6 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
     {
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
 
-
         missiles = new Queue<GameObject>();
         Transform bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
         Vector3 spawnPosition = spawnPoint.transform.position;
