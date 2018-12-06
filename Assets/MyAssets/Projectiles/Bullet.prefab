@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cee275f2ef47040bf2ef7bb2fac8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 10
+  lifeTime: 20
   explosion: {fileID: 114172284798936708}
   damage: 1
 --- !u!198 &198646977569279792

@@ -8,7 +8,7 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
     public float bulletLifeSpan;
     public float bulletSpeed;
 
-    private int numBullets = 100;    
+    private int numBullets = 120;    
     private Rigidbody ShipRigidbody;
     private Queue<GameObject> bullets;
 

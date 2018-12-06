@@ -6,7 +6,7 @@ public class BulletController : MonoBehaviour, IWeapon
 {
     public GameObject bulletPrefab;
     public GameObject bulletSpawn;
-    public float bulletSpeed = 100.0f;
+    public float bulletSpeed = 200.0f;
     public float fireRate = 2.0f;
     public float bulletLifeSpan = 10.0f;
     private float bulletCooldown;

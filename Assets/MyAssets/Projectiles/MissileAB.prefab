@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerationSpeed: 5
-  lifeTime: 10
+  lifeTime: 20
   explosion: {fileID: 198705056608953398, guid: ce540ad542aad5e4fae77fdea99cf528,
     type: 2}
   thruster: {fileID: 198882613193485640}
