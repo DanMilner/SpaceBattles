@@ -29,10 +29,7 @@ public class HomingMissile : MonoBehaviour {
         {
             Detonate();
         }
-    }
 
-    void FixedUpdate()
-    {
         missileRigidBody.velocity = transform.forward * speed;
         missileRigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation,
                                     Quaternion.LookRotation(target.transform.position - transform.position),

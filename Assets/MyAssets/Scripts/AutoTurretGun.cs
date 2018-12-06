@@ -7,10 +7,13 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
     public GameObject spawnPoint;
     public float bulletLifeSpan;
     public float bulletSpeed;
-    private int numBullets = 100;
-    
+
+    private int numBullets = 100;    
     private Rigidbody ShipRigidbody;
     private Queue<GameObject> bullets;
+
+    private Rigidbody bulletRigidBody;
+    private GameObject bullet;
 
     void Start () {
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();        
@@ -29,11 +32,11 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
 
     public void Fire(Collider target)
     {       
-        GameObject bullet = bullets.Dequeue();
+        bullet = bullets.Dequeue();
 
         if (!bullet.activeSelf)
         {
-            Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
+            bulletRigidBody = bullet.GetComponent<Rigidbody>();
 
             bullet.transform.position = spawnPoint.transform.position;
             bullet.transform.rotation = spawnPoint.transform.rotation;

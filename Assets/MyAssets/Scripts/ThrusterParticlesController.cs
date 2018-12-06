@@ -151,7 +151,7 @@ public class ThrusterParticlesController : MonoBehaviour {
             }
             else
             {
-                ps.Stop();
+                if (ps.isPlaying) { ps.Stop(); }
             }
         }
     }

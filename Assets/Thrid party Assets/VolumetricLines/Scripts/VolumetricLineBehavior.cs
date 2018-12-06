@@ -319,6 +319,7 @@ namespace VolumetricLines
 			DestroyMaterial();
 		}
 		
+        /*
 		void Update()
 		{
 			if (transform.hasChanged && null != m_material)
@@ -326,7 +327,7 @@ namespace VolumetricLines
 				m_material.SetFloat("_LineScale", transform.GetGlobalUniformScaleForLineWidth());
 			}
 		}
-
+        */
 		void OnValidate()
 		{
 			// This function is called when the script is loaded or a value is changed in the inspector (Called in the editor only).
