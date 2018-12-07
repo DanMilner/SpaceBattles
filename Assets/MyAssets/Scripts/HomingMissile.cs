@@ -45,6 +45,7 @@ public class HomingMissile : MonoBehaviour {
     public void Reset()
     {
         timer = lifeTime;
+        thruster.Play();
     }
 
     void OnTriggerEnter(Collider other)
@@ -62,6 +63,7 @@ public class HomingMissile : MonoBehaviour {
 
     private void Detonate()
     {
+        thruster.Stop();
         explosion.Play();
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;

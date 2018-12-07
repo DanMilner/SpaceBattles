@@ -126,7 +126,7 @@ public class AutoTurret : MonoBehaviour
 
     private bool CheckLineOfShight(Transform shipTransform)
     {
-        if (Physics.Raycast(transform.position, shipTransform.position - transform.position, out hit, 150, layerMask))
+        if (Physics.Raycast(turretGun.position, shipTransform.position - turretGun.position, out hit, 150, layerMask))
         {
             return factionId != hit.transform.gameObject.GetComponentInParent<FactionID>().factionID;
         }

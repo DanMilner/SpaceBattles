@@ -38,8 +38,8 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
             missile.transform.position = spawnPoint.transform.position;
             missile.transform.rotation = spawnPoint.transform.rotation;
 
-            missile.GetComponent<HomingMissile>().SetTarget(target);
             missile.SetActive(true);
+            missile.GetComponent<HomingMissile>().SetTarget(target);
 
             bulletRigidBody.velocity = ShipRigidbody.velocity;
         }
