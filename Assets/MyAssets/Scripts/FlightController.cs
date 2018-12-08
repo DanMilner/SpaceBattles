@@ -69,12 +69,19 @@ public class FlightController : MonoBehaviour
         }
         else
         {
-            shipAI.Fly();
-            count++;
-            if (count > 50)
+            if (shipAI.ActivateAI)
             {
-                count = 0;
-                thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
+                shipAI.Fly();
+                count++;
+                if (count > 50)
+                {
+                    count = 0;
+                    thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
+                }
+            }
+            else
+            {
+                thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
             }
         }
     }

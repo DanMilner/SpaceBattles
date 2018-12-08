@@ -8,6 +8,7 @@ public class ShipAI : MonoBehaviour {
     public float moveStrength = 200.0f;
     public float rotationStrength = 0.1f;
     public float stoppingDistance = 40.0f;
+    public bool ActivateAI = true;
 
     private Quaternion lookRotation;
     private Vector3 targetDirection;
@@ -26,6 +27,10 @@ public class ShipAI : MonoBehaviour {
 
     public void Fly()
     {
+        if (!ActivateAI)
+        {
+            return;
+        }
         if(target != null)
         {
             MoveTowardsTarget();
