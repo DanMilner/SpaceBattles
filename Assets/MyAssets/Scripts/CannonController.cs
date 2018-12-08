@@ -46,9 +46,7 @@ public class CannonController : MonoBehaviour {
 
                 GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
                 bullet.transform.parent = null;
-                bullet.GetComponent<Rigidbody>().velocity = shipRigidbody.velocity;
-                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed);
-                bullet.GetComponent<IndividualBulletController>().ResetBullet();
+                bullet.GetComponent<IndividualBulletController>().Fire(bulletSpawn.transform, shipRigidbody.velocity, bulletSpeed);
 
                 Destroy(bullet, bulletLifeSpan);
             }

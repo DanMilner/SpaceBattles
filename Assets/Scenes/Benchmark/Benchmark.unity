@@ -446,10 +446,6 @@ Prefab:
       propertyPath: m_Name
       value: ErisClassCruiser (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 2}
   m_IsPrefabAsset: 0
@@ -596,7 +592,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1003031100324096, guid: e477b4072732fec429ee3354f23e4957, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 2}
@@ -639,10 +635,6 @@ Prefab:
     - target: {fileID: 4183892652681526, guid: 9397aa6ad8c3a334e8333aa130e9fa8b, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507820311890866, guid: 9397aa6ad8c3a334e8333aa130e9fa8b, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9397aa6ad8c3a334e8333aa130e9fa8b, type: 2}

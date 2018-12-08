@@ -8,8 +8,7 @@ public class IndividualBulletController : MonoBehaviour {
     public float damage = 1.0f;
 
     private float counter = 0.0f;
-
-    // Update is called once per frame
+    public Rigidbody bulletRigidbody;
     
     void Update()
     {
@@ -19,12 +18,17 @@ public class IndividualBulletController : MonoBehaviour {
         {
             gameObject.SetActive(false);
         }
-    }
-    
+    }    
 
-    public void ResetBullet()
+    public void Fire(Transform spawnPoint, Vector3 velocity, float speed)
     {
         counter = lifeTime;
+
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+
+        bulletRigidbody.velocity = velocity;
+        bulletRigidbody.AddForce(transform.forward * speed);
     }
 
     void OnTriggerEnter(Collider other)
@@ -43,8 +47,8 @@ public class IndividualBulletController : MonoBehaviour {
 
     private void DisableBullet()
     {
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        bulletRigidbody.velocity = Vector3.zero;
+        bulletRigidbody.angularVelocity = Vector3.zero;
         gameObject.SetActive(false);
     }
 }

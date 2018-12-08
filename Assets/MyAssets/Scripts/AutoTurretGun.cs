@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
     public GameObject bulletPrefab;
-    public GameObject spawnPoint;
-    public float bulletLifeSpan;
-    public float bulletSpeed;
+    public Transform spawnPoint;
+    public float bulletLifeSpan = 10.0f;
+    public float bulletSpeed = 1.0f;
 
     private int numBullets = 120;    
     private Rigidbody ShipRigidbody;
@@ -19,8 +19,8 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();        
         bullets = new Queue<GameObject>();
         Transform bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
-        Vector3 spawnPosition = spawnPoint.transform.position;
-        Quaternion spawnRotation = spawnPoint.transform.rotation;
+        Vector3 spawnPosition = spawnPoint.position;
+        Quaternion spawnRotation = spawnPoint.rotation;
 
         for (int i = 0; i < numBullets; i++)
         {
@@ -36,18 +36,9 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
 
         if (!bullet.activeSelf)
         {
-            bulletRigidBody = bullet.GetComponent<Rigidbody>();
-
-            bullet.transform.position = spawnPoint.transform.position;
-            bullet.transform.rotation = spawnPoint.transform.rotation;
-
-            bullet.GetComponent<IndividualBulletController>().ResetBullet();
             bullet.SetActive(true);
-
-            bulletRigidBody.velocity = ShipRigidbody.velocity;
-            bulletRigidBody.AddForce(bullet.transform.forward * bulletSpeed);
+            bullet.GetComponent<IndividualBulletController>().Fire(spawnPoint, ShipRigidbody.velocity, bulletSpeed);
         }
-        bullets.Enqueue(bullet);
-        
+        bullets.Enqueue(bullet);        
     }
 }
