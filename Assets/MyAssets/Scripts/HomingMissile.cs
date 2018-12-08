@@ -30,10 +30,11 @@ public class HomingMissile : MonoBehaviour {
             Detonate();
         }
 
-        missileRigidBody.velocity = transform.forward * speed;
         missileRigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation,
-                                    Quaternion.LookRotation(target.transform.position - transform.position),
-                                    turningRate));
+                            Quaternion.LookRotation(target.transform.position - transform.position),
+                            turningRate));
+
+        missileRigidBody.MovePosition(missileRigidBody.position + transform.forward * speed * Time.deltaTime);
     }
 
     public void SetTarget(Collider target)
@@ -65,8 +66,6 @@ public class HomingMissile : MonoBehaviour {
     {
         thruster.Stop();
         explosion.Play();
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         gameObject.SetActive(false);
     }
 }

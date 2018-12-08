@@ -9,6 +9,7 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
     private Rigidbody ShipRigidbody;
     private Queue<GameObject> missiles;
     private int numMissiles = 5;
+    private GameObject missile;
 
     void Start()
     {
@@ -29,19 +30,15 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
 
     public void Fire(Collider target)
     {
-        GameObject missile = missiles.Dequeue();
+        missile = missiles.Dequeue();
 
         if (!missile.activeSelf)
         {
-            Rigidbody bulletRigidBody = missile.GetComponent<Rigidbody>();
-
             missile.transform.position = spawnPoint.transform.position;
             missile.transform.rotation = spawnPoint.transform.rotation;
 
             missile.SetActive(true);
             missile.GetComponent<HomingMissile>().SetTarget(target);
-
-            bulletRigidBody.velocity = ShipRigidbody.velocity;
         }
         missiles.Enqueue(missile);
     }
