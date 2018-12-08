@@ -41,6 +41,7 @@ public class ThrusterParticlesController : MonoBehaviour {
     private ParticleSystem[] RollRightThrustersParticles;
 
     private bool PlayerControlled = false;
+    private ShipAI shipAI;
 
     void Start () {
         MoveForwardThrustersParticles = MoveForwardThrusters.GetComponentsInChildren<ParticleSystem>();
@@ -56,6 +57,8 @@ public class ThrusterParticlesController : MonoBehaviour {
         YawRightThrustersParticles = YawRightThrusters.GetComponentsInChildren<ParticleSystem>();
         RollLeftThrustersParticles = RollLeftThrusters.GetComponentsInChildren<ParticleSystem>();
         RollRightThrustersParticles = RollRightThrusters.GetComponentsInChildren<ParticleSystem>();
+
+        shipAI = gameObject.GetComponent<ShipAI>();
     }
 
     public void SetPlayerControlled(bool IsPlayerControlled)
@@ -69,7 +72,7 @@ public class ThrusterParticlesController : MonoBehaviour {
         {
             if (movementStabiliersActive)
             {
-                ActivateStabiliserThrusters(MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).z);
+                DetermineThrusterActivation(shipAI.isMovingForward, shipAI.isMovingBackward, MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).z, movementStabiliersActive);
                 ActivateStabiliserThrusters(MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).x);
                 ActivateStabiliserThrusters(MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).y);
             }

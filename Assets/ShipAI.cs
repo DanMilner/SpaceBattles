@@ -16,6 +16,9 @@ public class ShipAI : MonoBehaviour {
     private float angleToTarget;
     private float targetVelocity;
 
+    public bool isMovingForward { set; get; }
+    public bool isMovingBackward { set; get; }
+
     void Start()
     {
         shipRigidbody = GetComponent<Rigidbody>();
@@ -58,15 +61,24 @@ public class ShipAI : MonoBehaviour {
             {
                 //accelerate
                 shipRigidbody.AddForce(targetDirection * (moveStrength - angleToTarget));
+                isMovingForward = true;
+                isMovingBackward = false;
             }
             else
             {
                 //decelerate
                 shipRigidbody.AddForce(-targetDirection * (moveStrength - angleToTarget));
+                isMovingForward = false;
+                isMovingBackward = true;
             }
         }
+        else
+        {
+            isMovingForward = false;
+            isMovingBackward = false;
+        }
 
-        RotateTowardsTarget();
+        RotateShip(targetDirection);
     }
 
     private void AttackTarget()
@@ -74,13 +86,7 @@ public class ShipAI : MonoBehaviour {
         //we are withing firing distance. Rotate ship sideways.
         RotateSidewaysFromTarget();
     }
-
-    private void RotateTowardsTarget()
-    {
-        lookRotation = Quaternion.LookRotation(targetDirection);
-        shipRigidbody.rotation = Quaternion.RotateTowards(shipRigidbody.rotation, lookRotation, rotationStrength);
-    }
-
+   
     private void RotateSidewaysFromTarget()
     {
         
@@ -99,44 +105,28 @@ public class ShipAI : MonoBehaviour {
         else
         {
             targetDirection = (target.transform.position - transform.InverseTransformDirection(-transform.right)).normalized;
-        }        
+        }
 
-        lookRotation = Quaternion.LookRotation(targetDirection);
-        shipRigidbody.rotation = Quaternion.RotateTowards(shipRigidbody.rotation, lookRotation, rotationStrength);
+        RotateShip(targetDirection);
+    }
+
+    private void RotateShip(Vector3 target)
+    {
+        var x = Vector3.Cross(transform.forward.normalized, target.normalized);
+        float theta = Mathf.Asin(x.magnitude);
+        var w = x.normalized * theta / Time.fixedDeltaTime;
+        var q = transform.rotation * shipRigidbody.inertiaTensorRotation;
+        var t = q * Vector3.Scale(shipRigidbody.inertiaTensor, Quaternion.Inverse(q) * w);
+        shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
     }
 
     private void StabiliseMovement()
     {
         float localXVelocity = transform.InverseTransformDirection(shipRigidbody.velocity).x;
-        DetermineStabilisingSpeed(localXVelocity, transform.right, moveStrength * 2f);
+        FlightController.DetermineStabilisingSpeed(shipRigidbody, localXVelocity, transform.right, moveStrength * 2f);
 
         float localYVelocity = transform.InverseTransformDirection(shipRigidbody.velocity).y;
-        DetermineStabilisingSpeed(localYVelocity, transform.up, moveStrength * 2f);        
-    }
-
-    private void DetermineStabilisingSpeed(float currentVelocity, Vector3 direction, float thrust)
-    {
-        if (currentVelocity < 0.1f && currentVelocity > -0.1f)
-        {
-            //if ship velocity is low, reduce velocity by 90%. This allows the ship to come to a complete stop smoothly.
-            SlowShipUsingStabilisers(currentVelocity, direction, thrust * 0.1f);
-        }
-        else
-        {
-            SlowShipUsingStabilisers(currentVelocity, direction, thrust);
-        }
-    }
-
-    private void SlowShipUsingStabilisers(float localVelocity, Vector3 direction, float thrustSpeed)
-    {
-        if (localVelocity > 0.005)
-        {
-            shipRigidbody.AddForce(-direction * thrustSpeed);
-        }
-        else if (localVelocity < -0.005)
-        {
-            shipRigidbody.AddForce(direction * thrustSpeed);
-        }
+        FlightController.DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, moveStrength * 2f);        
     }
 
     private void StabiliseRotation()

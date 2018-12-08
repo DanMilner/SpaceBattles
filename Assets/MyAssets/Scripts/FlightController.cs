@@ -131,36 +131,36 @@ public class FlightController : MonoBehaviour
         if (moveHorizontal == 0)
         {
             float localXVelocity = base.transform.InverseTransformDirection(shipRigidbody.velocity).x;
-            DetermineStabilisingSpeed(localXVelocity, transform.right, horizontalThrust);
+            DetermineStabilisingSpeed(shipRigidbody, localXVelocity, transform.right, horizontalThrust);
         }
 
         if (moveVertical == 0)
         {
             float localYVelocity = base.transform.InverseTransformDirection(shipRigidbody.velocity).y;
-            DetermineStabilisingSpeed(localYVelocity, transform.up, verticalThrust);
+            DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, verticalThrust);
         }
 
         if (moveForward == 0)
         {
             float localZVelocity = base.transform.InverseTransformDirection(shipRigidbody.velocity).z;
-            DetermineStabilisingSpeed(localZVelocity, transform.forward, forwardThrust);
+            DetermineStabilisingSpeed(shipRigidbody, localZVelocity, transform.forward, forwardThrust);
         }
     }
 
-    private void DetermineStabilisingSpeed(float currentVelocity, Vector3 direction, float thrust)
+    public static void DetermineStabilisingSpeed(Rigidbody shipRigidbody, float currentVelocity, Vector3 direction, float thrust)
     {
         if (currentVelocity < 0.1f && currentVelocity > -0.1f)
         {
             //if ship velocity is low, reduce velocity by 90%. This allows the ship to come to a complete stop smoothly.
-            SlowShipUsingStabilisers(currentVelocity, direction, thrust * 0.1f);
+            SlowShipUsingStabilisers(shipRigidbody, currentVelocity, direction, thrust * 0.1f);
         }
         else
         {
-            SlowShipUsingStabilisers(currentVelocity, direction, thrust);
+            SlowShipUsingStabilisers(shipRigidbody, currentVelocity, direction, thrust);
         }
     }
 
-    private void SlowShipUsingStabilisers(float localVelocity, Vector3 direction, float thrustSpeed)
+    public static void SlowShipUsingStabilisers(Rigidbody shipRigidbody, float localVelocity, Vector3 direction, float thrustSpeed)
     {
         if (localVelocity > 0.005)
         {
