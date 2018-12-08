@@ -346,6 +346,7 @@ MonoBehaviour:
   lifeTime: 10
   explosion: {fileID: 114908357015419324}
   damage: 50
+  bulletRigidbody: {fileID: 54191203623221072}
 --- !u!114 &114424973841118534
 MonoBehaviour:
   m_ObjectHideFlags: 1

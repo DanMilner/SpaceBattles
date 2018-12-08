@@ -11,6 +11,8 @@ public class FactionController : MonoBehaviour {
     void OnEnable () {
         SetShipFactionIds();
 
+        SetEnemyShips();
+
         GetShips();
 
         AssignRandomTargets();
@@ -26,13 +28,23 @@ public class FactionController : MonoBehaviour {
         }
     }
 
+    private void SetEnemyShips()
+    {
+        AutoTurretManager[] autoTurretManagers = gameObject.GetComponentsInChildren<AutoTurretManager>();
+
+        for (int i = 0; i < autoTurretManagers.Length; i++)
+        {
+            autoTurretManagers[i].SetEnemyShips(enemyShips);
+        }
+    }
+
     private void GetShips()
     {
         foreach (GameObject ship in GameObject.FindGameObjectsWithTag("Ship"))
         {
             if (ship.GetComponentInParent<FactionID>().factionID != factionID)
             {
-                enemyShips.Add(ship);
+                enemyShips.Add(ship.transform.parent.gameObject);
             }
             else
             {

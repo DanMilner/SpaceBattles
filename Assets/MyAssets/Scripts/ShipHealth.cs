@@ -118,9 +118,9 @@ public class ShipHealth : MonoBehaviour {
     {
         Collider[] colliders = GetComponentsInChildren<Collider>();
 
-        foreach (AutoTurretManager a in shipsTargetedBy)
+        foreach (AutoTurretManager ship in shipsTargetedBy)
         {
-            a.RemoveShips(colliders);
+            ship.RemoveTargets(colliders);
         }
     }
 
