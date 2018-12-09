@@ -65,6 +65,7 @@ public class HomingMissile : MonoBehaviour {
     private void Detonate()
     {
         thruster.Stop();
+        explosion.transform.position = transform.position;
         explosion.Play();
         gameObject.SetActive(false);
     }
