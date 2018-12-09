@@ -187,13 +187,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0aacf547b880434db992114fec5a0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   turningRate: 15
   explosion: {fileID: 114658561160236494}
   thruster: {fileID: 198098087004579168}
   target: {fileID: 0}
-  damage: 1
-  lifeTime: 10
+  damage: 10
+  lifeTime: 20
 --- !u!114 &114658561160236494
 MonoBehaviour:
   m_ObjectHideFlags: 1
