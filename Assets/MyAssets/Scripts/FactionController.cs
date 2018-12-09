@@ -55,6 +55,11 @@ public class FactionController : MonoBehaviour {
 
     private void AssignRandomTargets()
     {
+        if(enemyShips.Count <= 0)
+        {
+            return;
+        }
+
         foreach (ShipAI ai in friendlyShips)
         {
             ai.target = enemyShips[Random.Range(0, enemyShips.Count - 1)];
