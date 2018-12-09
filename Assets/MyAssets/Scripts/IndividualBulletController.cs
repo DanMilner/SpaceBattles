@@ -33,13 +33,25 @@ public class IndividualBulletController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("AutoTurret") && !other.CompareTag("Bullet"))
+        if (!other.CompareTag("Bullet"))
         {
-            ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
-            if (shipHealth != null)
+            if (other.CompareTag("AutoTurret"))
             {
-                shipHealth.TakeDamage(damage);
+                TurretHealth turretHealth = other.gameObject.GetComponentInChildren<TurretHealth>();
+                if (turretHealth != null)
+                {
+                    turretHealth.TakeDamage(damage);
+                }
             }
+            else if (other.CompareTag("ShipCollider"))
+            {
+                ShipHealth shipHealth = other.gameObject.GetComponentInParent<ShipHealth>();
+                if (shipHealth != null)
+                {
+                    shipHealth.TakeDamage(damage);
+                }
+            }
+
             explosion.Play();
             DisableBullet();
         }
