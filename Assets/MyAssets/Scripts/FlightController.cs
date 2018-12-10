@@ -41,7 +41,7 @@ public class FlightController : MonoBehaviour
         shipAI = gameObject.GetComponent<ShipAI>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (PlayerControlled)
         {
@@ -84,7 +84,7 @@ public class FlightController : MonoBehaviour
                 thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
             }
         }
-    }
+    }   
 
     public void ToggleRotationalStabilisers()
     {
