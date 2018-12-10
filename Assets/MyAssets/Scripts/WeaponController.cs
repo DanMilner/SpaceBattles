@@ -85,7 +85,10 @@ public class WeaponController : MonoBehaviour
         if (playerControlled)
         {
             UpdateUIWithWeaponName();
-            CurrentWeapon.SetWeaponTarget(weaponTarget);
+            if(CurrentWeapon != null)
+            {
+                CurrentWeapon.SetWeaponTarget(weaponTarget);
+            }
         }
     }
 

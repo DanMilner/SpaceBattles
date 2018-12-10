@@ -41,7 +41,7 @@ public class AutoTurretManager : MonoBehaviour {
 
     private void GetNearbyShips()
     {
-        for (int i = 0; i < enemyShips.Count; i++)
+        for(int i = 0; i < enemyShips.Count; i++)
         {
             if (Vector3.Distance(enemyShips[i].transform.position, transform.position) <= range)
             {
@@ -60,7 +60,13 @@ public class AutoTurretManager : MonoBehaviour {
                     RemoveTargets(enemyShips[i].GetComponentsInChildren<Collider>());
                 }
             }
-        }
+        }        
+    }
+
+    public void RemoveEnemyShip(GameObject ship)
+    {
+        enemyShips.Remove(ship);
+        RemoveTargets(ship.GetComponentsInChildren<Collider>());
     }
 
     public void RemoveTargets(Collider[] collider)

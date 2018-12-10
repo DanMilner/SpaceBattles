@@ -6,12 +6,15 @@ public class FactionController : MonoBehaviour {
     public int factionID;
     private List<GameObject> enemyShips = new List<GameObject>();
     private List<ShipAI> friendlyShips = new List<ShipAI>();
+    private List<FactionController> otherFactions = new List<FactionController>();
 
     // Use this for initialization
     void OnEnable () {
         SetShipFactionIds();
 
         SetEnemyShips();
+
+        GetOtherFactions();
 
         GetShips();
 
@@ -35,6 +38,14 @@ public class FactionController : MonoBehaviour {
         for (int i = 0; i < autoTurretManagers.Length; i++)
         {
             autoTurretManagers[i].SetEnemyShips(enemyShips);
+        }
+    }
+
+    private void GetOtherFactions()
+    {
+        foreach (GameObject faction in GameObject.FindGameObjectsWithTag("Faction"))
+        {
+            otherFactions.Add(faction.GetComponent<FactionController>());
         }
     }
 
@@ -64,5 +75,31 @@ public class FactionController : MonoBehaviour {
         {
             ai.target = enemyShips[Random.Range(0, enemyShips.Count - 1)];
         }
+    }
+
+    public void EnemyShipDestroyed(GameObject ship)
+    {
+        AutoTurretManager[] autoTurretManagers = gameObject.GetComponentsInChildren<AutoTurretManager>();
+        
+        for (int i = 0; i < autoTurretManagers.Length; i++)
+        {
+            autoTurretManagers[i].RemoveEnemyShip(ship);
+        }
+    }
+
+    public void FriendlyShipDestroyed(GameObject ship)
+    {
+        for (int i = 0; i < otherFactions.Count; i++)
+        {
+            otherFactions[i].EnemyShipDestroyed(ship);
+        }
+
+        friendlyShips.Remove(ship.GetComponent<ShipAI>());
+
+        MonoBehaviour[] scripts = ship.GetComponentsInChildren<MonoBehaviour>();
+        foreach (MonoBehaviour m in scripts)
+        {
+            m.enabled = false;
+        }        
     }
 }

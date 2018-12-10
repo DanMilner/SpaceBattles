@@ -96,11 +96,10 @@ public class ShipHealth : MonoBehaviour {
             renderer.material = deadMaterial;
         }
 
-        DisableAutoTurrets();
 
         Instantiate(deathExplostion, transform.position, transform.rotation);
 
-        RemoveSelfFromTargetedShips();
+        InformFactionControllerOfDeath();
     }
 
     private void DisableAutoTurrets()
@@ -114,23 +113,8 @@ public class ShipHealth : MonoBehaviour {
         }
     }
 
-    private void RemoveSelfFromTargetedShips()
+    private void InformFactionControllerOfDeath()
     {
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-
-        foreach (AutoTurretManager ship in shipsTargetedBy)
-        {
-            ship.RemoveTargets(colliders);
-        }
-    }
-
-    public void SetTargeted(AutoTurretManager autoTurretManager)
-    {
-        shipsTargetedBy.Add(autoTurretManager);
-    }
-
-    public void SetNotTargeted(AutoTurretManager autoTurretManager)
-    {
-        shipsTargetedBy.Remove(autoTurretManager);
+        GetComponentInParent<FactionController>().FriendlyShipDestroyed(gameObject);
     }
 }
