@@ -41,7 +41,7 @@ public class FlightController : MonoBehaviour
         shipAI = gameObject.GetComponent<ShipAI>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (PlayerControlled)
         {
@@ -64,27 +64,38 @@ public class FlightController : MonoBehaviour
             {
                 StabiliseMovement();
             }
-
-            thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
         }
         else
         {
             if (shipAI.ActivateAI)
             {
                 shipAI.Fly();
-                count++;
-                if (count > 50)
-                {
-                    count = 0;
-                    thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
-                }
+            }
+        }
+    }
+
+    void Update()
+    {
+        count++;
+        if (count < 50) { return; }
+        count = 0;
+
+        if (PlayerControlled)
+        {
+            thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
+        }
+        else
+        {
+            if (shipAI.ActivateAI)
+            {
+                thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
             }
             else
             {
                 thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
             }
         }
-    }   
+    }
 
     public void ToggleRotationalStabilisers()
     {
@@ -197,5 +208,5 @@ public class FlightController : MonoBehaviour
         shipRigidbody.AddTorque(transform.right * pitchSpeed * pitch);
         shipRigidbody.AddTorque(transform.up * yawSpeed * yaw);
         shipRigidbody.AddTorque(transform.forward * rollSpeed * roll);
-    }    
+    }
 }
