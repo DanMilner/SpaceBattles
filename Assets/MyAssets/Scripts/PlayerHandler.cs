@@ -79,10 +79,16 @@ public class PlayerHandler : MonoBehaviour {
 
     private void SetPlayerShip(int shipNumber)
     {
-        if(CurrentPlayerShip != null)
+        if (shipNumber >= PlayerShips.Length)
+        {
+            return;
+        }
+
+        if (CurrentPlayerShip != null)
         {
             CurrentPlayerShip.tag = "Ship";
         }
+
         CurrentPlayerShip = PlayerShips[shipNumber];
         cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
 
