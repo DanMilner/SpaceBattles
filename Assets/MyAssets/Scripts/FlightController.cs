@@ -12,8 +12,6 @@ public class FlightController : MonoBehaviour
     public float rollSpeed = 0.03f;
     public float pitchSpeed = 0.03f;
 
-    private bool PlayerControlled = false;
-
     private Rigidbody shipRigidbody;
 
     private float moveForward;
@@ -29,72 +27,43 @@ public class FlightController : MonoBehaviour
 
     private ThrusterParticlesController thrusterParticlesController;
 
-    private ShipAI shipAI;
-
-    private int count = 0;
-
     void Start()
     {
-        shipRigidbody = gameObject.GetComponent<Rigidbody>();
-
+        shipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
-        shipAI = gameObject.GetComponent<ShipAI>();
     }
 
-    void FixedUpdate()
+    public void Fly()
     {
-        if (PlayerControlled)
+        moveForward = Input.GetAxis("Move Forward") - Input.GetAxis("Move Backward");
+        moveHorizontal = Input.GetAxis("Move Right") - Input.GetAxis("Move Left");
+        moveVertical = Input.GetAxis("Move Up") - Input.GetAxis("Move Down");
+        pitch = Input.GetAxis("Pitch Down") - Input.GetAxis("Pitch Up");
+        yaw = Input.GetAxis("Yaw Right") - Input.GetAxis("Yaw Left");
+        roll = Input.GetAxis("Roll Left") - Input.GetAxis("Roll Right");
+
+        ThrusterMovement();
+        ThrusterRotation();
+
+        if (rotationalStabiliersActive)
         {
-            moveForward = Input.GetAxis("Move Forward") - Input.GetAxis("Move Backward");
-            moveHorizontal = Input.GetAxis("Move Right") - Input.GetAxis("Move Left");
-            moveVertical = Input.GetAxis("Move Up") - Input.GetAxis("Move Down");
-            pitch = Input.GetAxis("Pitch Down") - Input.GetAxis("Pitch Up");
-            yaw = Input.GetAxis("Yaw Right") - Input.GetAxis("Yaw Left");
-            roll = Input.GetAxis("Roll Left") - Input.GetAxis("Roll Right");
-
-            ThrusterMovement();
-            ThrusterRotation();
-
-            if (rotationalStabiliersActive)
-            {
-                StabiliseRotation();
-            }
-
-            if (movementStabiliersActive)
-            {
-                StabiliseMovement();
-            }
+            StabiliseRotation();
         }
-        else
+
+        if (movementStabiliersActive)
         {
-            if (shipAI.ActivateAI)
-            {
-                shipAI.Fly();
-            }
+            StabiliseMovement();
         }
     }
 
-    void Update()
+    public void ActivateThrustersPlayer()
     {
-        count++;
-        if (count < 50) { return; }
-        count = 0;
+        thrusterParticlesController.ActivateThrustersPlayer(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
+    }
 
-        if (PlayerControlled)
-        {
-            thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
-        }
-        else
-        {
-            if (shipAI.ActivateAI)
-            {
-                thrusterParticlesController.ActivateThrusters(shipRigidbody, true, true);
-            }
-            else
-            {
-                thrusterParticlesController.ActivateThrusters(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
-            }
-        }
+    public void ActivateThrustersAI(bool aiMovingForward, bool aiMovingBackward)
+    {
+        thrusterParticlesController.ActivateThrustersAI(shipRigidbody, aiMovingForward, aiMovingBackward);
     }
 
     public void ToggleRotationalStabilisers()
@@ -115,18 +84,6 @@ public class FlightController : MonoBehaviour
     public bool AreRotationalStabilisersActive()
     {
         return rotationalStabiliersActive;
-    }
-
-    public void SetPlayerControlled(bool IsPlayerControlled)
-    {
-        PlayerControlled = IsPlayerControlled;
-
-        if (thrusterParticlesController == null)
-        {
-            thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
-        }
-        thrusterParticlesController.SetPlayerControlled(IsPlayerControlled);
-
     }
 
     private void StabiliseRotation()
@@ -189,6 +146,11 @@ public class FlightController : MonoBehaviour
         {
             shipRigidbody.AddForce(direction * thrustSpeed);
         }
+    }
+
+    public void DisableAllThrusters()
+    {
+        thrusterParticlesController.DisableAllThrusters();
     }
 
     private void ThrusterMovement()

@@ -9,6 +9,7 @@ public class ShipHealth : MonoBehaviour {
     public GameObject damagePoints;
     public bool alive = true;
     public Material deadMaterial;
+    public MeshRenderer[] meshes;
 
     private ParticleSystem[] damage;
     private UIHandler uIHandler;
@@ -16,14 +17,9 @@ public class ShipHealth : MonoBehaviour {
     float damageThreshold;
     float currentThreshold;
     private bool isPlayerShip;
-    private HashSet<AutoTurretManager> shipsTargetedBy;
 
     void Start()
     {
-        //each ship stores a set enemy ships that has auto guns and are aware of this ship
-        //This script will inform those enemy ships when it is destoryed so they will no 
-        //longer target this ship.
-        shipsTargetedBy = new HashSet<AutoTurretManager>();
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         damage = damagePoints.GetComponentsInChildren<ParticleSystem>();
 
@@ -86,16 +82,10 @@ public class ShipHealth : MonoBehaviour {
 
     private void DestroyShip()
     {
-        gameObject.GetComponent<FlightController>().enabled = false;
-        gameObject.GetComponent<ThrusterParticlesController>().ShipDestroyed();
-        gameObject.GetComponent<ThrusterParticlesController>().enabled = false;
-        gameObject.GetComponent<WeaponController>().enabled = false;
-
-        foreach(MeshRenderer renderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+        foreach(MeshRenderer renderer in meshes)
         {
             renderer.material = deadMaterial;
         }
-
 
         Instantiate(deathExplostion, transform.position, transform.rotation);
 
@@ -115,6 +105,6 @@ public class ShipHealth : MonoBehaviour {
 
     private void InformFactionControllerOfDeath()
     {
-        GetComponentInParent<FactionController>().FriendlyShipDestroyed(gameObject);
+        GetComponentInParent<FactionController>().FriendlyShipDestroyed(gameObject.transform.parent.gameObject);
     }
 }

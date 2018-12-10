@@ -5,7 +5,6 @@ using UnityEngine;
 public class AutoTurretManager : MonoBehaviour {
     public float range = 400.0f;
 
-    private int factionId;
     private AutoTurret[] autoTurrets;
     private HashSet<Collider> enemyTargets;
     private List<GameObject> enemyShips;
@@ -15,7 +14,6 @@ public class AutoTurretManager : MonoBehaviour {
     void Start () {
         enemyTargets = new HashSet<Collider>();
         nearbyShips = new HashSet<GameObject>();
-        factionId = gameObject.GetComponentInParent<FactionID>().factionID;
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
 
         for (int i = 0; i < autoTurrets.Length; i++)

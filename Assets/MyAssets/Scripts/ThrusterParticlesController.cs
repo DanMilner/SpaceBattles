@@ -40,9 +40,6 @@ public class ThrusterParticlesController : MonoBehaviour {
     private ParticleSystem[] RollLeftThrustersParticles;
     private ParticleSystem[] RollRightThrustersParticles;
 
-    private bool PlayerControlled = false;
-    private ShipAI shipAI;
-
     void Start () {
         MoveForwardThrustersParticles = MoveForwardThrusters.GetComponentsInChildren<ParticleSystem>();
         MoveBackwardThrustersParticles = MoveBackwardThrusters.GetComponentsInChildren<ParticleSystem>();
@@ -57,42 +54,28 @@ public class ThrusterParticlesController : MonoBehaviour {
         YawRightThrustersParticles = YawRightThrusters.GetComponentsInChildren<ParticleSystem>();
         RollLeftThrustersParticles = RollLeftThrusters.GetComponentsInChildren<ParticleSystem>();
         RollRightThrustersParticles = RollRightThrusters.GetComponentsInChildren<ParticleSystem>();
-
-        shipAI = gameObject.GetComponent<ShipAI>();
     }
 
-    public void SetPlayerControlled(bool IsPlayerControlled)
+    public void ActivateThrustersPlayer(Rigidbody shipRigidbody, bool movementStabiliersActive, bool rotationalStabiliersActive)
     {
-        PlayerControlled = IsPlayerControlled;
+        DetermineThrusterActivation(Input.GetButton("Move Forward"), Input.GetButton("Move Backward"), MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).z, movementStabiliersActive);
+        DetermineThrusterActivation(Input.GetButton("Move Right"), Input.GetButton("Move Left"), MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).x, movementStabiliersActive);
+        DetermineThrusterActivation(Input.GetButton("Move Up"), Input.GetButton("Move Down"), MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).y, movementStabiliersActive);
+
+        DetermineThrusterActivation(Input.GetButton("Pitch Up"), Input.GetButton("Pitch Down"), PitchUpThrustersParticles, PitchDownThrustersParticles, shipRigidbody.angularVelocity.x, rotationalStabiliersActive);
+        DetermineThrusterActivation(Input.GetButton("Yaw Right"), Input.GetButton("Yaw Left"), YawRightThrustersParticles, YawLeftThrustersParticles, shipRigidbody.angularVelocity.y, rotationalStabiliersActive);
+        DetermineThrusterActivation(Input.GetButton("Roll Right"), Input.GetButton("Roll Left"), RollRightThrustersParticles, RollLeftThrustersParticles, shipRigidbody.angularVelocity.z, rotationalStabiliersActive);
     }
 
-    public void ActivateThrusters (Rigidbody ShipRigidbody, bool movementStabiliersActive, bool rotationalStabiliersActive) {
-        //if ship is not currently controlled by the player
-        if (!PlayerControlled)
-        {
-            if (movementStabiliersActive)
-            {
-                DetermineThrusterActivation(shipAI.isMovingForward, shipAI.isMovingBackward, MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).z, movementStabiliersActive);
-                ActivateStabiliserThrusters(MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).x);
-                ActivateStabiliserThrusters(MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).y);
-            }
-            if (rotationalStabiliersActive)
-            {
-                ActivateStabiliserThrusters(PitchUpThrustersParticles, PitchDownThrustersParticles, ShipRigidbody.angularVelocity.x);
-                ActivateStabiliserThrusters(YawRightThrustersParticles, YawLeftThrustersParticles, ShipRigidbody.angularVelocity.y);
-                ActivateStabiliserThrusters(RollRightThrustersParticles, RollLeftThrustersParticles, ShipRigidbody.angularVelocity.z);
-            }
-        }
-        else
-        {
-            DetermineThrusterActivation(Input.GetButton("Move Forward"), Input.GetButton("Move Backward"), MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).z, movementStabiliersActive);
-            DetermineThrusterActivation(Input.GetButton("Move Right"), Input.GetButton("Move Left"), MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).x, movementStabiliersActive);
-            DetermineThrusterActivation(Input.GetButton("Move Up"), Input.GetButton("Move Down"), MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(ShipRigidbody.velocity).y, movementStabiliersActive);
+    public void ActivateThrustersAI(Rigidbody shipRigidbody, bool aiMovingForward, bool aiMovingBackward)
+    {
+        DetermineThrusterActivation(aiMovingForward, aiMovingBackward, MoveForwardThrustersParticles, MoveBackwardThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).z, true);
+        ActivateStabiliserThrusters(MoveRightThrustersParticles, MoveLeftThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).x);
+        ActivateStabiliserThrusters(MoveUpThrustersParticles, MoveDownThrustersParticles, transform.InverseTransformDirection(shipRigidbody.velocity).y);
 
-            DetermineThrusterActivation(Input.GetButton("Pitch Up"), Input.GetButton("Pitch Down"), PitchUpThrustersParticles, PitchDownThrustersParticles, ShipRigidbody.angularVelocity.x, rotationalStabiliersActive);
-            DetermineThrusterActivation(Input.GetButton("Yaw Right"), Input.GetButton("Yaw Left"), YawRightThrustersParticles, YawLeftThrustersParticles, ShipRigidbody.angularVelocity.y, rotationalStabiliersActive);
-            DetermineThrusterActivation(Input.GetButton("Roll Right"), Input.GetButton("Roll Left"), RollRightThrustersParticles, RollLeftThrustersParticles, ShipRigidbody.angularVelocity.z, rotationalStabiliersActive);
-        }
+        ActivateStabiliserThrusters(PitchUpThrustersParticles, PitchDownThrustersParticles, shipRigidbody.angularVelocity.x);
+        ActivateStabiliserThrusters(YawRightThrustersParticles, YawLeftThrustersParticles, shipRigidbody.angularVelocity.y);
+        ActivateStabiliserThrusters(RollRightThrustersParticles, RollLeftThrustersParticles, shipRigidbody.angularVelocity.z);
     }
 
     private void DetermineThrusterActivation(bool positiveActive, bool negativeActive, ParticleSystem[] postive, ParticleSystem[] negative, float velocity, bool stabiliserActive)
@@ -159,7 +142,7 @@ public class ThrusterParticlesController : MonoBehaviour {
         }
     }
 
-    public void ShipDestroyed()
+    public void DisableAllThrusters()
     {
         ToggleThrusterParticleSystems(MoveForwardThrustersParticles, false);
         ToggleThrusterParticleSystems(MoveBackwardThrustersParticles, false);

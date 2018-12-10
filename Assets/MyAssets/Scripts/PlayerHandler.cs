@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour {
-    public GameObject[] PlayerShips;
+    public GameObject[] playerShips;
     public UIHandler uIHandler;
 
     private KeyCode[] keyCodes = {
@@ -18,12 +18,9 @@ public class PlayerHandler : MonoBehaviour {
          KeyCode.Alpha9,
      };
 
-    private GameObject CurrentPlayerShip;
+    private GameObject currentPlayerShip;
     private CameraController cameraController;
-    private FlightController CurrentFlightController;
-    private WeaponController currentWeaponController;
-    private Rigidbody CurrentShipRigidbody;
-    private ShipHealth currentShipHealth;
+    private ShipController currentShipController;
 
     // Use this for initialization
     void Start () {
@@ -31,8 +28,8 @@ public class PlayerHandler : MonoBehaviour {
 
         SetPlayerShip(0);
 
-        uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
-        uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
+        uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
+        uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
     }
 
     void Update()
@@ -50,57 +47,49 @@ public class PlayerHandler : MonoBehaviour {
 
         if (Input.GetButtonDown("RotationalStabilisers"))
         {
-            CurrentFlightController.ToggleRotationalStabilisers();
-            uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
+            currentShipController.ToggleRotationalStabilisers();
+            uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
         }
 
         if (Input.GetButtonDown("MovementStabilisers"))
         {
-            CurrentFlightController.ToggleMovementStabilisers();
-            uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
+            currentShipController.ToggleMovementStabilisers();
+            uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
         }
 
-        uIHandler.UpdateUI(CurrentShipRigidbody);
+        uIHandler.UpdateUI(currentShipController.GetRigidbody());
     }
 
     private void ChangePlayerShip(int shipNumber)
     {
-        if (shipNumber > PlayerShips.Length) { return; }
+        if (shipNumber > playerShips.Length) { return; }
 
-        CurrentFlightController.SetPlayerControlled(false);
-        currentWeaponController.SetPlayerControlled(false);
-        currentShipHealth.SetPlayerControlled(false);
+        currentShipController.SetPlayerControlled(false);
 
         SetPlayerShip(shipNumber);
 
-        uIHandler.SetRotationalStabiliers(CurrentFlightController.AreRotationalStabilisersActive());
-        uIHandler.SetMovementStabiliers(CurrentFlightController.AreMovementStabilisersActive());
+        uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
+        uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
     }
 
     private void SetPlayerShip(int shipNumber)
     {
-        if (shipNumber >= PlayerShips.Length)
+        if (shipNumber >= playerShips.Length)
         {
             return;
         }
 
-        if (CurrentPlayerShip != null)
+        if (currentPlayerShip != null)
         {
-            CurrentPlayerShip.tag = "Ship";
+            currentPlayerShip.tag = "Ship";
         }
 
-        CurrentPlayerShip = PlayerShips[shipNumber];
-        cameraController.SetCameraTarget(CurrentPlayerShip.transform, CurrentPlayerShip.GetComponent<CameraZoomSettings>());
+        currentPlayerShip = playerShips[shipNumber];
+        cameraController.SetCameraTarget(currentPlayerShip.transform, currentPlayerShip.GetComponent<CameraZoomSettings>());
 
-        CurrentFlightController = CurrentPlayerShip.GetComponent<FlightController>();
-        currentWeaponController = CurrentPlayerShip.GetComponent<WeaponController>();
-        currentShipHealth = CurrentPlayerShip.GetComponent<ShipHealth>();
-        CurrentShipRigidbody = CurrentPlayerShip.GetComponent<Rigidbody>();
+        currentShipController = currentPlayerShip.GetComponentInChildren<ShipController>();
+        currentShipController.SetPlayerControlled(true);
 
-        CurrentFlightController.SetPlayerControlled(true);
-        currentWeaponController.SetPlayerControlled(true);
-        currentShipHealth.SetPlayerControlled(true);
-
-        CurrentPlayerShip.tag = "Player";
+        currentPlayerShip.tag = "Player";
     }
 }

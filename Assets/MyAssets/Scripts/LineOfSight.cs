@@ -5,22 +5,22 @@ using UnityEngine;
 public class LineOfSight : MonoBehaviour {
     private RaycastHit hit;
     private int layerMask;
-    private FactionID faction;
+    private int factionID;
+    private GameObject objectHit;
+
     void Start () {
         layerMask = ~(1 << 2);
-        faction = GetComponentInParent<FactionID>();
+        factionID = GetComponentInParent<FactionController>().factionID;
     }
 
     public bool SafeToFire()
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 150, layerMask))
         {
-            GameObject objectHit = hit.transform.gameObject;
+            objectHit = hit.transform.gameObject;
             if (objectHit.CompareTag("Ship")) {
-                return objectHit.GetComponentInParent<FactionID>().factionID != faction.factionID;
+                return objectHit.GetComponentInParent<FactionController>().factionID != factionID;
             }
-
-            return !objectHit.CompareTag("Player");
         }
         return true;
     }
