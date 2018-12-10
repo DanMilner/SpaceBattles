@@ -9,10 +9,7 @@ public class CannonManager : MonoBehaviour, IWeapon {
     void Start()
     {
         Cannons = gameObject.GetComponentsInChildren<CannonController>();
-        for (int i = 0; i < Cannons.Length; i++)
-        {
-            Cannons[i].SetCannonTarget(cannonTarget);
-        }
+        ApplyCannonTarget();
     }
 
     public void Fire()
@@ -26,5 +23,24 @@ public class CannonManager : MonoBehaviour, IWeapon {
     public string GetName()
     {
         return "Cannons";
+    }
+
+    public void SetCannonTarget(GameObject target)
+    {
+        cannonTarget = target;
+        ApplyCannonTarget();
+    }
+
+    private void ApplyCannonTarget()
+    {
+        for (int i = 0; i < Cannons.Length; i++)
+        {
+            Cannons[i].SetCannonTarget(cannonTarget);
+        }
+    }
+
+    public void SetWeaponTarget(GameObject target)
+    {
+        cannonTarget = target;
     }
 }

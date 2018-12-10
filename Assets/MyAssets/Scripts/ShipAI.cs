@@ -16,6 +16,7 @@ public class ShipAI : MonoBehaviour {
     private Transform shipTransform;
     private float angleToTarget;
     private float targetVelocity;
+    private CannonManager cannonManager;
 
     public bool isMovingForward { set; get; }
     public bool isMovingBackward { set; get; }
@@ -23,6 +24,7 @@ public class ShipAI : MonoBehaviour {
     void Start()
     {
         shipRigidbody = GetComponent<Rigidbody>();
+        cannonManager = GetComponentInChildren<CannonManager>();
     }
 
     public void Fly()
@@ -34,6 +36,8 @@ public class ShipAI : MonoBehaviour {
         if(target != null)
         {
             MoveTowardsTarget();
+            cannonManager.SetCannonTarget(target);
+            cannonManager.Fire();
         }
     }
 
@@ -93,8 +97,7 @@ public class ShipAI : MonoBehaviour {
     }
    
     private void RotateSidewaysFromTarget()
-    {
-        
+    {        
         float angle = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
         float angle2 = Vector3.Angle(transform.forward, transform.position - target.transform.position);
         

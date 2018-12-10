@@ -40,7 +40,7 @@ public class FactionController : MonoBehaviour {
 
     private void GetShips()
     {
-        foreach (GameObject ship in GameObject.FindGameObjectsWithTag("Ship"))
+        foreach (GameObject ship in GameObject.FindGameObjectsWithTag("ShipTarget"))
         {
             if (ship.GetComponentInParent<FactionID>().factionID != factionID)
             {

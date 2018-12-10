@@ -13,6 +13,7 @@ TagManager:
   - UI
   - BulletHolder
   - Ship
+  - ShipTarget
   layers:
   - Default
   - TransparentFX

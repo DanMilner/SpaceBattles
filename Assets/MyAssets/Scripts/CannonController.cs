@@ -38,9 +38,9 @@ public class CannonController : MonoBehaviour {
 
     public void FireCannon()
     {
-        if (lineOfSight.SafeToFire())
+        if (coolDown <= 0)
         {
-            if (coolDown <= 0)
+            if (lineOfSight.SafeToFire())
             {
                 coolDown = coolDownTime;
 

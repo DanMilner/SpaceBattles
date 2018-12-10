@@ -42,4 +42,10 @@ public class MissileController : MonoBehaviour, IWeapon
     {
         return "Missiles";
     }
+
+    public void SetWeaponTarget(GameObject target)
+    {
+        //TODO: implement weapon target. Gun should face where the player is looking.
+        return;
+    }
 }

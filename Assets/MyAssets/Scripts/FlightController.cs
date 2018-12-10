@@ -115,6 +115,7 @@ public class FlightController : MonoBehaviour
             thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();
         }
         thrusterParticlesController.SetPlayerControlled(IsPlayerControlled);
+
     }
 
     private void StabiliseRotation()

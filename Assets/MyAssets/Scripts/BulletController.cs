@@ -44,4 +44,10 @@ public class BulletController : MonoBehaviour, IWeapon
     {
         return "Gun";
     }
- }
+
+    public void SetWeaponTarget(GameObject target)
+    {
+        //TODO: implement weapon target. Gun should face where the player is looking.
+        return;
+    }
+}

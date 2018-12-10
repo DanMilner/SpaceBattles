@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IWeapon
 {
     void Fire();
+    void SetWeaponTarget(GameObject target);
     string GetName();
 }
 
@@ -45,22 +46,12 @@ public class WeaponController : MonoBehaviour
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
                 CurrentWeaponNum++;
-                if (CurrentWeaponNum > NumberOfWeapons)
-                {
-                    CurrentWeaponNum = 0;
-                }
-                CurrentWeapon = GetWeapon(CurrentWeaponNum);
-                UpdateUIWithWeaponName();
+                ChangeWeapon();
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
                 CurrentWeaponNum--;
-                if (CurrentWeaponNum < 0)
-                {
-                    CurrentWeaponNum = NumberOfWeapons;
-                }
-                CurrentWeapon = GetWeapon(CurrentWeaponNum);
-                UpdateUIWithWeaponName();
+                ChangeWeapon();
             }
         }
 
@@ -73,12 +64,28 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    private void ChangeWeapon()
+    {
+        if (CurrentWeaponNum > NumberOfWeapons)
+        {
+            CurrentWeaponNum = 0;
+        }
+        else if (CurrentWeaponNum < 0)
+        {
+            CurrentWeaponNum = NumberOfWeapons;
+        }
+        CurrentWeapon = GetWeapon(CurrentWeaponNum);
+        CurrentWeapon.SetWeaponTarget(weaponTarget);
+        UpdateUIWithWeaponName();
+    }
+
     public void SetPlayerControlled(bool pControlled)
     {
         playerControlled = pControlled;
         if (playerControlled)
         {
             UpdateUIWithWeaponName();
+            CurrentWeapon.SetWeaponTarget(weaponTarget);
         }
     }
 

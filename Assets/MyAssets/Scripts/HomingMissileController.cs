@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingMissileController : MonoBehaviour, IWeapon
+public class HomingMissileController : MonoBehaviour
 {
     public GameObject missilePrefab;
     public GameObject spawnPoint;

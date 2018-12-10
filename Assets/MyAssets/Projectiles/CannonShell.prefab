@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cee275f2ef47040bf2ef7bb2fac8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 10
+  lifeTime: 20
   explosion: {fileID: 114908357015419324}
   damage: 50
   bulletRigidbody: {fileID: 54191203623221072}
