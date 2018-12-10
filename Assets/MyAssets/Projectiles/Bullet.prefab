@@ -158,7 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 198646977569279792}
-  parent: {fileID: 4990364101363684}
 --- !u!114 &114393568107962556
 MonoBehaviour:
   m_ObjectHideFlags: 1

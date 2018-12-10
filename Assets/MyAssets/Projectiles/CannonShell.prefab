@@ -377,7 +377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 198478636279423108}
-  parent: {fileID: 4705127967767128}
 --- !u!198 &198234430233952396
 ParticleSystem:
   m_ObjectHideFlags: 1

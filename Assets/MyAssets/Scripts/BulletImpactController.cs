@@ -4,29 +4,15 @@ using UnityEngine;
 
 public class BulletImpactController : MonoBehaviour {
     public ParticleSystem ps;
-    public Transform parent;
-    private float delay;
-    private float time = 0.0f;
 
     void Start()
     {
-        delay = ps.main.duration;
+        transform.parent = GameObject.FindGameObjectWithTag("BulletHolder").transform;
     }
-
-    public void Play()
+    
+    public void Play(Vector3 newPosition)
     {
-        time = delay;
-        transform.parent = null;
+        transform.position = newPosition;
         ps.Play();
-    }
-
-    void Update()
-    {
-        time -= Time.deltaTime;
-
-        if(time < 0)
-        {
-            transform.parent = parent;
-        }
     }
 }

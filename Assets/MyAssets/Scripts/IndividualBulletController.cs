@@ -52,7 +52,7 @@ public class IndividualBulletController : MonoBehaviour {
                 }
             }
 
-            explosion.Play();
+            explosion.Play(transform.position);
             DisableBullet();
         }
     }
