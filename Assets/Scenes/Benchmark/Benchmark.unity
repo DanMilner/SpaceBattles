@@ -371,6 +371,11 @@ Prefab:
       propertyPath: PlayerShips.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114821717817528538, guid: e21efe1aef09fde4485b657c8ee83833,
+        type: 2}
+      propertyPath: playerShips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4030030542466606, guid: e21efe1aef09fde4485b657c8ee83833, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -413,6 +418,11 @@ Prefab:
       propertyPath: PlayerShips.Array.data[1]
       value: 
       objectReference: {fileID: 1379173413}
+    - target: {fileID: 114821717817528538, guid: e21efe1aef09fde4485b657c8ee83833,
+        type: 2}
+      propertyPath: playerShips.Array.data[0]
+      value: 
+      objectReference: {fileID: 1255935572}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e21efe1aef09fde4485b657c8ee83833, type: 2}
   m_IsPrefabAsset: 0
@@ -805,10 +815,6 @@ Prefab:
     - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 2}
       propertyPath: m_Name
       value: ErisClassCruiser (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 2}

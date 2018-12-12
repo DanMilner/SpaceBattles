@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class IndividualBulletController : MonoBehaviour {
     public float lifeTime = 10.0f;
-    public BulletImpactController explosion;
     public float damage = 1.0f;
 
+    [SerializeField] private GameObject explosion;
+    [SerializeField] private Rigidbody bulletRigidbody;
+
     private float counter = 0.0f;
-    public Rigidbody bulletRigidbody;
-    
+    private float explosionLength = 1.0f;
+
+    void Start()
+    {
+        if(explosion != null)
+        {
+            explosionLength = explosion.GetComponent<ParticleSystem>().main.duration;
+        }
+    }
+
     void Update()
     {
         counter -= Time.deltaTime;
@@ -52,7 +62,12 @@ public class IndividualBulletController : MonoBehaviour {
                 }
             }
 
-            explosion.Play(transform.position);
+            if (explosion != null)
+            {
+                GameObject explo = Instantiate(explosion, transform.position, transform.rotation, null);
+                Destroy(explo, explosionLength);
+            }
+
             DisableBullet();
         }
     }

@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletImpactController : MonoBehaviour {
-    public ParticleSystem ps;
-
-    void Awake()
-    {
-        transform.parent = GameObject.FindGameObjectWithTag("BulletHolder").transform;
-    }
+    [SerializeField] private ParticleSystem ps;
     
     public void Play(Vector3 newPosition)
     {

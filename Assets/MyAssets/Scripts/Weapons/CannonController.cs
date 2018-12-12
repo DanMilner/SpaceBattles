@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,12 +17,14 @@ public class CannonController : MonoBehaviour {
     private Rigidbody shipRigidbody;
     private Quaternion rotation;
     private LineOfSight lineOfSight;
+    private Transform bulletHolder;
 
     void Awake()
     {
         shipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         coolDown = coolDownTime;
         lineOfSight = cannonGun.GetComponent<LineOfSight>();
+        bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
     }
 
     void Update()
@@ -45,8 +47,7 @@ public class CannonController : MonoBehaviour {
             {
                 coolDown = coolDownTime;
 
-                GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
-                bullet.transform.parent = null;
+                GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation, bulletHolder);
                 bullet.GetComponent<IndividualBulletController>().Fire(bulletSpawn.transform, shipRigidbody.velocity, bulletSpeed);
 
                 Destroy(bullet, bulletLifeSpan);
