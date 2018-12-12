@@ -11,11 +11,14 @@ public class AutoTurretManager : MonoBehaviour {
     private HashSet<GameObject> nearbyShips;
     private int count = 0;
 
-    void Start () {
+    void Awake()
+    {
         enemyTargets = new HashSet<Collider>();
         nearbyShips = new HashSet<GameObject>();
         autoTurrets = gameObject.GetComponentsInChildren<AutoTurret>();
+    }
 
+    void Start () {
         for (int i = 0; i < autoTurrets.Length; i++)
         {
             autoTurrets[i].SetEnemyShipCollection(enemyTargets);

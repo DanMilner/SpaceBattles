@@ -8,8 +8,7 @@ public class FactionController : MonoBehaviour {
     private List<ShipController> friendlyShips = new List<ShipController>();
     private List<FactionController> otherFactions = new List<FactionController>();
 
-    // Use this for initialization
-    void OnEnable () {
+    void Start() {
         GetOtherFactions();
 
         GetShips();

@@ -18,7 +18,7 @@ public class ShipHealth : MonoBehaviour {
     float currentThreshold;
     private bool isPlayerShip;
 
-    void Start()
+    void Awake()
     {
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         damage = damagePoints.GetComponentsInChildren<ParticleSystem>();
@@ -26,6 +26,7 @@ public class ShipHealth : MonoBehaviour {
         damageThreshold = health / damage.Length;
         currentThreshold = damageThreshold;
     }
+
     public void TakeDamage(float damage)
     {
         if (!alive)

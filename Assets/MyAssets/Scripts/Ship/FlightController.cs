@@ -27,7 +27,7 @@ public class FlightController : MonoBehaviour
 
     private ThrusterParticlesController thrusterParticlesController;
 
-    void Start()
+    void Awake()
     {
         shipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         thrusterParticlesController = gameObject.GetComponent<ThrusterParticlesController>();

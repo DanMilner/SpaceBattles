@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletImpactController : MonoBehaviour {
     public ParticleSystem ps;
 
-    void Start()
+    void Awake()
     {
         transform.parent = GameObject.FindGameObjectWithTag("BulletHolder").transform;
     }

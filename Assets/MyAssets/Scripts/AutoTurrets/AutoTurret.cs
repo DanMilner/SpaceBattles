@@ -28,8 +28,7 @@ public class AutoTurret : MonoBehaviour
 
     private int layerMask;
 
-    // Use this for initialization
-    void Start()
+    void Awake()
     {
         layerMask = ~(1 << 2);
         enemyShips = new HashSet<Collider>();

@@ -12,8 +12,7 @@ public class MissileController : MonoBehaviour, IWeapon
     private float MissileCooldown = 0.6f;
     private float MissileCooldownTimer;
 
-
-    void Start () {
+    void Awake () {
         missilesLeft = Missiles.Length - 1;
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
     }

@@ -14,7 +14,6 @@ public class HomingMissile : MonoBehaviour {
 
     private Rigidbody missileRigidBody;
 
-    // Use this for initialization
     void Start () {
         missileRigidBody = gameObject.GetComponent<Rigidbody>();
         thruster.Play();

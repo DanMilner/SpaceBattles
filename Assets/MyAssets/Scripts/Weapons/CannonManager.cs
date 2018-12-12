@@ -6,7 +6,7 @@ public class CannonManager : MonoBehaviour, IWeapon {
     public GameObject cannonTarget;
     private CannonController[] Cannons;
 
-    void Start()
+    void Awake()
     {
         Cannons = gameObject.GetComponentsInChildren<CannonController>();
         ApplyCannonTarget();

@@ -5,12 +5,10 @@ using UnityEngine;
 public class ExplosionHandler : MonoBehaviour {
     private ParticleSystem ps;
 
-	// Use this for initialization
-	void Start () {
+	void Awake () {
         ps = gameObject.GetComponent<ParticleSystem>();
     }
 
-    // Update is called once per frame
     void Update () {
         if (ps)
         {

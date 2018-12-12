@@ -17,7 +17,7 @@ public class CannonController : MonoBehaviour {
     private Quaternion rotation;
     private LineOfSight lineOfSight;
 
-    void Start()
+    void Awake()
     {
         shipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
         coolDown = coolDownTime;

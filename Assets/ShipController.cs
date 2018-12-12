@@ -14,8 +14,7 @@ public class ShipController : MonoBehaviour
     private bool playerControlled = false;
     private int count = 0;
 
-    // Use this for initialization
-    void Start()
+    void Awake()
     {
         flightController = GetComponentInChildren<FlightController>();
         shipAi = GetComponent<ShipAI>();
@@ -88,10 +87,6 @@ public class ShipController : MonoBehaviour
 
     public void SetAiTarget(GameObject target)
     {
-        if (shipAi == null)
-        {
-            shipAi = GetComponent<ShipAI>();
-        }
         shipAi.target = target;
     }
 
@@ -102,10 +97,6 @@ public class ShipController : MonoBehaviour
 
     public void SetEnemyShips(List<GameObject> ship)
     {
-        if (autoTurretManager == null)
-        {
-            autoTurretManager = GetComponentInChildren<AutoTurretManager>();
-        }
         autoTurretManager.SetEnemyShips(ship);
     }
 

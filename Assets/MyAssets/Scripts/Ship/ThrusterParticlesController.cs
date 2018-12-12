@@ -40,7 +40,7 @@ public class ThrusterParticlesController : MonoBehaviour {
     private ParticleSystem[] RollLeftThrustersParticles;
     private ParticleSystem[] RollRightThrustersParticles;
 
-    void Start () {
+    void Awake () {
         MoveForwardThrustersParticles = MoveForwardThrusters.GetComponentsInChildren<ParticleSystem>();
         MoveBackwardThrustersParticles = MoveBackwardThrusters.GetComponentsInChildren<ParticleSystem>();
         MoveUpThrustersParticles = MoveUpThrusters.GetComponentsInChildren<ParticleSystem>();

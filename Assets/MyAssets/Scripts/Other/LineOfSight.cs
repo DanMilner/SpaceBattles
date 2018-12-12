@@ -8,7 +8,7 @@ public class LineOfSight : MonoBehaviour {
     private int factionID;
     private GameObject objectHit;
 
-    void Start () {
+    void Awake () {
         layerMask = ~(1 << 2);
         factionID = GetComponentInParent<FactionController>().factionID;
     }

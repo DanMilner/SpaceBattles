@@ -21,10 +21,14 @@ public class WeaponController : MonoBehaviour
     private int NumberOfWeapons = 0;
     private bool playerControlled = false;
 
-    void Start()
+    void Awake()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
+    }
+
+    void Start()
+    {
         CurrentWeapon = GetWeapon(CurrentWeaponNum);
         NumberOfWeapons = Weapons.Length-1;
         UpdateUIWithWeaponName();

@@ -21,7 +21,7 @@ public class ShipAI : MonoBehaviour {
     public bool isMovingForward { set; get; }
     public bool isMovingBackward { set; get; }
 
-    void Start()
+    void Awake()
     {
         shipRigidbody = GetComponent<Rigidbody>();
         cannonManager = GetComponentInChildren<CannonManager>();

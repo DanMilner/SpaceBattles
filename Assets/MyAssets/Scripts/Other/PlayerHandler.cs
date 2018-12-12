@@ -27,9 +27,6 @@ public class PlayerHandler : MonoBehaviour {
         cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
 
         SetPlayerShip(0);
-
-        uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
-        uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
     }
 
     void Update()

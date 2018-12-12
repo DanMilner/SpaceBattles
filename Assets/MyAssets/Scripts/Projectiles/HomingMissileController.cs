@@ -11,7 +11,7 @@ public class HomingMissileController : MonoBehaviour
     private Rigidbody ShipRigidbody;
     private Collider target;
 
-    public void Start()
+    public void Awake()
     {
         ShipRigidbody = gameObject.GetComponentInParent<Rigidbody>();
     }
