@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipAI : MonoBehaviour {
-    public GameObject target;
-    private Rigidbody shipRigidbody;
     public float moveStrength = 200.0f;
     public float rotationStrength = 0.1f;
     public float stoppingDistance = 40.0f;
     public bool AIisActive = true;
-
-    private Quaternion lookRotation;
-    private Vector3 targetDirection;
-    private float distanceToTarget;
-    private Transform shipTransform;
-    private float angleToTarget;
-    private float targetVelocity;
-    private CannonManager cannonManager;
-
     public bool isMovingForward { set; get; }
     public bool isMovingBackward { set; get; }
+    public GameObject target { set; get; }
+
+    private Rigidbody shipRigidbody;
+    private Quaternion lookRotation;
+    private Vector3 targetDirection;
+    private Transform shipTransform;
+    private CannonManager cannonManager;
+    private float distanceToTarget;
+    private float angleToTarget;
+    private float targetVelocity;
 
     void Awake()
     {

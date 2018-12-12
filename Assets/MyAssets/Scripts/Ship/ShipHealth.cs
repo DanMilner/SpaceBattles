@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class ShipHealth : MonoBehaviour {
     public float health = 100.0f;
-    public GameObject deathExplostion;
-    public GameObject AutoTurrets;
-    public GameObject damagePoints;
     public bool alive = true;
-    public Material deadMaterial;
-    public MeshRenderer[] meshes;
+
+    [SerializeField] private GameObject deathExplostion;
+    [SerializeField] private GameObject AutoTurrets;
+    [SerializeField] private GameObject damagePoints;
+    [SerializeField] private Material deadMaterial;
+    [SerializeField] private MeshRenderer[] meshes;
 
     private ParticleSystem[] damage;
     private UIHandler uIHandler;
-    int damageActive = 0;
-    float damageThreshold;
-    float currentThreshold;
+    private int damageActive = 0;
+    private float damageThreshold;
+    private float currentThreshold;
     private bool isPlayerShip;
 
     void Awake()

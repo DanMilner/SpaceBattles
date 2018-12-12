@@ -11,8 +11,8 @@ public interface IWeapon
 
 public class WeaponController : MonoBehaviour
 {
-    public GameObject[] Weapons;
-    public GameObject weaponTarget;
+    [SerializeField] private GameObject[] Weapons;
+    [SerializeField] private GameObject weaponTarget;
 
     private GameObject mainCamera;
     private UIHandler uIHandler;

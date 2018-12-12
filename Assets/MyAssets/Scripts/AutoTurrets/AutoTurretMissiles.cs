@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
-    public GameObject missilePrefab;
-    public GameObject spawnPoint;
+    [SerializeField] private GameObject missilePrefab;
+    [SerializeField] private GameObject spawnPoint;
 
     private Queue<GameObject> missiles;
     private int numMissiles = 5;

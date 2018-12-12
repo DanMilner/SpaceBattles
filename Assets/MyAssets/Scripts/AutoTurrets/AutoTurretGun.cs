@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
-    public GameObject bulletPrefab;
-    public Transform spawnPoint;
     public float bulletLifeSpan = 10.0f;
     public float bulletSpeed = 1.0f;
+
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform spawnPoint;
 
     private int numBullets = 120;    
     private Rigidbody ShipRigidbody;
     private Queue<GameObject> bullets;
-
     private Rigidbody bulletRigidBody;
     private GameObject bullet;
 

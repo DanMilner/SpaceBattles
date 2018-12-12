@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonManager : MonoBehaviour, IWeapon {
-    public GameObject cannonTarget;
+    [SerializeField] private GameObject cannonTarget;
     private CannonController[] Cannons;
 
     void Awake()

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour {
     public float coolDownTime = 10.0f;
-    public Transform bulletSpawn;
-    public GameObject bulletPrefab;
     public float bulletSpeed = 10.0f;
     public float bulletLifeSpan = 10.0f;
-    public Transform cannonTower;
-    public Transform cannonGun;
-    private Transform cannonTarget;
 
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform cannonTower;
+    [SerializeField] private Transform cannonGun;
+
+    private Transform cannonTarget;
     private float coolDown;
     private Rigidbody shipRigidbody;
     private Quaternion rotation;

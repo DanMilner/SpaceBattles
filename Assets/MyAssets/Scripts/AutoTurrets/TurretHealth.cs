@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TurretHealth : MonoBehaviour {
     public float health = 1.0f;
-    public ParticleSystem destroyedParticles;
-    public ParticleSystem damagedParticles;
-    private float damagedThreshold;
 
+    [SerializeField] private ParticleSystem destroyedParticles;
+    [SerializeField] private ParticleSystem damagedParticles;
+    private float damagedThreshold;
     private ParticleSystem particles;
 
     void Start()

@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ThrusterParticlesController : MonoBehaviour {
+    [SerializeField] private GameObject MoveForwardThrusters;
+    [SerializeField] private GameObject MoveBackwardThrusters;
 
-    public GameObject MoveForwardThrusters;
-    public GameObject MoveBackwardThrusters;
+    [SerializeField] private GameObject MoveUpThrusters;
+    [SerializeField] private GameObject MoveDownThrusters;
 
-    public GameObject MoveUpThrusters;
-    public GameObject MoveDownThrusters;
+    [SerializeField] private GameObject MoveLeftThrusters;
+    [SerializeField] private GameObject MoveRightThrusters;
 
-    public GameObject MoveLeftThrusters;
-    public GameObject MoveRightThrusters;
+    [SerializeField] private GameObject PitchUpThrusters;
+    [SerializeField] private GameObject PitchDownThrusters;
 
-    public GameObject PitchUpThrusters;
-    public GameObject PitchDownThrusters;
+    [SerializeField] private GameObject YawLeftThrusters;
+    [SerializeField] private GameObject YawRightThrusters;
 
-    public GameObject YawLeftThrusters;
-    public GameObject YawRightThrusters;
-
-    public GameObject RollLeftThrusters;
-    public GameObject RollRightThrusters;
+    [SerializeField] private GameObject RollLeftThrusters;
+    [SerializeField] private GameObject RollRightThrusters;
 
     private ParticleSystem[] MoveForwardThrustersParticles;
     private ParticleSystem[] MoveBackwardThrustersParticles;

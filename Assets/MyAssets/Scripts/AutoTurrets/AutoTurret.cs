@@ -10,22 +10,21 @@ public interface IAutoTurretWeapon
 public class AutoTurret : MonoBehaviour
 {
     public float fireRate = 2.0f;
-    public GameObject weapon;
 
-    public Transform turretTower;
-    public Transform turretGun;
+    [SerializeField] private GameObject weapon;
+    [SerializeField] private Transform turretTower;
+    [SerializeField] private Transform turretGun;
 
     private IAutoTurretWeapon mainWeapon;
-    private float cooldown;
     private HashSet<Collider> enemyShips;
     private Collider currentTarget;
-    private int factionId;
     private RaycastHit hit;
+    private Quaternion rotation;
+    private float cooldown;
+    private int factionId;
     private int validTargetCounter = 0;
     private int lineOfSightCounter = 0;
     private int targetSearchCounter = 0;
-    private Quaternion rotation;
-
     private int layerMask;
 
     void Awake()
