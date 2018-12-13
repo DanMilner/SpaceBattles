@@ -125,7 +125,11 @@ public class AutoTurret : MonoBehaviour
     {
         if (Physics.Raycast(turretGun.position, shipTransform.position - turretGun.position, out hit, 150, layerMask))
         {
-            return factionId != hit.transform.gameObject.GetComponentInParent<FactionController>().factionID;
+            FactionController factionController = hit.transform.gameObject.GetComponentInParent<FactionController>();
+            if(factionController != null)
+            {
+                return factionId != factionController.factionID;
+            }
         }
         return false;
     }
