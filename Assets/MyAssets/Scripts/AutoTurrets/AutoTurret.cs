@@ -30,7 +30,15 @@ public class AutoTurret : MonoBehaviour
     {
         layerMask = ~(1 << 2);
         enemyShips = new HashSet<Collider>();
-        factionId = gameObject.GetComponentInParent<FactionController>().factionID;
+        FactionController fc = gameObject.GetComponentInParent<FactionController>();
+        if(fc == null)
+        {
+            factionId = -1;
+        }
+        else
+        {
+            factionId = fc.factionID;
+        }
         cooldown = fireRate;
 
         mainWeapon = GetComponent<IAutoTurretWeapon>();

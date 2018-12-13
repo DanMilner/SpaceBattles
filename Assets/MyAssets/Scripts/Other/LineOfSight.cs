@@ -10,7 +10,15 @@ public class LineOfSight : MonoBehaviour {
 
     void Awake () {
         layerMask = ~(1 << 2);
-        factionID = GetComponentInParent<FactionController>().factionID;
+        FactionController fc = gameObject.GetComponentInParent<FactionController>();
+        if (fc == null)
+        {
+            factionID = -1;
+        }
+        else
+        {
+            factionID = fc.factionID;
+        }
     }
 
     public bool SafeToFire()
@@ -19,7 +27,8 @@ public class LineOfSight : MonoBehaviour {
         {
             objectHit = hit.transform.gameObject;
             if (objectHit.CompareTag("Ship")) {
-                return objectHit.GetComponentInParent<FactionController>().factionID != factionID;
+                FactionController fc = objectHit.GetComponentInParent<FactionController>();
+                return fc != null && fc.factionID != factionID;
             }
         }
         return true;

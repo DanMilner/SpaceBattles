@@ -76,17 +76,10 @@ public class PlayerHandler : MonoBehaviour {
             return;
         }
 
-        if (currentPlayerShip != null)
-        {
-            currentPlayerShip.tag = "Ship";
-        }
-
         currentPlayerShip = playerShips[shipNumber];
         cameraController.SetCameraTarget(currentPlayerShip.transform, currentPlayerShip.GetComponent<CameraZoomSettings>());
 
         currentShipController = currentPlayerShip.GetComponentInChildren<ShipController>();
         currentShipController.SetPlayerControlled(true);
-
-        currentPlayerShip.tag = "Player";
     }
 }

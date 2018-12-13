@@ -38,7 +38,8 @@ public class FactionController : MonoBehaviour {
     {
         foreach (GameObject ship in GameObject.FindGameObjectsWithTag("ShipTarget"))
         {
-            if (ship.GetComponentInParent<FactionController>().factionID != factionID)
+            FactionController fc = ship.GetComponentInParent<FactionController>();
+            if (fc != null && fc.factionID != factionID)
             {
                 enemyShips.Add(ship.transform.parent.gameObject);
             }
@@ -62,11 +63,34 @@ public class FactionController : MonoBehaviour {
         }
     }
 
-    public void EnemyShipDestroyed(GameObject ship)
+    public void EnemyShipDestroyed(GameObject deadShip)
     {
+        List<ShipController> shipsWithDeadTarget = new List<ShipController>();
+        
         foreach (ShipController friendlyShip in friendlyShips)
         {
-            friendlyShip.RemoveEnemyTarget(ship);
+            if(friendlyShip.GetAiTarget() == deadShip)
+            {
+                shipsWithDeadTarget.Add(friendlyShip);
+            }
+            friendlyShip.RemoveEnemyTarget(deadShip);
+        }
+
+        enemyShips.Remove(deadShip);
+
+        if(enemyShips.Count > 0)
+        {
+            foreach (ShipController ship in shipsWithDeadTarget)
+            {
+                ship.SetAiTarget(enemyShips[Random.Range(0, enemyShips.Count - 1)]);
+            }
+        }
+        else
+        {
+            foreach (ShipController ship in shipsWithDeadTarget)
+            {
+                ship.SetAiTarget(null);
+            }
         }
     }
 

@@ -44,7 +44,7 @@ public class ShipController : MonoBehaviour
 
         if (!playerControlled && shipAi.AIisActive)
         {
-            flightController.ActivateThrustersAI(shipAi.isMovingForward, shipAi.isMovingBackward);
+            flightController.ActivateThrustersAI(shipAi.IsMovingForward, shipAi.IsMovingBackward);
         }
         else
         {
@@ -57,7 +57,16 @@ public class ShipController : MonoBehaviour
         playerControlled = pControlled;
 
         weaponController.SetPlayerControlled(pControlled);
+        if (!pControlled)
+        {
+            shipAi.SetCannonTarget();
+        }
         shipHealth.SetPlayerControlled(pControlled);
+    }
+
+    public bool IsPlayerControlled()
+    {
+        return playerControlled;
     }
 
     public void ToggleRotationalStabilisers()
@@ -87,7 +96,12 @@ public class ShipController : MonoBehaviour
 
     public void SetAiTarget(GameObject target)
     {
-        shipAi.target = target;
+        shipAi.Target = target;
+    }
+
+    public GameObject GetAiTarget()
+    {
+        return shipAi.Target;
     }
 
     public void RemoveEnemyTarget(GameObject ship)

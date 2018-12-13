@@ -69,10 +69,13 @@ public class CameraController : MonoBehaviour
         bool isCorrected = false;
         if (Physics.Linecast(cameraTargetPosition, position, out collisionHit))
         {
-            if (!collisionHit.transform.CompareTag("Player")) {
-                position = collisionHit.point;
-                correctedDistance = Vector3.Distance(cameraTargetPosition, position);
-                isCorrected = true;
+            if (!collisionHit.transform.CompareTag("Ship")) {
+                if (collisionHit.transform.gameObject.GetComponent<ShipController>().IsPlayerControlled())
+                {
+                    position = collisionHit.point;
+                    correctedDistance = Vector3.Distance(cameraTargetPosition, position);
+                    isCorrected = true;
+                }
             }
         }        
 

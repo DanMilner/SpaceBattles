@@ -2,28 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipAI : MonoBehaviour {
+public class ShipAI : MonoBehaviour
+{
     public float moveStrength = 200.0f;
     public float rotationStrength = 0.1f;
     public float stoppingDistance = 40.0f;
     public bool AIisActive = true;
-    public bool isMovingForward { set; get; }
-    public bool isMovingBackward { set; get; }
-    public GameObject target { set; get; }
+    public bool IsMovingForward { set; get; }
+    public bool IsMovingBackward { set; get; }
 
+    private GameObject target;
     private Rigidbody shipRigidbody;
     private Quaternion lookRotation;
     private Vector3 targetDirection;
-    private Transform shipTransform;
+    private readonly Transform shipTransform;
     private CannonManager cannonManager;
     private float distanceToTarget;
     private float angleToTarget;
     private float targetVelocity;
+    private bool shipHasCannons;
+
+    public GameObject Target
+    {
+        set
+        {
+            target = value;
+            SetCannonTarget();
+        }
+        get
+        {
+            return this.target;
+        }
+    }
 
     void Awake()
     {
         shipRigidbody = GetComponent<Rigidbody>();
         cannonManager = GetComponentInChildren<CannonManager>();
+
+        shipHasCannons = cannonManager != null;
     }
 
     public void Fly()
@@ -32,12 +49,16 @@ public class ShipAI : MonoBehaviour {
         {
             return;
         }
-        if(target != null)
+        if (target != null)
         {
             MoveTowardsTarget();
-            cannonManager.SetCannonTarget(target);
-            cannonManager.Fire();
+            if (shipHasCannons) { cannonManager.Fire(); }                
         }
+    }
+
+    public void SetCannonTarget()
+    {
+        if (shipHasCannons) { cannonManager.SetWeaponTarget(target); }
     }
 
     private void MoveTowardsTarget()
@@ -64,26 +85,26 @@ public class ShipAI : MonoBehaviour {
 
         if (angleToTarget < 20)
         {
-            targetVelocity = (distanceToTarget - stoppingDistance+10) / 40;
+            targetVelocity = (distanceToTarget - stoppingDistance + 10) / 40;
             if (transform.InverseTransformDirection(shipRigidbody.velocity).z < targetVelocity)
             {
                 //accelerate
                 shipRigidbody.AddForce(targetDirection * (moveStrength - angleToTarget));
-                isMovingForward = true;
-                isMovingBackward = false;
+                IsMovingForward = true;
+                IsMovingBackward = false;
             }
             else
             {
                 //decelerate
                 shipRigidbody.AddForce(-targetDirection * (moveStrength - angleToTarget));
-                isMovingForward = false;
-                isMovingBackward = true;
+                IsMovingForward = false;
+                IsMovingBackward = true;
             }
         }
         else
         {
-            isMovingForward = false;
-            isMovingBackward = false;
+            IsMovingForward = false;
+            IsMovingBackward = false;
         }
 
         RotateShip(targetDirection);
@@ -94,12 +115,12 @@ public class ShipAI : MonoBehaviour {
         //we are withing firing distance. Rotate ship sideways.
         RotateSidewaysFromTarget();
     }
-   
+
     private void RotateSidewaysFromTarget()
-    {        
+    {
         float angle = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
         float angle2 = Vector3.Angle(transform.forward, transform.position - target.transform.position);
-        
+
         if (angle < 90.5 && angle > 89.5)
         {
             return;
@@ -133,7 +154,7 @@ public class ShipAI : MonoBehaviour {
         FlightController.DetermineStabilisingSpeed(shipRigidbody, localXVelocity, transform.right, moveStrength * 2f);
 
         float localYVelocity = transform.InverseTransformDirection(shipRigidbody.velocity).y;
-        FlightController.DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, moveStrength * 2f);        
+        FlightController.DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, moveStrength * 2f);
     }
 
     private void StabiliseRotation()

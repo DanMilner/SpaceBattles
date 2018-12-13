@@ -42,6 +42,8 @@ public class AutoTurretManager : MonoBehaviour {
 
     private void GetNearbyShips()
     {
+        if(enemyShips == null) { return; }
+
         for(int i = 0; i < enemyShips.Count; i++)
         {
             if (Vector3.Distance(enemyShips[i].transform.position, transform.position) <= range)

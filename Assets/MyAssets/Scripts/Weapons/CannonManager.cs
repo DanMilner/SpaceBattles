@@ -25,12 +25,6 @@ public class CannonManager : MonoBehaviour, IWeapon {
         return "Cannons";
     }
 
-    public void SetCannonTarget(GameObject target)
-    {
-        cannonTarget = target;
-        ApplyCannonTarget();
-    }
-
     private void ApplyCannonTarget()
     {
         for (int i = 0; i < Cannons.Length; i++)
@@ -42,5 +36,6 @@ public class CannonManager : MonoBehaviour, IWeapon {
     public void SetWeaponTarget(GameObject target)
     {
         cannonTarget = target;
+        ApplyCannonTarget();
     }
 }
