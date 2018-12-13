@@ -5,7 +5,7 @@ using UnityEngine;
 public class HomingMissile : MonoBehaviour {
     public float speed;
     public float turningRate;
-    public BulletImpactController explosion;
+    [SerializeField] private GameObject explosion;
     public ParticleSystem thruster;
     public Collider target;
     public float damage = 1.0f;
@@ -13,11 +13,17 @@ public class HomingMissile : MonoBehaviour {
     private float timer;
 
     private Rigidbody missileRigidBody;
+    private float explosionLength = 1.0f;
 
     void Start () {
         missileRigidBody = gameObject.GetComponent<Rigidbody>();
         thruster.Play();
         Reset();
+
+        if (explosion != null)
+        {
+            explosionLength = explosion.GetComponent<ParticleSystem>().main.duration;
+        }
     }
 
     void Update()
@@ -64,7 +70,13 @@ public class HomingMissile : MonoBehaviour {
     private void Detonate()
     {
         thruster.Stop();
-        explosion.Play(transform.position);
+
+        if (explosion != null)
+        {
+            GameObject explo = Instantiate(explosion, transform.position, transform.rotation, null);
+            Destroy(explo, explosionLength);
+        }
+
         gameObject.SetActive(false);
     }
 }

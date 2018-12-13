@@ -36,6 +36,9 @@ public class CannonManager : MonoBehaviour, IWeapon {
     public void SetWeaponTarget(GameObject target)
     {
         cannonTarget = target;
+
+        if(target == null) { return; }
+
         ApplyCannonTarget();
     }
 }
