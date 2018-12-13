@@ -11,7 +11,6 @@ public class AutoTurret : MonoBehaviour
 {
     public float fireRate = 2.0f;
 
-    [SerializeField] private GameObject weapon;
     [SerializeField] private Transform turretTower;
     [SerializeField] private Transform turretGun;
 
@@ -34,7 +33,7 @@ public class AutoTurret : MonoBehaviour
         factionId = gameObject.GetComponentInParent<FactionController>().factionID;
         cooldown = fireRate;
 
-        mainWeapon = weapon.GetComponent<IAutoTurretWeapon>();
+        mainWeapon = GetComponent<IAutoTurretWeapon>();
     }
 
     // Update is called once per frame
