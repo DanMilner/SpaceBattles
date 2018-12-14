@@ -14,6 +14,7 @@ public class PlayerHandler : MonoBehaviour {
     private Camera overViewCamera;
     private GameObject currentPlayerShip;
     private ShipController currentShipController;
+    private GameObject currentSelectedShip;
     [SerializeField] bool IsControllingShip;
     private int currentShipNumber = 0;
     private UIHandler uIHandler;
@@ -97,32 +98,84 @@ public class PlayerHandler : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = overViewCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, 2000.0f, layerMask))
-                {
-                    currentShipController = hit.transform.gameObject.GetComponent<ShipController>();
-                    shipSelected = true;
-                }
-            }
-
-            if (Input.GetMouseButtonDown(1))
+                ShootMouseRaycast(false);
+            }else if (Input.GetMouseButtonDown(1))
             {
                 if (shipSelected)
                 {
-                    RaycastHit hit;
-                    Ray ray = overViewCamera.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out hit, 2000.0f, layerMask))
-                    {
-                        ShipController shipController = hit.transform.gameObject.GetComponent<ShipController>();
-                        if(shipController.GetFactionID() != currentShipController.GetFactionID())
-                        {
-                            currentShipController.SetAiTarget(hit.transform.gameObject);
-                        }
-                    }
+                    ShootMouseRaycast(true);
                 }
             }
         }
+    }
+
+    private void ShootMouseRaycast(bool attack)
+    {
+        RaycastHit hit;
+        Ray ray = overViewCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 2000.0f, layerMask))
+        {
+            GameObject shipHit = hit.transform.gameObject;
+            ShipController shipController = shipHit.GetComponent<ShipController>();
+            if (attack)
+            {
+                if (shipController.GetFactionID() != currentShipController.GetFactionID())
+                {
+                    DisableOutline(currentShipController.GetAiTarget());
+                    currentShipController.SetAiTarget(shipHit);
+                    EnableOutline(shipHit, false);
+                }
+            }
+            else
+            {
+                DisableOutline(currentSelectedShip);
+                if(currentShipController != null) { DisableOutline(currentShipController.GetAiTarget()); }
+                
+                currentSelectedShip = shipHit;
+                currentShipController = shipController;
+
+                EnableOutline(shipHit, true);
+                EnableOutline(currentShipController.GetAiTarget(), false);
+
+                shipSelected = true;
+            }
+        }
+        else
+        {
+            DisableOutline(currentSelectedShip);
+            if (currentShipController != null) { DisableOutline(currentShipController.GetAiTarget()); }
+
+            currentShipController = null;
+            currentSelectedShip = null;
+
+            shipSelected = false;
+        }
+    }
+
+    private void EnableOutline(GameObject ship, bool friendlyShip)
+    {
+        if (ship == null) { return; }
+
+        Outline outline = ship.GetComponentInChildren<Outline>();
+
+        if (friendlyShip)
+        {
+            outline.OutlineColor = Color.blue;
+        }
+        else
+        {
+            outline.OutlineColor = Color.red;
+        }
+        outline.OutlineWidth = 2.0f;
+        outline.enabled = true;
+    }
+
+    private void DisableOutline(GameObject ship)
+    {
+        if(ship == null) { return; }
+
+        Outline outline = ship.GetComponentInChildren<Outline>();
+        outline.enabled = false;
     }
 
     private void ChangePlayerShip(int shipNumber)
