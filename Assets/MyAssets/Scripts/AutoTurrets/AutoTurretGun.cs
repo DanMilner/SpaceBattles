@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
-    public float bulletLifeSpan = 10.0f;
     public float bulletSpeed = 1.0f;
 
     [SerializeField] private GameObject bulletPrefab;
@@ -40,5 +39,13 @@ public class AutoTurretGun : MonoBehaviour, IAutoTurretWeapon {
             bullet.GetComponent<IndividualBulletController>().Fire(spawnPoint, ShipRigidbody.velocity, bulletSpeed);
         }
         bullets.Enqueue(bullet);        
+    }
+
+    public void Destroyed()
+    {
+        while(bullets.Count > 0)
+        {
+            Destroy(bullets.Dequeue());
+        }
     }
 }

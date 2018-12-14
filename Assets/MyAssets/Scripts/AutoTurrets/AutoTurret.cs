@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IAutoTurretWeapon
 {
     void Fire(Collider target);
+    void Destroyed();
 }
 
 public class AutoTurret : MonoBehaviour
@@ -154,5 +155,10 @@ public class AutoTurret : MonoBehaviour
     public void SetEnemyShipCollection(HashSet<Collider> enemyShipsCoolection)
     {
         enemyShips = enemyShipsCoolection;
+    }
+
+    public void Destroyed()
+    {
+        mainWeapon.Destroyed();
     }
 }

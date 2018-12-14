@@ -88,4 +88,11 @@ public class AutoTurretManager : MonoBehaviour {
         }
     }
 
+    public void ShipDestroyed()
+    {
+        for (int i = 0; i < autoTurrets.Length; i++)
+        {
+            autoTurrets[i].Destroyed();
+        }
+    }
 }

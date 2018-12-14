@@ -117,6 +117,7 @@ public class ShipController : MonoBehaviour
     public void DestroyShip()
     {
         flightController.DisableAllThrusters();
+        autoTurretManager.ShipDestroyed();
 
         foreach (MonoBehaviour m in GetComponentsInChildren<MonoBehaviour>())
         {

@@ -39,4 +39,12 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
         }
         missiles.Enqueue(missile);
     }
+
+    public void Destroyed()
+    {
+        foreach (GameObject missile in missiles)
+        {
+            Destroy(missile);
+        }
+    }
 }

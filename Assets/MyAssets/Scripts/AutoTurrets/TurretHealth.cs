@@ -37,7 +37,9 @@ public class TurretHealth : MonoBehaviour {
         Destroy(particles);
         particles = Instantiate(destroyedParticles, transform.position, Quaternion.identity, transform);
 
-        gameObject.GetComponent<AutoTurret>().enabled = false;
+        AutoTurret at = gameObject.GetComponent<AutoTurret>();
+        at.Destroyed();
+        at.enabled = false;
         gameObject.GetComponent<TurretHealth>().enabled = false;       
     }
 }
