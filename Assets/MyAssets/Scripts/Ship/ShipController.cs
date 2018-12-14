@@ -13,6 +13,7 @@ public class ShipController : MonoBehaviour
 
     private bool playerControlled = false;
     private int count = 0;
+    private int factionID;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class ShipController : MonoBehaviour
         shipHealth = GetComponentInChildren<ShipHealth>();
         weaponController = GetComponentInChildren<WeaponController>();
         autoTurretManager = GetComponentInChildren<AutoTurretManager>();
+        factionID = GetComponentInParent<FactionController>().factionID;
     }
 
     void FixedUpdate()
@@ -123,5 +125,10 @@ public class ShipController : MonoBehaviour
         {
             m.enabled = false;
         }
+    }
+
+    public int GetFactionID()
+    {
+        return factionID;
     }
 }

@@ -3,8 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour {
-    public GameObject[] playerShips;
-    public UIHandler uIHandler;
+    [SerializeField] private GameObject[] playerShips;
+    [SerializeField] private GameObject shipCamera;
+    [SerializeField] private GameObject overviewCamera;
+
+    [SerializeField] private GameObject shipUi;
+    [SerializeField] private GameObject overviewUi;
+
+    private CameraController shipCameraController;
+    private Camera overViewCamera;
+    private GameObject currentPlayerShip;
+    private ShipController currentShipController;
+    [SerializeField] bool IsControllingShip;
+    private int currentShipNumber = 0;
+    private UIHandler uIHandler;
+
+    private int layerMask;
+
+    private bool shipSelected;
 
     private KeyCode[] keyCodes = {
          KeyCode.Alpha1,
@@ -18,68 +34,138 @@ public class PlayerHandler : MonoBehaviour {
          KeyCode.Alpha9,
      };
 
-    private GameObject currentPlayerShip;
-    private CameraController cameraController;
-    private ShipController currentShipController;
-
-    // Use this for initialization
     void Start () {
-        cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
+        shipCameraController = shipCamera.GetComponent<CameraController>();
+        uIHandler = shipUi.GetComponent<UIHandler>();
+        overViewCamera = overviewCamera.GetComponent<Camera>();
 
-        SetPlayerShip(0);
+        if (IsControllingShip)
+        {
+            PlayerEnterShip(0);
+        }
+        else
+        {
+            PlayerEnterOverview();
+        }
+
+        layerMask = (1 << 11);
     }
 
     void Update()
     {
-        if (Input.GetButton("ChangeShip"))
+        if (Input.GetButtonDown("Overview"))
         {
-            for (int i = 0; i < keyCodes.Length; i++)
+            IsControllingShip = !IsControllingShip;
+            if (IsControllingShip)
             {
-                if (Input.GetKeyDown(keyCodes[i]))
-                {
-                    ChangePlayerShip(i);
-                }
+                PlayerEnterShip(currentShipNumber);
+            }
+            else
+            {
+                PlayerEnterOverview();
             }
         }
 
-        if (Input.GetButtonDown("RotationalStabilisers"))
+        if (IsControllingShip)
         {
-            currentShipController.ToggleRotationalStabilisers();
-            uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
-        }
+            if (Input.GetButton("ChangeShip"))
+            {
+                for (int i = 0; i < keyCodes.Length; i++)
+                {
+                    if (Input.GetKeyDown(keyCodes[i]))
+                    {
+                        ChangePlayerShip(i);
+                    }
+                }
+            }
 
-        if (Input.GetButtonDown("MovementStabilisers"))
+            if (Input.GetButtonDown("RotationalStabilisers"))
+            {
+                currentShipController.ToggleRotationalStabilisers();
+                uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
+            }
+
+            if (Input.GetButtonDown("MovementStabilisers"))
+            {
+                currentShipController.ToggleMovementStabilisers();
+                uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
+            }
+
+            uIHandler.UpdateUI(currentShipController.GetRigidbody());
+        }
+        else
         {
-            currentShipController.ToggleMovementStabilisers();
-            uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = overViewCamera.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 2000.0f, layerMask))
+                {
+                    currentShipController = hit.transform.gameObject.GetComponent<ShipController>();
+                    shipSelected = true;
+                }
+            }
 
-        uIHandler.UpdateUI(currentShipController.GetRigidbody());
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (shipSelected)
+                {
+                    RaycastHit hit;
+                    Ray ray = overViewCamera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, 2000.0f, layerMask))
+                    {
+                        ShipController shipController = hit.transform.gameObject.GetComponent<ShipController>();
+                        if(shipController.GetFactionID() != currentShipController.GetFactionID())
+                        {
+                            currentShipController.SetAiTarget(hit.transform.gameObject);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void ChangePlayerShip(int shipNumber)
     {
         if (shipNumber > playerShips.Length) { return; }
 
+        currentShipNumber = shipNumber;
+
         currentShipController.SetPlayerControlled(false);
 
-        SetPlayerShip(shipNumber);
+        PlayerEnterShip(currentShipNumber);
 
         uIHandler.SetRotationalStabiliers(currentShipController.AreRotationalStabilisersActive());
         uIHandler.SetMovementStabiliers(currentShipController.AreMovementStabilisersActive());
     }
 
-    private void SetPlayerShip(int shipNumber)
+    private void PlayerEnterShip(int shipNumber)
     {
-        if (shipNumber >= playerShips.Length)
-        {
-            return;
-        }
+        shipCamera.SetActive(true);
+        shipUi.SetActive(true);
+        overviewCamera.SetActive(false);
+        overviewUi.SetActive(false);
 
         currentPlayerShip = playerShips[shipNumber];
-        cameraController.SetCameraTarget(currentPlayerShip.transform, currentPlayerShip.GetComponent<CameraZoomSettings>());
+        shipCameraController.SetCameraTarget(currentPlayerShip.transform, currentPlayerShip.GetComponent<CameraZoomSettings>());
 
         currentShipController = currentPlayerShip.GetComponentInChildren<ShipController>();
         currentShipController.SetPlayerControlled(true);
+    }
+
+    private void PlayerEnterOverview()
+    {
+        shipCamera.SetActive(false);
+        shipUi.SetActive(false);
+        overviewCamera.SetActive(true);
+        overviewUi.SetActive(true);
+
+        currentPlayerShip = null;
+        
+        if(currentShipController != null)
+        {
+            currentShipController.SetPlayerControlled(false);
+            currentShipController = null;
+        }
     }
 }

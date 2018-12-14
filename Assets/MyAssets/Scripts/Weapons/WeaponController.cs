@@ -43,7 +43,6 @@ public class WeaponController : MonoBehaviour
 
         weaponTarget.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 50;
         //TODO. shoot raycast and put target at whatever it hits or put it at the max distance.
-        //An AI could just place the target at its enemytargets position.
 
         if (!Input.GetKey("left ctrl"))
         {

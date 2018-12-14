@@ -36,16 +36,16 @@ public class FactionController : MonoBehaviour {
 
     private void GetShips()
     {
-        foreach (GameObject ship in GameObject.FindGameObjectsWithTag("ShipTarget"))
+        foreach (GameObject ship in GameObject.FindGameObjectsWithTag("Ship"))
         {
             FactionController fc = ship.GetComponentInParent<FactionController>();
             if (fc != null && fc.factionID != factionID)
             {
-                enemyShips.Add(ship.transform.parent.gameObject);
+                enemyShips.Add(ship);
             }
             else
             {
-                friendlyShips.Add(ship.GetComponentInParent<ShipController>());
+                friendlyShips.Add(ship.GetComponent<ShipController>());
             }
         }
     }
