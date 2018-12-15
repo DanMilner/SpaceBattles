@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHandler : MonoBehaviour {
     [SerializeField] private GameObject[] playerShips;
     [SerializeField] private GameObject shipCamera;
-    [SerializeField] private GameObject overviewCamera;
+    [SerializeField] private GameObject overviewCameraGameObject;
 
     [SerializeField] private GameObject shipUi;
     [SerializeField] private GameObject overviewUi;
@@ -38,7 +38,7 @@ public class PlayerHandler : MonoBehaviour {
     void Start () {
         shipCameraController = shipCamera.GetComponent<CameraController>();
         uIHandler = shipUi.GetComponent<UIHandler>();
-        overViewCamera = overviewCamera.GetComponent<Camera>();
+        overViewCamera = overviewCameraGameObject.GetComponent<Camera>();
 
         if (IsControllingShip)
         {
@@ -105,6 +105,26 @@ public class PlayerHandler : MonoBehaviour {
                 {
                     ShootMouseRaycast(true);
                 }
+            }
+
+            /*
+            float zoom = Input.GetAxis("Mouse ScrollWheel");
+            if (zoom != 0)
+            {
+                overviewCameraGameObject.transform.Translate(overviewCameraGameObject.transform.forward * Time.deltaTime * zoom * 500, Space.World);
+            }
+            */
+
+            float horiz = Input.GetAxis("MoveCameraHorizontal");
+            if (horiz != 0)
+            {
+                overviewCameraGameObject.transform.Translate(overviewCameraGameObject.transform.right * Time.deltaTime * horiz * 300, Space.World);
+            }
+
+            float vert = Input.GetAxis("MoveCameraVertical");
+            if (vert != 0)
+            {
+                overviewCameraGameObject.transform.Translate(overviewCameraGameObject.transform.forward * Time.deltaTime * vert * 300, Space.World);
             }
         }
     }
@@ -196,7 +216,7 @@ public class PlayerHandler : MonoBehaviour {
     {
         shipCamera.SetActive(true);
         shipUi.SetActive(true);
-        overviewCamera.SetActive(false);
+        overviewCameraGameObject.SetActive(false);
         overviewUi.SetActive(false);
 
         currentPlayerShip = playerShips[shipNumber];
@@ -210,7 +230,7 @@ public class PlayerHandler : MonoBehaviour {
     {
         shipCamera.SetActive(false);
         shipUi.SetActive(false);
-        overviewCamera.SetActive(true);
+        overviewCameraGameObject.SetActive(true);
         overviewUi.SetActive(true);
 
         currentPlayerShip = null;

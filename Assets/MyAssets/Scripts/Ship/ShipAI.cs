@@ -140,12 +140,15 @@ public class ShipAI : MonoBehaviour
 
     private void RotateShip(Vector3 target)
     {
-        var x = Vector3.Cross(transform.forward.normalized, target.normalized);
+        Vector3 x = Vector3.Cross(transform.forward.normalized, target.normalized);
         float theta = Mathf.Asin(x.magnitude);
-        var w = x.normalized * theta / Time.fixedDeltaTime;
-        var q = transform.rotation * shipRigidbody.inertiaTensorRotation;
-        var t = q * Vector3.Scale(shipRigidbody.inertiaTensor, Quaternion.Inverse(q) * w);
-        shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
+        Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
+        Quaternion q = transform.rotation * shipRigidbody.inertiaTensorRotation;
+        Vector3 t = q * Vector3.Scale(shipRigidbody.inertiaTensor, Quaternion.Inverse(q) * w);
+        if(t != null)
+        {
+            shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
+        }
     }
 
     private void StabiliseMovement()
