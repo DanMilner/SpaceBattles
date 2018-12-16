@@ -12,11 +12,6 @@ public class CameraMovementController : MonoBehaviour
     private int mouseXSpeedMod = 5;
     private int mouseYSpeedMod = 5;
 
-    private int lerpRate = 5;
-    private float distance = 3f;
-
-    public float cameraTargetHeight = 1.0f;
-
     // Use this for initialization
     void Start()
     {

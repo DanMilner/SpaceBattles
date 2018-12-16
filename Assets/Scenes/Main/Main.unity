@@ -184,6 +184,11 @@ PrefabInstance:
       propertyPath: IsControllingShip
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114821717817528538, guid: e21efe1aef09fde4485b657c8ee83833,
+        type: 3}
+      propertyPath: overviewCameraGameObject
+      value: 
+      objectReference: {fileID: 1472986280370228}
     - target: {fileID: 4030030542466606, guid: e21efe1aef09fde4485b657c8ee83833, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1335,6 +1340,7 @@ GameObject:
   - component: {fileID: 4961304769878174}
   - component: {fileID: 20171682062546444}
   - component: {fileID: 81183533527331994}
+  - component: {fileID: 1472986280370229}
   m_Layer: 0
   m_Name: Overview camera
   m_TagString: Untagged
@@ -1342,6 +1348,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1472986280370229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472986280370228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1468c15f3b074499169ceaebabd3a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4961304769878174
 Transform:
   m_ObjectHideFlags: 0
