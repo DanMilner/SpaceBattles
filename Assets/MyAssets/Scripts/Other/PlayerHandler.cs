@@ -1,46 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerHandler : MonoBehaviour {
+public class PlayerHandler : MonoBehaviour
+{
     [SerializeField] private GameObject[] playerShips;
     [SerializeField] private GameObject shipCamera;
     [SerializeField] private GameObject overviewCameraGameObject;
-
     [SerializeField] private GameObject shipUi;
     [SerializeField] private GameObject overviewUi;
+    [SerializeField] private bool isControllingShip;
+    [SerializeField] private FactionController factionController;
 
     private CameraController shipCameraController;
     private Camera overViewCamera;
     private GameObject currentPlayerShip;
     private ShipController currentShipController;
     private GameObject currentSelectedShip;
-    [SerializeField] bool IsControllingShip;
-    private int currentShipNumber = 0;
+    private int currentShipNumber;
     private UIHandler uIHandler;
+    private OverviewUiHandler overviewUiHandler;
 
     private int layerMask;
 
     private bool shipSelected;
 
-    private KeyCode[] keyCodes = {
-         KeyCode.Alpha1,
-         KeyCode.Alpha2,
-         KeyCode.Alpha3,
-         KeyCode.Alpha4,
-         KeyCode.Alpha5,
-         KeyCode.Alpha6,
-         KeyCode.Alpha7,
-         KeyCode.Alpha8,
-         KeyCode.Alpha9,
-     };
+    private KeyCode[] keyCodes =
+    {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+        KeyCode.Alpha7,
+        KeyCode.Alpha8,
+        KeyCode.Alpha9,
+    };
 
-    void Start () {
+    private void Start()
+    {
         shipCameraController = shipCamera.GetComponent<CameraController>();
         uIHandler = shipUi.GetComponent<UIHandler>();
+        overviewUiHandler = overviewUi.GetComponent<OverviewUiHandler>();
         overViewCamera = overviewCameraGameObject.GetComponent<Camera>();
 
-        if (IsControllingShip)
+        if (isControllingShip)
         {
             PlayerEnterShip(0);
         }
@@ -49,15 +52,17 @@ public class PlayerHandler : MonoBehaviour {
             PlayerEnterOverview();
         }
 
-        layerMask = (1 << 11);
+        layerMask = 1 << 11;
+
+        overviewUiHandler.CreateUi(factionController.GetFriendlyShips(), GetComponent<PlayerHandler>());
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetButtonDown("Overview"))
         {
-            IsControllingShip = !IsControllingShip;
-            if (IsControllingShip)
+            isControllingShip = !isControllingShip;
+            if (isControllingShip)
             {
                 PlayerEnterShip(currentShipNumber);
             }
@@ -67,7 +72,7 @@ public class PlayerHandler : MonoBehaviour {
             }
         }
 
-        if (IsControllingShip)
+        if (isControllingShip)
         {
             if (Input.GetButton("ChangeShip"))
             {
@@ -99,7 +104,8 @@ public class PlayerHandler : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 ShootMouseRaycast(false);
-            }else if (Input.GetMouseButtonDown(1))
+            }
+            else if (Input.GetMouseButtonDown(1))
             {
                 if (shipSelected)
                 {
@@ -118,13 +124,15 @@ public class PlayerHandler : MonoBehaviour {
             float horiz = Input.GetAxis("MoveCameraHorizontal");
             if (horiz != 0)
             {
-                overviewCameraGameObject.transform.Translate(overviewCameraGameObject.transform.right * Time.deltaTime * horiz * 300, Space.World);
+                overviewCameraGameObject.transform.Translate(
+                    overviewCameraGameObject.transform.right * Time.deltaTime * horiz * 300, Space.World);
             }
 
             float vert = Input.GetAxis("MoveCameraVertical");
             if (vert != 0)
             {
-                overviewCameraGameObject.transform.Translate(overviewCameraGameObject.transform.forward * Time.deltaTime * vert * 300, Space.World);
+                overviewCameraGameObject.transform.Translate(
+                    overviewCameraGameObject.transform.forward * Time.deltaTime * vert * 300, Space.World);
             }
         }
     }
@@ -148,22 +156,16 @@ public class PlayerHandler : MonoBehaviour {
             }
             else
             {
-                DisableOutline(currentSelectedShip);
-                if(currentShipController != null) { DisableOutline(currentShipController.GetAiTarget()); }
-                
-                currentSelectedShip = shipHit;
-                currentShipController = shipController;
-
-                EnableOutline(shipHit, true);
-                EnableOutline(currentShipController.GetAiTarget(), false);
-
-                shipSelected = true;
+                SelectShip(shipHit, shipController);
             }
         }
         else
         {
             DisableOutline(currentSelectedShip);
-            if (currentShipController != null) { DisableOutline(currentShipController.GetAiTarget()); }
+            if (currentShipController != null)
+            {
+                DisableOutline(currentShipController.GetAiTarget());
+            }
 
             currentShipController = null;
             currentSelectedShip = null;
@@ -172,27 +174,43 @@ public class PlayerHandler : MonoBehaviour {
         }
     }
 
-    private void EnableOutline(GameObject ship, bool friendlyShip)
+    public void SelectShip(GameObject shipGameObject, ShipController shipController)
     {
-        if (ship == null) { return; }
+        DisableOutline(currentSelectedShip);
+        if (currentShipController != null)
+        {
+            DisableOutline(currentShipController.GetAiTarget());
+        }
+
+        currentSelectedShip = shipGameObject;
+        currentShipController = shipController;
+
+        EnableOutline(shipGameObject, true);
+        EnableOutline(currentShipController.GetAiTarget(), false);
+
+        shipSelected = true;
+    }
+
+    private static void EnableOutline(GameObject ship, bool friendlyShip)
+    {
+        if (ship == null)
+        {
+            return;
+        }
 
         Outline outline = ship.GetComponentInChildren<Outline>();
 
-        if (friendlyShip)
-        {
-            outline.OutlineColor = Color.blue;
-        }
-        else
-        {
-            outline.OutlineColor = Color.red;
-        }
+        outline.OutlineColor = friendlyShip ? Color.blue : Color.red;
         outline.OutlineWidth = 2.0f;
         outline.enabled = true;
     }
 
-    private void DisableOutline(GameObject ship)
+    private static void DisableOutline(GameObject ship)
     {
-        if(ship == null) { return; }
+        if (ship == null)
+        {
+            return;
+        }
 
         Outline outline = ship.GetComponentInChildren<Outline>();
         outline.enabled = false;
@@ -200,7 +218,10 @@ public class PlayerHandler : MonoBehaviour {
 
     private void ChangePlayerShip(int shipNumber)
     {
-        if (shipNumber > playerShips.Length) { return; }
+        if (shipNumber > playerShips.Length)
+        {
+            return;
+        }
 
         currentShipNumber = shipNumber;
 
@@ -220,7 +241,8 @@ public class PlayerHandler : MonoBehaviour {
         overviewUi.SetActive(false);
 
         currentPlayerShip = playerShips[shipNumber];
-        shipCameraController.SetCameraTarget(currentPlayerShip.transform, currentPlayerShip.GetComponent<CameraZoomSettings>());
+        shipCameraController.SetCameraTarget(currentPlayerShip.transform,
+            currentPlayerShip.GetComponent<CameraZoomSettings>());
 
         currentShipController = currentPlayerShip.GetComponentInChildren<ShipController>();
         currentShipController.SetPlayerControlled(true);
@@ -234,11 +256,9 @@ public class PlayerHandler : MonoBehaviour {
         overviewUi.SetActive(true);
 
         currentPlayerShip = null;
-        
-        if(currentShipController != null)
-        {
-            currentShipController.SetPlayerControlled(false);
-            currentShipController = null;
-        }
+
+        if (currentShipController == null) return;
+        currentShipController.SetPlayerControlled(false);
+        currentShipController = null;
     }
 }

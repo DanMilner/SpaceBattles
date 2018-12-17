@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShipAI : MonoBehaviour
 {
@@ -31,11 +29,11 @@ public class ShipAI : MonoBehaviour
         }
         get
         {
-            return this.target;
+            return target;
         }
     }
 
-    void Awake()
+    private void Awake()
     {
         shipRigidbody = GetComponent<Rigidbody>();
         cannonManager = GetComponentInChildren<CannonManager>();
@@ -49,11 +47,11 @@ public class ShipAI : MonoBehaviour
         {
             return;
         }
-        if (target != null)
-        {
-            MoveTowardsTarget();
-            if (shipHasCannons) { cannonManager.Fire(); }                
-        }
+
+        if (target == null) return;
+        
+        MoveTowardsTarget();
+        if (shipHasCannons) { cannonManager.Fire(); }
     }
 
     public void SetCannonTarget()

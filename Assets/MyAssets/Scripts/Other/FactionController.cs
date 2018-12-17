@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class FactionController : MonoBehaviour {
@@ -8,10 +7,13 @@ public class FactionController : MonoBehaviour {
     private List<ShipController> friendlyShips = new List<ShipController>();
     private List<FactionController> otherFactions = new List<FactionController>();
 
+    private void Awake()
+    {
+        GetShips();
+    }
+
     void Start() {
         GetOtherFactions();
-
-        GetShips();
 
         SetEnemyShips();
 
@@ -105,5 +107,10 @@ public class FactionController : MonoBehaviour {
 
         friendlyShips.Remove(shipController);
         shipController.DestroyShip();      
+    }
+
+    public List<ShipController> GetFriendlyShips()
+    {
+        return friendlyShips;
     }
 }

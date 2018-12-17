@@ -34,3 +34,17 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+\.idea/\.idea\.Space Battles/\.idea/\.name
+
+\.idea/\.idea\.Space Battles/\.idea/contentModel\.xml
+
+\.idea/\.idea\.Space Battles/\.idea/indexLayout\.xml
+
+\.idea/\.idea\.Space Battles/\.idea/modules\.xml
+
+\.idea/\.idea\.Space Battles/\.idea/vcs\.xml
+
+\.idea/\.idea\.Space Battles/\.idea/workspace\.xml
+
+\.idea/\.idea\.Space Battles/riderModule\.iml

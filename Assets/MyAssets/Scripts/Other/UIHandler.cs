@@ -70,7 +70,7 @@ public class UIHandler : MonoBehaviour {
 
     public void SetCurrentWeapon(string CurrentWeaponName)
     {
-        CurrentWeapon.text = "Current Weapon: " + CurrentWeaponName;
+        CurrentWeapon.text = "Weapon: " + CurrentWeaponName;
     }
 
     public void SetCurrentHealth(float health)
