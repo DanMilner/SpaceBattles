@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public interface IAutoTurretWeapon
 {
     void Fire(Collider target);
+    void StopFiring();
     void Destroyed();
 }
 
@@ -22,9 +22,9 @@ public class AutoTurret : MonoBehaviour
     private Quaternion rotation;
     private float cooldown;
     private int factionId;
-    private int validTargetCounter = 0;
-    private int lineOfSightCounter = 0;
-    private int targetSearchCounter = 0;
+    private int validTargetCounter;
+    private int lineOfSightCounter;
+    private int targetSearchCounter;
     private int layerMask;
 
     void Awake()
@@ -32,7 +32,7 @@ public class AutoTurret : MonoBehaviour
         layerMask = ~(1 << 2);
         enemyShips = new HashSet<Collider>();
         FactionController fc = gameObject.GetComponentInParent<FactionController>();
-        if(fc == null)
+        if (fc == null)
         {
             factionId = -1;
         }
@@ -40,6 +40,7 @@ public class AutoTurret : MonoBehaviour
         {
             factionId = fc.factionID;
         }
+
         cooldown = fireRate;
 
         mainWeapon = GetComponent<IAutoTurretWeapon>();
@@ -56,7 +57,10 @@ public class AutoTurret : MonoBehaviour
         targetSearchCounter++;
 
         //if gun cant shoot dont bother continuing.
-        if (cooldown > 0) { return; }
+        if (cooldown > 0)
+        {
+            return;
+        }
 
         if (CheckTargetIsValid())
         {
@@ -67,6 +71,11 @@ public class AutoTurret : MonoBehaviour
         {
             FindNewTarget();
         }
+
+        if (currentTarget == null)
+        {
+            mainWeapon.StopFiring();
+        }
     }
 
     private void CheckTargetLineOfSight()
@@ -75,10 +84,11 @@ public class AutoTurret : MonoBehaviour
         lineOfSightCounter++;
         if (lineOfSightCounter > 20)
         {
-            if (!CheckLineOfShight(currentTarget.transform))
+            if (!CheckLineOfSight(currentTarget.transform))
             {
                 currentTarget = null;
             }
+
             lineOfSightCounter = 0;
         }
     }
@@ -94,6 +104,7 @@ public class AutoTurret : MonoBehaviour
                 currentTarget = null;
             }
         }
+
         return currentTarget != null;
     }
 
@@ -114,14 +125,18 @@ public class AutoTurret : MonoBehaviour
     {
         //every 200 frames check for a new target
         //This function is expensive!
-        if(targetSearchCounter < 200) { return; }
+        if (targetSearchCounter < 200)
+        {
+            return;
+        }
+
         targetSearchCounter = 0;
 
         if (enemyShips.Count > 0)
         {
             foreach (Collider ship in enemyShips)
             {
-                if (CheckLineOfShight(ship.transform))
+                if (CheckLineOfSight(ship.transform))
                 {
                     currentTarget = ship;
                     return;
@@ -130,16 +145,17 @@ public class AutoTurret : MonoBehaviour
         }
     }
 
-    private bool CheckLineOfShight(Transform shipTransform)
+    private bool CheckLineOfSight(Transform shipTransform)
     {
         if (Physics.Raycast(turretGun.position, shipTransform.position - turretGun.position, out hit, 150, layerMask))
         {
             FactionController factionController = hit.transform.gameObject.GetComponentInParent<FactionController>();
-            if(factionController != null)
+            if (factionController != null)
             {
                 return factionId != factionController.factionID;
             }
         }
+
         return false;
     }
 
@@ -152,9 +168,9 @@ public class AutoTurret : MonoBehaviour
         }
     }
 
-    public void SetEnemyShipCollection(HashSet<Collider> enemyShipsCoolection)
+    public void SetEnemyShipCollection(HashSet<Collider> enemyShipsCollection)
     {
-        enemyShips = enemyShipsCoolection;
+        enemyShips = enemyShipsCollection;
     }
 
     public void Destroyed()

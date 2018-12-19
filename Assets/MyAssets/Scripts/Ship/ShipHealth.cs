@@ -94,17 +94,6 @@ public class ShipHealth : MonoBehaviour {
         InformFactionControllerOfDeath();
     }
 
-    private void DisableAutoTurrets()
-    {
-        if(AutoTurrets != null)
-        {
-            foreach (AutoTurret autoTurret in AutoTurrets.GetComponentsInChildren<AutoTurret>())
-            {
-                autoTurret.enabled = false;
-            }
-        }
-    }
-
     private void InformFactionControllerOfDeath()
     {
         GetComponentInParent<FactionController>().FriendlyShipDestroyed(gameObject.transform.parent.gameObject);

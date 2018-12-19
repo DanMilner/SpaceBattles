@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
+public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon
+{
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private GameObject spawnPoint;
 
@@ -37,7 +37,14 @@ public class AutoTurretMissiles : MonoBehaviour, IAutoTurretWeapon {
             missile.SetActive(true);
             missile.GetComponent<HomingMissile>().SetTarget(target);
         }
+
         missiles.Enqueue(missile);
+    }
+
+    public void StopFiring()
+    {
+        //TODO: Missiles should keep firing until told to stop
+        return;
     }
 
     public void Destroyed()

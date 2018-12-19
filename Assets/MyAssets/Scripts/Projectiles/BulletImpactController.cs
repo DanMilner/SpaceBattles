@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BulletImpactController : MonoBehaviour {
-    [SerializeField] private ParticleSystem ps;
-    
-    public void Play(Vector3 newPosition)
+public class BulletImpactController : MonoBehaviour
+{
+    [SerializeField] private float damage = 1.0f;
+
+    private void OnParticleCollision(GameObject other)
     {
-        transform.position = newPosition;
-        ps.Play();
+        other.GetComponentInChildren<ShipHealth>().TakeDamage(damage);
     }
 }
