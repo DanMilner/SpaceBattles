@@ -143,10 +143,7 @@ public class ShipAI : MonoBehaviour
         Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
         Quaternion q = transform.rotation * shipRigidbody.inertiaTensorRotation;
         Vector3 t = q * Vector3.Scale(shipRigidbody.inertiaTensor, Quaternion.Inverse(q) * w);
-        if(t != null)
-        {
-            shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
-        }
+        shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
     }
 
     private void StabiliseMovement()

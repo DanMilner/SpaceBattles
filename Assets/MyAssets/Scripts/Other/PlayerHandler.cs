@@ -18,6 +18,7 @@ public class PlayerHandler : MonoBehaviour
     private int currentShipNumber;
     private UIHandler uIHandler;
     private OverviewUiHandler overviewUiHandler;
+    private ShipOutlineController shipOutlineController;
 
     private int layerMask;
 
@@ -36,7 +37,7 @@ public class PlayerHandler : MonoBehaviour
         KeyCode.Alpha9,
     };
 
-    private void Start()
+    private void Awake()
     {
         shipCameraController = shipCamera.GetComponent<CameraController>();
         uIHandler = shipUi.GetComponent<UIHandler>();
@@ -55,6 +56,9 @@ public class PlayerHandler : MonoBehaviour
         layerMask = 1 << 11;
 
         overviewUiHandler.CreateUi(factionController.GetFriendlyShips(), GetComponent<PlayerHandler>());
+
+        shipOutlineController = GetComponent<ShipOutlineController>();
+        shipOutlineController.PlayerFactionId = factionController.factionID;
     }
 
     private void Update()
@@ -191,29 +195,31 @@ public class PlayerHandler : MonoBehaviour
         shipSelected = true;
     }
 
-    private static void EnableOutline(GameObject ship, bool friendlyShip)
+    private void EnableOutline(GameObject ship, bool friendlyShip)
     {
         if (ship == null)
         {
             return;
         }
 
-        Outline outline = ship.GetComponentInChildren<Outline>();
-
-        outline.OutlineColor = friendlyShip ? Color.blue : Color.red;
-        outline.OutlineWidth = 2.0f;
-        outline.enabled = true;
+        if (friendlyShip)
+        {
+            shipOutlineController.SetFriendlySelected(ship.GetComponentInChildren<Outline>());
+        }
+        else
+        {
+            shipOutlineController.SetEnemySelected(ship.GetComponentInChildren<Outline>());
+        }
     }
 
-    private static void DisableOutline(GameObject ship)
+    private void DisableOutline(GameObject ship)
     {
         if (ship == null)
         {
             return;
-        }
-
-        Outline outline = ship.GetComponentInChildren<Outline>();
-        outline.enabled = false;
+        }        
+        
+        shipOutlineController.SetOutlineDefault(ship);
     }
 
     private void ChangePlayerShip(int shipNumber)
