@@ -44,7 +44,7 @@ public class ShipController : MonoBehaviour
         if (count < 30) { return; }
         count = 0;
 
-        if (!playerControlled && shipAi.AIisActive)
+        if (!playerControlled && shipAi.AiIsActive)
         {
             flightController.ActivateThrustersAI(shipAi.IsMovingForward, shipAi.IsMovingBackward);
         }

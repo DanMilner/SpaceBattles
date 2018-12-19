@@ -5,7 +5,7 @@ public class ShipAI : MonoBehaviour
     public float moveStrength = 200.0f;
     public float rotationStrength = 0.1f;
     public float stoppingDistance = 40.0f;
-    public bool AIisActive = true;
+    public bool AiIsActive = true;
     public bool IsMovingForward { set; get; }
     public bool IsMovingBackward { set; get; }
 
@@ -43,7 +43,7 @@ public class ShipAI : MonoBehaviour
 
     public void Fly()
     {
-        if (!AIisActive)
+        if (!AiIsActive)
         {
             return;
         }
