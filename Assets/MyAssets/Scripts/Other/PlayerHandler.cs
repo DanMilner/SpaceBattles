@@ -44,6 +44,14 @@ public class PlayerHandler : MonoBehaviour
         overviewUiHandler = overviewUi.GetComponent<OverviewUiHandler>();
         overViewCamera = overviewCameraGameObject.GetComponent<Camera>();
 
+        layerMask = 1 << 11;
+
+        shipOutlineController = GetComponent<ShipOutlineController>();
+        shipOutlineController.PlayerFactionId = factionController.factionID;
+    }
+
+    private void Start()
+    {
         if (isControllingShip)
         {
             PlayerEnterShip(0);
@@ -52,13 +60,8 @@ public class PlayerHandler : MonoBehaviour
         {
             PlayerEnterOverview();
         }
-
-        layerMask = 1 << 11;
-
+        
         overviewUiHandler.CreateUi(factionController.GetFriendlyShips(), GetComponent<PlayerHandler>());
-
-        shipOutlineController = GetComponent<ShipOutlineController>();
-        shipOutlineController.PlayerFactionId = factionController.factionID;
     }
 
     private void Update()

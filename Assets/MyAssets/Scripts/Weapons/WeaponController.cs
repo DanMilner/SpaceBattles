@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IWeapon
 {
@@ -11,75 +9,77 @@ public interface IWeapon
 
 public class WeaponController : MonoBehaviour
 {
-    [SerializeField] private GameObject[] Weapons;
+    [SerializeField] private GameObject[] weapons;
     [SerializeField] private GameObject weaponTarget;
 
     private GameObject mainCamera;
     private UIHandler uIHandler;
-    private int CurrentWeaponNum = 0;
-    private IWeapon CurrentWeapon;
-    private int NumberOfWeapons = 0;
-    private bool playerControlled = false;
+    private int currentWeaponNum;
+    private IWeapon currentWeapon;
+    private int numberOfWeapons;
+    private bool playerControlled;
 
-    void Awake()
+    private void Awake()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
     }
 
-    void Start()
+    private void Start()
     {
-        CurrentWeapon = GetWeapon(CurrentWeaponNum);
-        NumberOfWeapons = Weapons.Length-1;
-        UpdateUIWithWeaponName();
+        currentWeapon = GetWeapon(currentWeaponNum);
+        numberOfWeapons = weapons.Length - 1;
+        UpdateUiWithWeaponName();
     }
 
     // Update is called once per frame
-    void Update () {
+    private void Update()
+    {
         if (!playerControlled)
         {
             return;
         }
 
-        weaponTarget.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 50;
+        weaponTarget.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 150;
         //TODO. shoot raycast and put target at whatever it hits or put it at the max distance.
 
         if (!Input.GetKey("left ctrl"))
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                CurrentWeaponNum++;
+                currentWeaponNum++;
                 ChangeWeapon();
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                CurrentWeaponNum--;
+                currentWeaponNum--;
                 ChangeWeapon();
             }
         }
 
         if (Input.GetMouseButton(0))
         {
-            if(CurrentWeapon != null)
+            if (currentWeapon != null)
             {
-                CurrentWeapon.Fire();
+                currentWeapon.Fire();
             }
         }
     }
 
     private void ChangeWeapon()
     {
-        if (CurrentWeaponNum > NumberOfWeapons)
+        if (currentWeaponNum > numberOfWeapons)
         {
-            CurrentWeaponNum = 0;
+            currentWeaponNum = 0;
         }
-        else if (CurrentWeaponNum < 0)
+        else if (currentWeaponNum < 0)
         {
-            CurrentWeaponNum = NumberOfWeapons;
+            currentWeaponNum = numberOfWeapons;
         }
-        CurrentWeapon = GetWeapon(CurrentWeaponNum);
-        CurrentWeapon.SetWeaponTarget(weaponTarget);
-        UpdateUIWithWeaponName();
+
+        currentWeapon = GetWeapon(currentWeaponNum);
+        currentWeapon.SetWeaponTarget(weaponTarget);
+        UpdateUiWithWeaponName();
     }
 
     public void SetPlayerControlled(bool pControlled)
@@ -87,35 +87,33 @@ public class WeaponController : MonoBehaviour
         playerControlled = pControlled;
         if (playerControlled)
         {
-            UpdateUIWithWeaponName();
-            if(CurrentWeapon != null)
+            UpdateUiWithWeaponName();
+            if (currentWeapon != null)
             {
-                CurrentWeapon.SetWeaponTarget(weaponTarget);
+                currentWeapon.SetWeaponTarget(weaponTarget);
             }
         }
     }
 
     private IWeapon GetWeapon(int weaponNum)
     {
-        if (Weapons.Length > 0 && weaponNum <= NumberOfWeapons)
+        if (weapons.Length > 0 && weaponNum <= numberOfWeapons)
         {
-            return Weapons[CurrentWeaponNum].GetComponent<IWeapon>();
+            return weapons[currentWeaponNum].GetComponent<IWeapon>();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
-    private void UpdateUIWithWeaponName()
+    private void UpdateUiWithWeaponName()
     {
-        if(uIHandler == null)
+        if (uIHandler == null)
         {
             uIHandler = GameObject.FindGameObjectWithTag("UI").GetComponent<UIHandler>();
         }
-        if (CurrentWeapon != null)
+
+        if (currentWeapon != null)
         {
-            uIHandler.SetCurrentWeapon(CurrentWeapon.GetName());
+            uIHandler.SetCurrentWeapon(currentWeapon.GetName());
         }
         else
         {
