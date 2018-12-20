@@ -151,7 +151,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 7
+      scalar: 20
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -533,16 +533,16 @@ ParticleSystem:
         m_RotationOrder: 4
   ShapeModule:
     serializedVersion: 6
-    enabled: 0
+    enabled: 1
     type: 4
-    angle: 0
+    angle: 53.29896
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 0
+    radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0, y: 0, z: 1}
+    m_Scale: {x: 0.02, y: 0.02, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -621,7 +621,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.0001
+      value: 10
       mode: 0
       spread: 0
       speed:
@@ -678,9 +678,9 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 0
+      value: 20
       mode: 0
-      spread: 0
+      spread: 1
       speed:
         serializedVersion: 2
         minMaxState: 0
@@ -740,7 +740,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 6
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3613,9 +3613,9 @@ ParticleSystem:
     ratio: 1
     lifetime:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 0.002
-      minScalar: 0.002
+      minMaxState: 0
+      scalar: 0.0015
+      minScalar: 0.0015
       maxCurve:
         serializedVersion: 2
         m_Curve:
