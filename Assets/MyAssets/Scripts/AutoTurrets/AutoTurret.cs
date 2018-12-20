@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public interface IAutoTurretWeapon
 {
@@ -10,7 +13,7 @@ public interface IAutoTurretWeapon
 
 public class AutoTurret : MonoBehaviour
 {
-    public float fireRate = 2.0f;
+    public float FireRate = 2.0f;
 
     [SerializeField] private Transform turretTower;
     [SerializeField] private Transform turretGun;
@@ -27,7 +30,7 @@ public class AutoTurret : MonoBehaviour
     private int targetSearchCounter;
     private int layerMask;
 
-    void Awake()
+    private void Awake()
     {
         layerMask = ~(1 << 2);
         enemyShips = new HashSet<Collider>();
@@ -41,13 +44,13 @@ public class AutoTurret : MonoBehaviour
             factionId = fc.factionID;
         }
 
-        cooldown = fireRate;
+        cooldown = FireRate;
 
         mainWeapon = GetComponent<IAutoTurretWeapon>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         cooldown -= Time.deltaTime;
 
@@ -56,7 +59,7 @@ public class AutoTurret : MonoBehaviour
         lineOfSightCounter++;
         targetSearchCounter++;
 
-        //if gun cant shoot dont bother continuing.
+        //if gun cant shoot don't bother continuing.
         if (cooldown > 0)
         {
             return;
@@ -82,15 +85,17 @@ public class AutoTurret : MonoBehaviour
     {
         //every 20 frames check that the current target is still line of sight
         lineOfSightCounter++;
-        if (lineOfSightCounter > 20)
+        if (lineOfSightCounter <= 20)
         {
-            if (!CheckLineOfSight(currentTarget.transform))
-            {
-                currentTarget = null;
-            }
-
-            lineOfSightCounter = 0;
+            return;
         }
+
+        if (!CheckLineOfSight(currentTarget.transform))
+        {
+            currentTarget = null;
+        }
+
+        lineOfSightCounter = 0;
     }
 
     private bool CheckTargetIsValid()
@@ -110,38 +115,42 @@ public class AutoTurret : MonoBehaviour
 
     private void LookAtTarget()
     {
-        if (currentTarget != null)
+        if (currentTarget == null)
         {
-            turretTower.LookAt(currentTarget.transform);
-            rotation = new Quaternion(0, turretTower.localRotation.y, 0, turretTower.localRotation.w);
-            turretTower.localRotation = rotation;
-
-            rotation = Quaternion.LookRotation(currentTarget.transform.position - turretGun.position, transform.up);
-            turretGun.rotation = rotation;
+            return;
         }
+
+        turretTower.LookAt(currentTarget.transform);
+        rotation = new Quaternion(0, turretTower.localRotation.y, 0, turretTower.localRotation.w);
+        turretTower.localRotation = rotation;
+
+        rotation = Quaternion.LookRotation(currentTarget.transform.position - turretGun.position, transform.up);
+        turretGun.rotation = rotation;
     }
 
     private void FindNewTarget()
     {
         //every 200 frames check for a new target
         //This function is expensive!
-        if (targetSearchCounter < 200)
+        if (targetSearchCounter < 200 || enemyShips.Count <= 0)
         {
             return;
         }
 
         targetSearchCounter = 0;
 
-        if (enemyShips.Count > 0)
+        var shipsInRandomOrder = enemyShips.ToList();
+
+        for (int i = 0; i < shipsInRandomOrder.Count; i++)
         {
-            foreach (Collider ship in enemyShips)
+            int rand = Random.Range(0, shipsInRandomOrder.Count-1);
+            
+            if (CheckLineOfSight(shipsInRandomOrder[rand].transform))
             {
-                if (CheckLineOfSight(ship.transform))
-                {
-                    currentTarget = ship;
-                    return;
-                }
+                currentTarget = shipsInRandomOrder[rand];
+                return;
             }
+            shipsInRandomOrder.RemoveAt(rand);
         }
     }
 
@@ -161,11 +170,13 @@ public class AutoTurret : MonoBehaviour
 
     private void Fire()
     {
-        if (cooldown < 0)
+        if (cooldown > 0)
         {
-            mainWeapon.Fire(currentTarget);
-            cooldown = fireRate;
+            return;
         }
+
+        mainWeapon.Fire(currentTarget);
+        cooldown = FireRate;
     }
 
     public void SetEnemyShipCollection(HashSet<Collider> enemyShipsCollection)
