@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CannonManager : MonoBehaviour, IWeapon {
+public class CannonManager : MonoBehaviour, IWeapon
+{
     [SerializeField] private GameObject cannonTarget;
-    private CannonController[] Cannons;
+    private CannonController[] cannons;
 
-    void Awake()
+    private void Awake()
     {
-        Cannons = gameObject.GetComponentsInChildren<CannonController>();
+        cannons = gameObject.GetComponentsInChildren<CannonController>();
         ApplyCannonTarget();
     }
 
     public void Fire()
     {
-        for(int i = 0; i < Cannons.Length; i++)
+        for (int i = 0; i < cannons.Length; i++)
         {
-            Cannons[i].FireCannon();
+            cannons[i].FireCannon();
         }
     }
 
@@ -27,9 +26,9 @@ public class CannonManager : MonoBehaviour, IWeapon {
 
     private void ApplyCannonTarget()
     {
-        for (int i = 0; i < Cannons.Length; i++)
+        for (int i = 0; i < cannons.Length; i++)
         {
-            Cannons[i].SetCannonTarget(cannonTarget);
+            cannons[i].SetCannonTarget(cannonTarget);
         }
     }
 
@@ -37,8 +36,19 @@ public class CannonManager : MonoBehaviour, IWeapon {
     {
         cannonTarget = target;
 
-        if(target == null) { return; }
+        if (target == null)
+        {
+            return;
+        }
 
         ApplyCannonTarget();
+    }
+
+    public void SetCannonRange(float range)
+    {
+        for (int i = 0; i < cannons.Length; i++)
+        {
+            cannons[i].SetRange(range);
+        }
     }
 }

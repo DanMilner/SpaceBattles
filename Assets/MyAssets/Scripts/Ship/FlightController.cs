@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlightController : MonoBehaviour
@@ -22,8 +20,8 @@ public class FlightController : MonoBehaviour
     private float pitch;
     private float roll;
 
-    private bool rotationalStabiliersActive = false;
-    private bool movementStabiliersActive = false;
+    private bool rotationalStabiliersActive;
+    private bool movementStabiliersActive;
 
     private ThrusterParticlesController thrusterParticlesController;
 
@@ -58,7 +56,8 @@ public class FlightController : MonoBehaviour
 
     public void ActivateThrustersPlayer()
     {
-        thrusterParticlesController.ActivateThrustersPlayer(shipRigidbody, movementStabiliersActive, rotationalStabiliersActive);
+        thrusterParticlesController.ActivateThrustersPlayer(shipRigidbody, movementStabiliersActive,
+            rotationalStabiliersActive);
     }
 
     public void ActivateThrustersAI(bool aiMovingForward, bool aiMovingBackward)
@@ -90,15 +89,20 @@ public class FlightController : MonoBehaviour
     {
         if (pitch == 0)
         {
-            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x * 0.95f, shipRigidbody.angularVelocity.y, shipRigidbody.angularVelocity.z);
+            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x * 0.95f,
+                shipRigidbody.angularVelocity.y, shipRigidbody.angularVelocity.z);
         }
+
         if (yaw == 0)
         {
-            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x, shipRigidbody.angularVelocity.y * 0.95f, shipRigidbody.angularVelocity.z);
+            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x,
+                shipRigidbody.angularVelocity.y * 0.95f, shipRigidbody.angularVelocity.z);
         }
+
         if (roll == 0)
         {
-            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x, shipRigidbody.angularVelocity.y, shipRigidbody.angularVelocity.z * 0.95f);
+            shipRigidbody.angularVelocity = new Vector3(shipRigidbody.angularVelocity.x,
+                shipRigidbody.angularVelocity.y, shipRigidbody.angularVelocity.z * 0.95f);
         }
     }
 
@@ -123,7 +127,8 @@ public class FlightController : MonoBehaviour
         }
     }
 
-    public static void DetermineStabilisingSpeed(Rigidbody shipRigidbody, float currentVelocity, Vector3 direction, float thrust)
+    public static void DetermineStabilisingSpeed(Rigidbody shipRigidbody, float currentVelocity, Vector3 direction,
+        float thrust)
     {
         if (currentVelocity < 0.1f && currentVelocity > -0.1f)
         {
@@ -136,7 +141,8 @@ public class FlightController : MonoBehaviour
         }
     }
 
-    public static void SlowShipUsingStabilisers(Rigidbody shipRigidbody, float localVelocity, Vector3 direction, float thrustSpeed)
+    public static void SlowShipUsingStabilisers(Rigidbody shipRigidbody, float localVelocity, Vector3 direction,
+        float thrustSpeed)
     {
         if (localVelocity > 0.005)
         {

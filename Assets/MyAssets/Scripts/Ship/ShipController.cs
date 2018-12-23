@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     private FlightController flightController;
-    private ShipAI shipAi;
+    private ShipAi shipAi;
     private WeaponController weaponController;
     private ShipHealth shipHealth;
     private Rigidbody shipRigidbody;
@@ -18,7 +18,7 @@ public class ShipController : MonoBehaviour
     void Awake()
     {
         flightController = GetComponentInChildren<FlightController>();
-        shipAi = GetComponent<ShipAI>();
+        shipAi = GetComponent<ShipAi>();
         shipRigidbody = GetComponent<Rigidbody>();
         shipHealth = GetComponentInChildren<ShipHealth>();
         weaponController = GetComponentInChildren<WeaponController>();

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class ShipAI : MonoBehaviour
+public class ShipAi : MonoBehaviour
 {
-    public float moveStrength = 200.0f;
-    public float rotationStrength = 0.1f;
-    public float stoppingDistance = 40.0f;
+    public float MoveStrength = 200.0f;
+    public float RotationStrength = 0.1f;
+    public float StoppingDistance = 40.0f;
     public bool AiIsActive = true;
     public bool IsMovingForward { set; get; }
     public bool IsMovingBackward { set; get; }
@@ -39,6 +39,8 @@ public class ShipAI : MonoBehaviour
         cannonManager = GetComponentInChildren<CannonManager>();
 
         shipHasCannons = cannonManager != null;
+        
+        cannonManager.SetCannonRange(StoppingDistance);
     }
 
     public void Fly()
@@ -51,7 +53,10 @@ public class ShipAI : MonoBehaviour
         if (target == null) return;
         
         MoveTowardsTarget();
-        if (shipHasCannons) { cannonManager.Fire(); }
+        if (shipHasCannons)
+        {
+            cannonManager.Fire();
+        }
     }
 
     public void SetCannonTarget()
@@ -64,7 +69,7 @@ public class ShipAI : MonoBehaviour
         angleToTarget = Vector3.Angle(-transform.forward, transform.position - target.transform.position);
         distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
 
-        if (distanceToTarget > stoppingDistance)
+        if (distanceToTarget > StoppingDistance)
         {
             MoveToTarget();
         }
@@ -83,18 +88,18 @@ public class ShipAI : MonoBehaviour
 
         if (angleToTarget < 20)
         {
-            targetVelocity = (distanceToTarget - stoppingDistance + 10) / 40;
+            targetVelocity = (distanceToTarget - StoppingDistance + 10) / 40;
             if (transform.InverseTransformDirection(shipRigidbody.velocity).z < targetVelocity)
             {
                 //accelerate
-                shipRigidbody.AddForce(targetDirection * (moveStrength - angleToTarget));
+                shipRigidbody.AddForce(targetDirection * (MoveStrength - angleToTarget));
                 IsMovingForward = true;
                 IsMovingBackward = false;
             }
             else
             {
                 //decelerate
-                shipRigidbody.AddForce(-targetDirection * (moveStrength - angleToTarget));
+                shipRigidbody.AddForce(-targetDirection * (MoveStrength - angleToTarget));
                 IsMovingForward = false;
                 IsMovingBackward = true;
             }
@@ -143,16 +148,16 @@ public class ShipAI : MonoBehaviour
         Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
         Quaternion q = transform.rotation * shipRigidbody.inertiaTensorRotation;
         Vector3 t = q * Vector3.Scale(shipRigidbody.inertiaTensor, Quaternion.Inverse(q) * w);
-        shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * rotationStrength);
+        shipRigidbody.AddTorque((t - shipRigidbody.angularVelocity) * RotationStrength);
     }
 
     private void StabiliseMovement()
     {
         float localXVelocity = transform.InverseTransformDirection(shipRigidbody.velocity).x;
-        FlightController.DetermineStabilisingSpeed(shipRigidbody, localXVelocity, transform.right, moveStrength * 2f);
+        FlightController.DetermineStabilisingSpeed(shipRigidbody, localXVelocity, transform.right, MoveStrength * 2f);
 
         float localYVelocity = transform.InverseTransformDirection(shipRigidbody.velocity).y;
-        FlightController.DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, moveStrength * 2f);
+        FlightController.DetermineStabilisingSpeed(shipRigidbody, localYVelocity, transform.up, MoveStrength * 2f);
     }
 
     private void StabiliseRotation()
