@@ -40,7 +40,7 @@ public class ShipAi : MonoBehaviour
 
         shipHasCannons = cannonManager != null;
         
-        cannonManager.SetCannonRange(StoppingDistance);
+        cannonManager.SetCannonRange(StoppingDistance*2);
     }
 
     public void Fly()

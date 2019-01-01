@@ -956,10 +956,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StratosCruiser
       objectReference: {fileID: 0}
-    - target: {fileID: 1507820311890866, guid: 9397aa6ad8c3a334e8333aa130e9fa8b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4183892652681526, guid: 9397aa6ad8c3a334e8333aa130e9fa8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -1349,10 +1345,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ErisClassCruiser (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1280285772294690, guid: e477b4072732fec429ee3354f23e4957, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.8
@@ -1385,10 +1377,17 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 23375678668472122, guid: e477b4072732fec429ee3354f23e4957,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633107437867866, guid: e477b4072732fec429ee3354f23e4957, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e477b4072732fec429ee3354f23e4957, type: 3}
@@ -1502,7 +1501,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772858998}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1033.2, y: 0.17601585, z: 621.5}
+  m_LocalPosition: {x: -248, y: 139, z: 621}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1048111619}
@@ -1770,15 +1769,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4464907104156196, guid: 018363a2eb3ec3547a856de4739088c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1077.4
+      value: 709
       objectReference: {fileID: 0}
     - target: {fileID: 4464907104156196, guid: 018363a2eb3ec3547a856de4739088c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 448
+      value: 193
       objectReference: {fileID: 0}
     - target: {fileID: 4464907104156196, guid: 018363a2eb3ec3547a856de4739088c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 591.8
+      value: 592
       objectReference: {fileID: 0}
     - target: {fileID: 4464907104156196, guid: 018363a2eb3ec3547a856de4739088c7, type: 3}
       propertyPath: m_LocalRotation.x

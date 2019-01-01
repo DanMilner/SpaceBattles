@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class AutoTurretManager : MonoBehaviour {
     private HashSet<Collider> enemyTargets;
     private List<GameObject> enemyShips;
     private HashSet<GameObject> nearbyShips;
-    private int count = 0;
+    private int count;
 
     private void Awake()
     {
