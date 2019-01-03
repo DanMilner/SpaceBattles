@@ -11,7 +11,6 @@ public class CannonController : MonoBehaviour
     [SerializeField] private Transform cannonTower;
     [SerializeField] private Transform cannonGun;
     
-    private float range;
     private Transform cannonTarget;
     private float coolDown;
     private Rigidbody shipRigidbody;
@@ -57,15 +56,8 @@ public class CannonController : MonoBehaviour
     private bool CanFire()
     {
         if(coolDown > 0) {return false;}
-        
-        if(Vector3.Distance(cannonTarget.position, transform.position) > range) {return false;}
-        
+                
         return lineOfSight.SafeToFire();
-    }
-
-    public void SetRange(float range)
-    {
-        this.range = range;
     }
 
     public void SetCannonTarget(GameObject target)

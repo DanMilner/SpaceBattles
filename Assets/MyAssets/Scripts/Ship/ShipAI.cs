@@ -39,8 +39,6 @@ public class ShipAi : MonoBehaviour
         cannonManager = GetComponentInChildren<CannonManager>();
 
         shipHasCannons = cannonManager != null;
-        
-        cannonManager.SetCannonRange(StoppingDistance*2);
     }
 
     public void Fly()
@@ -53,7 +51,7 @@ public class ShipAi : MonoBehaviour
         if (target == null) return;
         
         MoveTowardsTarget();
-        if (shipHasCannons)
+        if (shipHasCannons && distanceToTarget < StoppingDistance*2)
         {
             cannonManager.Fire();
         }

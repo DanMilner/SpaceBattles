@@ -43,12 +43,4 @@ public class CannonManager : MonoBehaviour, IWeapon
 
         ApplyCannonTarget();
     }
-
-    public void SetCannonRange(float range)
-    {
-        for (int i = 0; i < cannons.Length; i++)
-        {
-            cannons[i].SetRange(range);
-        }
-    }
 }
