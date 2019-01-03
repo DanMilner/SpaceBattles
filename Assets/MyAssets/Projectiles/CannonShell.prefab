@@ -96,9 +96,9 @@ MonoBehaviour:
   m_templateMaterial: {fileID: 2100000, guid: 974b33ccbd786464a825203eb88b8dab, type: 2}
   m_doNotOverwriteTemplateMaterialProperties: 0
   m_startPos: {x: 0, y: 0, z: 0}
-  m_endPos: {x: 0, y: 0, z: 600}
+  m_endPos: {x: 0, y: 0, z: 1000}
   m_lineColor: {r: 1, g: 0, b: 0.13606548, a: 1}
-  m_lineWidth: 1600
+  m_lineWidth: 3000
   m_lightSaberFactor: 0.9
 --- !u!54 &54191203623221072
 Rigidbody:
